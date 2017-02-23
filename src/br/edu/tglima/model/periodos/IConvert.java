@@ -2,9 +2,9 @@ package br.edu.tglima.model.periodos;
 
 import java.time.LocalDate;
 
-public interface ICaptura {
+public interface IConvert {
 	
-	public LocalDate capturarData(String s);
+	public LocalDate convertToDate(String s);
 	
 
 }

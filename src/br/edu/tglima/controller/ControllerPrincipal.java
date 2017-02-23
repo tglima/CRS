@@ -9,9 +9,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.Locale;
 
 
+import br.edu.tglima.model.periodos.*;
+import br.edu.tglima.model.proventos.*;
 import br.edu.tglima.view.FramePrincipal;
 
 
@@ -23,9 +26,56 @@ import br.edu.tglima.view.FramePrincipal;
 
 public class ControllerPrincipal  {
 	
+//	Classes
 	private FramePrincipal view;
+	private Data data = new Data();
+	private Dia dia = new Dia();
+	private Mes mes = new Mes();
+	private Salario salario = new Salario();
+	private Ferias ferias = new Ferias();
+//	private AvisoPrevio aviso = new AvisoPrevio();
+	private Fgts fgts = new Fgts();
+
 	
-	public ControllerPrincipal(FramePrincipal framePrincipal) {
+//	Atributos		
+	private LocalDate dataEntrada;
+	private LocalDate dataSaida;
+	private int totDiasTrab;
+//	private BigDecimal salario;
+	
+	public int getTotDiasTrab() {
+		return totDiasTrab;
+	}
+
+
+	public void setTotDiasTrab(int totDiasTrab) {
+		this.totDiasTrab = totDiasTrab;
+	}
+
+
+	/* Métodos Getters e Setters desta classe.*/
+	public LocalDate getDataEntrada() {
+		return dataEntrada;
+	}
+
+
+	public void setDataEntrada(LocalDate dataEntrada) {
+		this.dataEntrada = dataEntrada;
+	}
+
+
+	public LocalDate getDataSaida() {
+		return dataSaida;
+	}
+
+
+	public void setDataSaida(LocalDate dataSaida) {
+		this.dataSaida = dataSaida;
+	}
+
+
+	
+ 	public ControllerPrincipal(FramePrincipal framePrincipal) {
 		this.view = framePrincipal;
 		
         //Definindo os listeners para os botoes dessa view.
@@ -151,8 +201,7 @@ public class ControllerPrincipal  {
 	}
 	
 	
-	
-	
+//	--------------------------------------------------------------- //
 	
 	
 	
@@ -247,11 +296,22 @@ public class ControllerPrincipal  {
         String value = view.getjFormattedTextField3().getText();
         value = value.replace(" ", "").replace(".", "").replace(",", ".");
         Locale ptBr = new Locale("pt", "BR");
-        NumberFormat nf = NumberFormat.getCurrencyInstance(ptBr);
-        BigDecimal valor = new BigDecimal(value);
-        String valorFormatado = nf.format(valor);
-        System.out.println(valorFormatado);
-        view.getjFormattedTextField3().setText(valorFormatado);
+        
+        try {
+        	
+            NumberFormat nf = NumberFormat.getCurrencyInstance(ptBr);
+            BigDecimal valor = new BigDecimal(value);
+            String valorFormatado = nf.format(valor);
+            System.out.println(valorFormatado);
+            view.getjFormattedTextField3().setText(valorFormatado);
+			
+		} catch (Exception e2) {
+//			
+		}
+        
+        
+        
+
 	}
 	
     private void jFormattedTextField4FocusLost(FocusEvent e) {                                               
@@ -271,18 +331,102 @@ public class ControllerPrincipal  {
         CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
         cl.show(view.getjPanel1(), "card1");
     } 
-    
-    
+
     private void jButton1ActionPerformed(ActionEvent e) {                                         
 //    Aqui vem a implementação do botão calcular
     	System.out.println("Botão calcular foi pressionado");
+    	
+    	/*
+    	 * Primeiro vamos obter os dados obrigátorios, começaremos
+    	 * com as datas e o salário.
+    	 */
+    	this.setDataEntrada(capturarData(view.getjFormattedTextField1().getText()));
+    	this.setDataSaida(capturarData(view.getjFormattedTextField2().getText()));
+    	this.setTotDiasTrab(dia.calcTotDiasTrab(this.getDataEntrada(), this.getDataSaida() ) );
+    	this.salario.setValor(convertToBD(view.getjFormattedTextField3().getText()));
+    	
+    	
+    	if (validarDatas(this.getDataEntrada(), this.getDataSaida()) && validarValor(this.salario.getValor()) ) {
+        	System.out.println("Total de dias trabalhados = " + this.getTotDiasTrab());
+        	System.out.println("O sálario informado foi: " + this.salario.getValor());
+		} else {
+			System.out.println("Algo deu errado, usuário deve corrigir o problema.");
+		}
+    	
+    	
+
+    	System.out.println(validarDatas(this.getDataEntrada(), this.getDataSaida()));
+    	
+
+    	System.out.println(validarValor(this.salario.getValor()));
+    	
+    	calcOpFimContrato();
+    	
     }  
+
     
     
-
+    
+    
+    private LocalDate capturarData(String s){
+    	return this.data.convertToDate(s);
+    }
+    
+    private boolean validarDatas(LocalDate dateInicio, LocalDate dateFim){
+    	if (dateInicio == null || dateFim == null) {
+			return false;
+		}
+    	
+    	else if (this.getTotDiasTrab() <= 0) {
+    		return false;
+		}
+    	
+    	else {
+    		
+        	return true;
+    	}
+ 
+    }
 	
+	private BigDecimal convertToBD(String s){
+		return this.salario.capturarValor(s);
+	}
 	
+	private boolean validarValor(BigDecimal valor){
+		if (valor.compareTo(new BigDecimal(0) ) <= 449){
+			
+			return false;
+			
+		}else {
+			
+			return true;
+
+		}
+		
+	}
 	
+	private void calcOpFimContrato(){
+		
+		/*Calcula e define o valor do último sálario que o funcionário vai receber. */
+		this.salario.setSalPropocional(this.salario.calcSalPropor(this.dia.calcDiasTrabUltimoMes(this.getDataSaida())));
 
+		/* Calcula e define o valor do decimo terceiro*/
+		this.salario.setDecimo(this.salario.calcDecimo(this.mes.calcMesesTrabUltimoAno(this.getDataEntrada(), this.getDataSaida())));
 
+		/*Calcula e define o valor referente as férias */
+		this.ferias.setValor(this.ferias.calcValorFerias(this.salario.getValor(), 
+				this.mes.calcMesesAqFerias(this.getDataEntrada(), this.getDataSaida())));
+		
+		/*Cálcula e define o valor referente ao terço das férias */
+		this.ferias.setTercoFerias(this.ferias.calcTercoFerias(this.ferias.getValor()));
+		
+		/*Calcula e define o valor referente ao FGTS */
+		this.fgts.setValor(this.fgts.calcSaldoFgts(this.salario.getValor(), this.getTotDiasTrab()));
+
+		/*Define o valor da multa de 40% do FGTS */
+		this.fgts.setMulta(new BigDecimal("0"));
+		
+		
+	}
+	
 }

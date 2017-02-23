@@ -2,12 +2,12 @@ package br.edu.tglima.model.periodos;
 
 import java.time.LocalDate;
 
-public class Data implements ICaptura {
+public class Data implements IConvert {
 	
 //	Atributos
 	private LocalDate data;
 	
-	
+//	Método construtor da classe.
 	public  Data(){
 		this.data = null;
 	}
@@ -23,7 +23,7 @@ public class Data implements ICaptura {
 	}
 
 	@Override
-	public LocalDate capturarData(String s) {
+	public LocalDate convertToDate(String s) {
 		
 		
 		/*
