@@ -33,7 +33,7 @@ public class ControllerPrincipal  {
 	private Mes mes = new Mes();
 	private Salario salario = new Salario();
 	private Ferias ferias = new Ferias();
-//	private AvisoPrevio aviso = new AvisoPrevio();
+	private AvisoPrevio aviso = new AvisoPrevio();
 	private Fgts fgts = new Fgts();
 
 	
@@ -42,6 +42,7 @@ public class ControllerPrincipal  {
 	private LocalDate dataSaida;
 	private int totDiasTrab;
 //	private BigDecimal salario;
+//	private BigDecimal valorAviso;
 	
 	public int getTotDiasTrab() {
 		return totDiasTrab;
@@ -302,7 +303,7 @@ public class ControllerPrincipal  {
             NumberFormat nf = NumberFormat.getCurrencyInstance(ptBr);
             BigDecimal valor = new BigDecimal(value);
             String valorFormatado = nf.format(valor);
-            System.out.println(valorFormatado);
+//            System.out.println(valorFormatado);
             view.getjFormattedTextField3().setText(valorFormatado);
 			
 		} catch (Exception e2) {
@@ -349,18 +350,24 @@ public class ControllerPrincipal  {
     	if (validarDatas(this.getDataEntrada(), this.getDataSaida()) && validarValor(this.salario.getValor()) ) {
         	System.out.println("Total de dias trabalhados = " + this.getTotDiasTrab());
         	System.out.println("O sálario informado foi: " + this.salario.getValor());
+        	
+        	
+        	
 		} else {
 			System.out.println("Algo deu errado, usuário deve corrigir o problema.");
+			
+			if (validarValor(this.salario.getValor()) == false) {
+				System.out.println("O valor informado como sálario foi inválido. \n" + this.salario.getValor());
+			}
 		}
     	
     	
 
-    	System.out.println(validarDatas(this.getDataEntrada(), this.getDataSaida()));
     	
 
-    	System.out.println(validarValor(this.salario.getValor()));
     	
-    	calcOpFimContrato();
+//    	calcOpFimContrato();
+    	calcOpPedidoDemissao();
     	
     }  
 
@@ -393,8 +400,9 @@ public class ControllerPrincipal  {
 	}
 	
 	private boolean validarValor(BigDecimal valor){
-		if (valor.compareTo(new BigDecimal(0) ) <= 449){
-			
+		
+		if ( valor.compareTo(new BigDecimal("449") ) < 0){
+			System.out.println(valor);
 			return false;
 			
 		}else {
@@ -429,4 +437,87 @@ public class ControllerPrincipal  {
 		
 	}
 	
+	private void calcOpDemissaoJustaCausa(){
+		
+		/*Calcula e define o valor do último sálario que o funcionário vai receber. */
+		this.salario.setSalPropocional(this.salario.calcSalPropor(this.dia.calcDiasTrabUltimoMes(this.getDataSaida())));
+		
+		/* Define o valor do decimo terceiro*/
+		this.salario.setDecimo(new BigDecimal("0"));
+		
+		/*Calcula e define o valor referente as férias */
+		this.ferias.setValor(new BigDecimal("0"));
+		
+		/*Cálcula e define o valor referente ao terço das férias */
+		this.ferias.setTercoFerias(new BigDecimal("0"));
+				
+		/*Define o valor referente ao FGTS */
+		this.fgts.setValor(new BigDecimal("0"));
+		
+		/*Define o valor da multa de 40% do FGTS */
+		this.fgts.setMulta(new BigDecimal("0"));
+		
+	}
+
+	private void calcOpPedidoDemissao(){
+		
+		/*Calcula e define o valor do último sálario que o funcionário vai receber. */
+		this.salario.setSalPropocional(this.salario.calcSalPropor(this.dia.calcDiasTrabUltimoMes(this.getDataSaida())));
+
+		/* Calcula e define o valor do decimo terceiro*/
+		this.salario.setDecimo(this.salario.calcDecimo(this.mes.calcMesesTrabUltimoAno(this.getDataEntrada(), this.getDataSaida())));
+
+		/*Calcula e define o valor referente as férias */
+		this.ferias.setValor(this.ferias.calcValorFerias(this.salario.getValor(), 
+				this.mes.calcMesesAqFerias(this.getDataEntrada(), this.getDataSaida())));
+		
+		/*Cálcula e define o valor referente ao terço das férias */
+		this.ferias.setTercoFerias(this.ferias.calcTercoFerias(this.ferias.getValor()));
+		
+		/*Calcula e define o valor referente ao FGTS */
+		this.fgts.setValor(this.fgts.calcSaldoFgts(this.salario.getValor(), this.getTotDiasTrab()));
+
+		/*Define o valor da multa de 40% do FGTS */
+		this.fgts.setMulta(new BigDecimal("0"));
+		
+		/*Calcula o valor do aviso prévio e carrego ele em uma variável local*/
+		BigDecimal valorAviso =	this.aviso.calcAvisoPrevio(this.salario.getValor(), 30);
+		
+		
+		String opAviso = (String) this.view.getjComboBox2().getSelectedItem();
+		
+		System.out.println("O funcionário cumprirá seu aviso prévio:" +opAviso);
+		
+
+		if (opAviso.equals("Trabalhado")) {
+			this.aviso.setValor(new BigDecimal("0"));
+		}
+		else if (opAviso.equals("Indenizado pela empresa")) {	
+			this.aviso.setValor(valorAviso);
+
+		}else {
+			this.aviso.setValor(valorAviso.multiply(new BigDecimal("-1")));
+		}
+		
+		
+		
+		/* Exemplo de saída de dados */
+		System.out.println("Ultimo sálario do funcionário: " + this.salario.getSalPropocional());
+		System.out.println("Décimo terceiro do funcionário: " + this.salario.getDecimo());
+		System.out.println("Valor correspondente as férias: " + this.ferias.getValor());
+		System.out.println("Valor correspondente ao terço das férias: " + this.ferias.getTercoFerias());
+		System.out.println("Valor correspondente ao aviso prévio: " +  this.aviso.getValor());
+		System.out.println("Valor correspondente ao FGTS: " + this.fgts.getValor()); 
+		System.out.println("Valor correspondente há multa de 40% do FGTS: " + this.fgts.getMulta());
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+
+
 }
