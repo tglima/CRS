@@ -2,28 +2,11 @@ package br.edu.tglima.model.periodos;
 
 import java.time.LocalDate;
 
-public class Data implements IConvert {
-	
-//	Atributos
-	private LocalDate data;
-	
-//	Método construtor da classe.
-	public  Data(){
-		this.data = null;
-	}
-	
+public class Data {
+		
 
-//	Métodos Getter e Setter
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
-	@Override
 	public LocalDate convertToDate(String s) {
+		LocalDate date = null;
 		
 		
 		/*
@@ -51,19 +34,15 @@ public class Data implements IConvert {
 			String strData = dataVetor[2] + "-" + dataVetor[1] + "-"+ dataVetor[0];			
 			
 			try {
-				this.data = LocalDate.parse(strData);
+				date = LocalDate.parse(strData);
 			} catch (Exception e) {
 				// Implementação de erro
 			}
 				
 			
-		} else {
-			
-//			Implemente erro referente ao tamanho da string
-
-		}
+		} 
 		
-		return this.data;
+		return date;
 	}
 	
 	
