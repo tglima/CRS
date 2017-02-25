@@ -45,7 +45,13 @@ public class Data {
 		return date;
 	}
 	
-	
+	public boolean validarData(LocalDate date) {
+		if (date == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	
 	
 

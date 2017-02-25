@@ -27,12 +27,13 @@ public class ControllerSecundario {
 	
 /* Métodos responsáveis por válidar os dados fornecidos pelo usuário.*/
 	
-	protected boolean validarData(LocalDate date) {
-		if (date == null) {
-			return false;
-		} else {
+	protected boolean validarData(LocalDate date){
+		LocalDate inicioClt = capturarData("30/04/1943");
+		
+		if (data.validarData(date) && verificarDiferDatas(inicioClt, date) ) {
 			return true;
-		}
+		} else
+		return false ;
 	}
 	
 	protected boolean verificarDiferDatas(LocalDate dateInicio, LocalDate dateFim){
