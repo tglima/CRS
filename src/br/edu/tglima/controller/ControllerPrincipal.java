@@ -18,10 +18,9 @@ import br.edu.tglima.view.FramePrincipal;
 
 
 /**
- * 
  * @author tglima Thiago Lima de Sousa
- * @version 0.4.0
- * @build 2017-02-27_01
+ * @version 0.4.1
+ * @build 20170227-1840
  *
  */
 

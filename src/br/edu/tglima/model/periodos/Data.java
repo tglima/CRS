@@ -5,6 +5,14 @@ import java.time.LocalDate;
 public class Data {
 		
 
+	/**
+	 * Método responsável por fazer o tratamento e conversão
+	 * da data obtida da view.
+	 * 
+	 *  @param s Referente há data digitada pelo usuário na view.
+	 *  @return Este método retorna um valor do tipo LocalDate
+	 *  no seguinte formato AAAA-MM-DD.
+	 */
 	public LocalDate capData(String s) {
 		LocalDate date = null;
 		
@@ -36,7 +44,6 @@ public class Data {
 			try {
 				date = LocalDate.parse(strData);
 			} catch (Exception e) {
-				// Implementação de erro
 			}
 				
 			
@@ -45,6 +52,12 @@ public class Data {
 		return date;
 	}
 	
+	/**
+	 * Método responsável por testar um valor do tipo LocalDate
+	 * 
+	 * @param date Referente há data que desejamos testar.
+	 * @return Este método retorna um valor do tipo booleano.
+	 */
 	public boolean validarData(LocalDate date) {
 		if (date == null) {
 			return false;
@@ -53,6 +66,4 @@ public class Data {
 		}
 	}
 	
-	
-
 }

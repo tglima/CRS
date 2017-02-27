@@ -4,7 +4,14 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Dia {
-	
+	/**
+	 * Método responsável por calcular a diferença em dias entre
+	 * duas datas fornecidas.
+	 * 
+	 * @param dateInicio Referente há data inicial.
+	 * @param dateFim Referente há data final.
+	 * @return Este método retornará uma valor do tipo inteiro.
+	 */
     public int calcDiferDias(LocalDate dateInicio, LocalDate dateFim) {
 
         int diferencaEmDias = -1;
@@ -18,6 +25,14 @@ public class Dia {
         return diferencaEmDias;
     }
     
+    /**
+     * Método responsável por calcular o total de dias que o funcionário
+     * trabalhou na empresa.
+     * 
+     * @param dateInicio Referente há data de entrada do funcionário.
+     * @param dateFim Referente há data de saída do funcionádio.
+     * @return Este método retornarpa um valor tipo inteiro.
+     */
     public int calcTotDiasTrab(LocalDate dateInicio, LocalDate dateFim) {
 
         int totalDiasTrabalhados = 0;
@@ -32,10 +47,11 @@ public class Dia {
     }
     
     /**
-     * Este método deve receber um valor do tipo LocalDate,
-     * que será referente há data de saída do usuário.
-     * O método retornará um valor inteiro que será referente
-     * ao total de dias trabalhados pelo usuário no último mês.
+     * Método responsável por calcular o total de dias trabalhos no último mês
+     * em que ele trabalhou na empresa.
+     *  
+     * @param dataSaida Referente há data em que o funcionário saiu da empresa.
+     * @return Este método retorna um valor do tipo inteiro.
      */
     public int calcDiasTrabUltimoMes(LocalDate dataSaida) {
         int totalDiasTrabalhados = 0;
@@ -63,13 +79,13 @@ public class Dia {
     }
 
     /**
-     * Este método deve receber dois valores do tipo LocalDate,
-     * eles serão referentes há data de entrada e data de saída
-     * do usuário, para que o método funcione corretamente, eles
-     * precisam ser passados na respectiva ordem: entrada - saída.
      * 
-     * O método retornará um valor inteiro, que será referente
-     * ao total de dias no aviso prévio do usuário.
+     * Método responsável por calcular há quantidade de dias que o funcionário
+     * deverá cumprir durante o aviso prévio.
+     * 
+     * @param dataEntrada Referente há data em que o funcionário entrou na empresa.
+     * @param dataSaida Referente há data em que o funcionário deve sair da empresa.
+     * @return Este método retorna um valor do tipo inteiro.
      */
     public int calcDiasAviso(LocalDate dataEntrada, LocalDate dataSaida) {
 
@@ -111,5 +127,4 @@ public class Dia {
         return diasAviso;
     }
 	
-    
 }

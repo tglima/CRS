@@ -4,15 +4,14 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Mes extends Dia {
-	
+
 	/**
-	 * Este método deve receber como parâmetro, dois valores do tipo
-	 * LocalDate. Para que o método funcione corretamente, eles
-     * precisam ser passados na respectiva ordem:
-     * Data de entrada - data de saída.
-     * 
-     * Este método calculará o total de meses trabalhados no último
-     * ano do usuário. O retorno do método será do tipo inteiro.
+	 * Método responsável por calcular o total de meses trabalhados no
+	 * último ano do funcionário.
+	 * 
+	 * @param dataEntrada Referente a data de entrada do funcionário na empresa.
+	 * @param dataSaida Referente a data de saída do funcionário na empresa.
+	 * @return Este método retorna um valor do tipo inteiro.
 	 */
     public int calcMesesTrabUltimoAno(LocalDate dataEntrada, LocalDate dataSaida) {
 
@@ -34,15 +33,11 @@ public class Mes extends Dia {
 
                 totalDiasTrabalhados = totalDiasTrabalhados + 1;
 
-                /*if (mesFim == 12) {
-					mesFim = 10;
-				}*/
                 if (totalDiasTrabalhados > 14) {
                     mesFim = mesFim + 1;
                 }
 
                 totalMeses = mesFim - mesInicio;
-                //System.out.println("Total de meses trabalhado foi: " + totalMeses);
                 return totalMeses;
 
             } else {
@@ -70,14 +65,11 @@ public class Mes extends Dia {
                 }
 
                 totalMeses = mesFim - mesInicio;
-                //System.out.println("Total de meses trabalhado foi: " + totalMeses);
                 return totalMeses;
 
             }
 
         } else {
-            // System.out.println("Os anos são diferentes");
-
             if (diaFim > 14) {
                 mesFim = mesFim + 1;
 
@@ -86,7 +78,6 @@ public class Mes extends Dia {
 
             mesInicio = 1;
             totalMeses = mesFim - mesInicio;
-            //System.out.println("Total de meses trabalhado foi: " + totalMeses);
             return totalMeses;
 
         }
@@ -94,13 +85,13 @@ public class Mes extends Dia {
     }
 	
     /**
-	 * Este método deve receber como parâmetro, dois valores do tipo
-	 * LocalDate. Para que o método funcione corretamente, eles
-     * precisam ser passados na respectiva ordem:
-     * Data de entrada - Data de saída.
+     * Método responsável por calcular a diferença em meses entre duas
+     *  datas fornecidas.
      * 
-     * Este método calculará a diferença entre duas datas fornecidas.
-	 */
+	 * @param dataEntrada Referente a data de entrada do funcionário na empresa.
+	 * @param dataSaida Referente a data de saída do funcionário na empresa.
+     * @return Este método retorna um valor do tipo inteiro.
+     */
     public int calcDiferMeses(LocalDate dataEntrada, LocalDate dataSaida) {
         int diferencaMeses = 0;
 
@@ -112,13 +103,8 @@ public class Mes extends Dia {
     }
 
     /**
-     * Este método deve receber como parâmetro, dois valores do tipo
-	 * LocalDate. Para que o método funcione corretamente, eles
-     * precisam ser passados na respectiva ordem:
-     * Data de entrada - Data de saída.
-     * 
-     * Este método calculará quantos meses aquisitivos de férias o usuário
-     * acumulou durante o periódo que ele trabalhou na empresa.
+     * Método responsável por calcular há quantidade de meses aquisitivos de
+     * férias do funcionário durante o périodo em que ele trabalhou na empresa.
      * 
      * O método foi desenvolvido para que ele não acumule periodos maiores
      * que 12 meses. Isso porque a cada 12 meses acumulado o usuário já 
@@ -130,17 +116,15 @@ public class Mes extends Dia {
      * que, supondo que ele tenha ficado 24 meses e + 2 dias, o sistema
      * irá retornar o valor 0.
      * 
-     * O método retornará um valor do tipo inteiro, que representará o valor
-     * de meses acumulados.
      * 
+	 * @param dataEntrada Referente a data de entrada do funcionário na empresa.
+	 * @param dataSaida Referente a data de saída do funcionário na empresa.
+     * @return Este método retorna um valor do tipo inteiro.
      */
     public int calcMesesAqFerias(LocalDate dataEntrada, LocalDate dataSaida) {
 
         int diaInicio = dataEntrada.getDayOfMonth();
         int mesInicio = dataEntrada.getMonthValue();
-//        int anoInicio = dataEntrada.getYear();
-
-//        int diaFim = dataSaida.getDayOfMonth();
         int mesFim = dataSaida.getMonthValue();
         int anoFim = dataSaida.getYear();
 
