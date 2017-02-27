@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Data {
 		
 
-	public LocalDate convertToDate(String s) {
+	public LocalDate capData(String s) {
 		LocalDate date = null;
 		
 		

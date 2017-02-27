@@ -1,6 +1,5 @@
 package br.edu.tglima;
 
-//import br.edu.tglima.model.periodos.Data;
 import br.edu.tglima.view.FramePrincipal;
 import br.edu.tglima.controller.*;
 

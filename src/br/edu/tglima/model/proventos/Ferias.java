@@ -3,29 +3,17 @@ package br.edu.tglima.model.proventos;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Ferias extends Provento {
-	
-//	Atributo
-	private BigDecimal tercoFerias;
-	
-	
-//	Construtor da Classe
-	public Ferias(){
-		this.tercoFerias = new BigDecimal("-1");
-	}
-
-
-//	Método Getter e Setter.
-	public BigDecimal getTercoFerias() {
-		return tercoFerias;
-	}
-
-
-	public void setTercoFerias(BigDecimal tercoFerias) {
-		this.tercoFerias = tercoFerias;
-	}
-	
-//	Métodos personalizados
+public class Ferias {
+		
+	/**
+	 * Método responsável por calcular o valor correspondente ao período
+	 * aquisitivo de férias.
+	 * 
+	 * @param salario Referente ao salário base do Funcionário
+	 * @param totMesesAqs Referente há quantidade de meses que o
+	 * funcionário acumulou durante o período em que esteve na empresa.
+	 * @return Este método retorna um valor do tipo BigDecimal.
+	 */
 	public BigDecimal calcValorFerias(BigDecimal salario, int totMesesAqs){
 		BigDecimal valorFerias = new BigDecimal("-1");
 		
@@ -35,11 +23,21 @@ public class Ferias extends Provento {
 		return valorFerias;
 	}
 	
+	
+	/**
+	 * Método responsável por calcular a fração correspondente há
+	 * 1/3 das Férias.
+	 * 
+	 * @param valorFerias Referente ao valor que será pago pelas
+	 *  férias.
+	 * @return Este método retorna um valor do tipo BigDecimal.
+	 */
 	public BigDecimal calcTercoFerias(BigDecimal valorFerias){
-		this.tercoFerias = valorFerias.divide
+		BigDecimal tercoFerias = new BigDecimal("-1");
+		tercoFerias = valorFerias.divide
 				(new BigDecimal("3"), 2, RoundingMode.HALF_UP);
 		
-		return this.tercoFerias;
+		return tercoFerias;
 		
 	}
 	

@@ -3,39 +3,36 @@ package br.edu.tglima.model.proventos;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Fgts extends Provento implements ICaptura {
+public class Fgts implements ICaptura {
 
-	
-//	Atributos	
-	private BigDecimal multa = new BigDecimal("-1");
-	
-
-//	Métodos Getters e Setters
-	public BigDecimal getMulta() {
-		return multa;
-	}
-
-
-	public void setMulta(BigDecimal multa) {
-		this.multa = multa;
-	}
-
-	
-//	Métodos personalizados.	
-
+	/**
+	 * Método responsável por fazer o tratamento e conversão
+	 * do valor obtido da view.
+	 *  @param s Referente ao valor digitado pelo usuário na view.
+	 *  @return Este método retorna um valor do tipo BigDecimal.
+	 */
 	@Override
 	public BigDecimal capturarValor(String s) {
 		BigDecimal valorCapturado = new BigDecimal("-1");
-		s = s.replace(" ", "").replace(".", "").replace(",", ".").replace("R$", "");
 		try {
+		s = s.replace(" ", "").replace(".", "").replace(",", ".").replace("R$", "");
 			valorCapturado = new BigDecimal(s);
 		} catch (Exception e) {
-//			Tratamento de erros
+			
 		}
 		return valorCapturado;
 	}
 	
-	
+	/**
+	 * Método responsável por calcular o saldo correspondente ao FGTS
+	 * que o funcionário acumulou durante o período em que
+	 * o funcionário trabalhou na empresa. 
+	 * 
+	 * @param salario Referente ao sálario base informado.
+	 * @param totDiasTrab Referente ao total de dias que o funcionário
+	 * trabalhou.
+	 * @return Este método retorna um valor do tipo BigDecimal.
+	 */
 	public BigDecimal calcSaldoFgts(BigDecimal salario, int totDiasTrab) {
 		BigDecimal saldoFgts = new BigDecimal("-1");
 		
@@ -45,13 +42,18 @@ public class Fgts extends Provento implements ICaptura {
 		return saldoFgts;
 	}
 	
-	
-	
-	public BigDecimal calcMulta(BigDecimal valorFgts) {		
-		this.multa = valorFgts.multiply(new BigDecimal("0.40"));
-		return this.multa;
+	/**
+	 * Método responsável por cálcular o valor da multa de 40%
+	 * sobre o valor do FGTS obtido durante o período em que
+	 * o funcionário trabalhou na empresa.
+	 * 
+	 * @param valorFgts Referente ao valor do FGTS do funcionário.
+	 * @return Este método retorna um valor do tipo BigDecimal.
+	 */
+	public BigDecimal calcMulta(BigDecimal valorFgts) {
+		BigDecimal multa = new BigDecimal("-1");
+		multa = valorFgts.multiply(new BigDecimal("0.40"));
+		return multa;
 	}
 	
-	
-
 }

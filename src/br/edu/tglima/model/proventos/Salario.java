@@ -3,31 +3,16 @@ package br.edu.tglima.model.proventos;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Salario extends Provento implements ICaptura {
+public class Salario implements ICaptura {
 	
-//	Atributos
-	private BigDecimal salPropocional = new BigDecimal("-1");
-	private BigDecimal decimo = new BigDecimal("-1");
-	
-	
-//	Métodos Getter e Setter
-	public BigDecimal getSalPropocional() {
-		return salPropocional;
-	}
-
-	public void setSalPropocional(BigDecimal salPropocional) {
-		this.salPropocional = salPropocional;
-	}
-
-	public BigDecimal getDecimo() {
-		return decimo;
-	}
-
-	public void setDecimo(BigDecimal decimo) {
-		this.decimo = decimo;
-	}
-	
-	//	Método personalizado
+	/**
+	 * Método responsável por fazer o tratamento e conversão
+	 * do valor obtido da view.
+	 * 
+	 *  @param s Referente ao valor digitado pelo usuário na view.
+	 *  @return Este método retorna um valor do tipo BigDecimal.
+	 *  
+	 */
 	@Override
 	public BigDecimal capturarValor(String s) {
 		BigDecimal valorCapturado = new BigDecimal("-1"); 
@@ -40,21 +25,44 @@ public class Salario extends Provento implements ICaptura {
         return valorCapturado; 
 	}
 	
-	public BigDecimal calcSalPropor(int qtdDias) {
+	/**
+	 * Este método realiza o cálculo referente ao último sálario que
+	 * que o funcionário vai receber de acordo com a quantida de dias
+	 * que ele trabalhou no último mês.
+	 * 
+	 * @param qtdDias Referente há quantidade de dias trabalhados no
+	 * último mês.
+	 * @param salario Referente ao valor do salário base.
+	 * @return 
+	 */
+	public BigDecimal calcUltSal(int qtdDias, BigDecimal salario) {
+		BigDecimal salarioFinal = new BigDecimal("-1");
+		
+		
 		if (qtdDias >= 30) {
-			this.salPropocional = getValor();
+			salarioFinal = salario;
 		} else {
-			this.salPropocional = new BigDecimal(qtdDias).multiply
-									((getValor().divide(new BigDecimal("30"),
-											2, RoundingMode.HALF_UP)));
+			salarioFinal = new BigDecimal(qtdDias).multiply
+			((salario.divide(new BigDecimal("30"),
+					2, RoundingMode.HALF_UP)));
 		}
-		return this.salPropocional;
+		
+		return salarioFinal;
 	}
 	
-	
-	public BigDecimal calcDecimo(int qtdMeses) {
-		this.decimo = (getValor().divide(new BigDecimal("12"), 
+	/**
+	 * Este método realiza o cálculo referente ao valor do décimo
+	 * terceiro salário.
+	 * 
+	 * @param qtdMeses Referente há quantidade de meses trabalhados
+	 * no último ano do funcionário.
+	 * @param salário Referente ao valo do salário base.
+	 * @return
+	 */
+	public BigDecimal calcDecimo(int qtdMeses, BigDecimal salario) {
+		BigDecimal decimo;
+		decimo = (salario.divide(new BigDecimal("12"), 
 					2, RoundingMode.HALF_UP).multiply(new BigDecimal(qtdMeses)));
-		return this.decimo;
+		return decimo;
 	}
 }
