@@ -5,22 +5,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
 
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 import br.edu.tglima.model.periodos.*;
 import br.edu.tglima.model.proventos.*;
-import br.edu.tglima.view.FramePrincipal;
+import br.edu.tglima.view.frames.FramePrincipal;
 
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.4.1
- * @build 20170227-1840
+ * @version 0.5.0
+ * @build 20170307-1940
  *
  */
 
@@ -88,15 +90,7 @@ public class ControllerPrincipal  {
             }
         });
 		
-		
-		
-		this.view.getjMenu2().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e){
-				jMenu2MousePressed(e);
-			}
-		});
-				
+						
 		this.view.getjButton1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
@@ -128,19 +122,7 @@ public class ControllerPrincipal  {
             }
         });
 		
-		this.view.getjRadioButton1().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                RadioButton1ActionPerformed(e);
-            }
-        });
-		
-        this.view.getjRadioButton2().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-            	RadioButton2ActionPerformed(e);
-            }
-        });
+
 
         this.view.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
@@ -190,7 +172,7 @@ public class ControllerPrincipal  {
 	
     private void jMenuItem1ActionPerformed(ActionEvent e) {                                           
         /*
-        Carrega a tela Termos de Uso
+        Carrega a tela de Limitações
          */
         CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
         cl.show(view.getjPanel1(), "card4");
@@ -199,25 +181,22 @@ public class ControllerPrincipal  {
 
     private void jMenuItem2ActionPerformed(ActionEvent e) {                                           
         /*
-        Carrega a tela Licença
+        Carrega a tela Termos
          */
         CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card5");
+        cl.show(view.getjPanel1(), "card3");
     }                                         
 
     private void jMenuItem3ActionPerformed(ActionEvent e) {                                           
         /*
         Carrega a tela Versão
+        Por enquanto ela está redirecionando de volta para a tela inicial.
+        Ela abrirá um menu popup exibindo as informações referentes
          */
         CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card6");
+        cl.show(view.getjPanel1(), "card2");
     }   
 	
-    private void jMenu2MousePressed(MouseEvent e) {                                    
-        //Carrega a tela de Ajuda
-        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card7");
-    }  
 
     private void voltarInicio(ActionEvent e) {                                         
         //Volta para a tela inicial do programa
@@ -230,21 +209,6 @@ public class ControllerPrincipal  {
     
 /*	Métodos responsáveis pelas escolhas feitas com os radio buttons */    
     
-	private void RadioButton1ActionPerformed(ActionEvent e){
-        if (true) {
-            view.getjLabel5().setEnabled(true);
-            view.getjSpinner1().setEnabled(true);
-        }
-	}
-	
-	private void RadioButton2ActionPerformed(ActionEvent e){
-        if (true) {
-            view.getjLabel5().setEnabled(false);
-            view.getjSpinner1().setEnabled(false);
-        }
-		
-	}
-
     private void RadioButton3ActionPerformed(ActionEvent e) {                                              
 
         if (true) {
@@ -265,10 +229,10 @@ public class ControllerPrincipal  {
 	private void jComboBox1ActionPerformed(ActionEvent e) {
 		if (view.getjComboBox1().getSelectedItem() == "Falecimento"
 				|| view.getjComboBox1().getSelectedItem() == "Fim do Contrato de Trabalho") {
-			view.getjLabel7().setEnabled(false);
+			view.getjLabel6().setEnabled(false);
 			view.getjComboBox2().setEnabled(false);
 		} else {
-			view.getjLabel7().setEnabled(true);
+			view.getjLabel6().setEnabled(true);
 			view.getjComboBox2().setEnabled(true);
 		}
 
@@ -556,6 +520,9 @@ public class ControllerPrincipal  {
     
     private void mostrarResultado(){
     	
+        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
+        cl.show(view.getjPanel1(), "card2");
+    	
     	System.out.println();
     	System.out.println("\t\t********************************** RESCISÃO **********************************"); //Cabeçario
     	System.out.println();
@@ -579,6 +546,120 @@ public class ControllerPrincipal  {
     	System.out.println("Saldo do FGTS:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.saldoFgts);
     	System.out.println("Multa de 40%:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.multaFGTS);
     	System.out.println("Valor total:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.totSomaFGTS);
+    	
+    	
+    	
+    	
+    	@SuppressWarnings("serial")
+    	// Modelo padrão para definição da Jtable1
+    	DefaultTableModel tabela1 = new DefaultTableModel() {
+    		// Método resṕonsável por bloquear a edição das células
+    		@Override
+			public boolean isCellEditable(int linha, int coluna) {
+    			return false;
+    		}
+
+    	};
+
+    	@SuppressWarnings("serial")
+    	DefaultTableModel tabela2 = new DefaultTableModel() {
+    		// Modelo padrão para definição da Jtable2
+    		@Override
+			public boolean isCellEditable(int linha, int coluna) {
+    			return false;
+    		}
+    	};
+        
+        
+        
+    	view.getjTable1().setModel(tabela1);
+        tabela1.addColumn("Item");
+        tabela1.addColumn("Referência");
+        tabela1.addColumn("Valor");
+               
+        view.getjTable1().getColumnModel().getColumn(0).setResizable(false);
+        view.getjTable1().getColumnModel().getColumn(0).setPreferredWidth(250);
+        
+        view.getjTable1().getColumnModel().getColumn(1).setResizable(false);        
+        view.getjTable1().getColumnModel().getColumn(1).setPreferredWidth(100);
+                
+        view.getjTable1().getColumnModel().getColumn(2).setResizable(false);
+        view.getjTable1().getColumnModel().getColumn(2).setPreferredWidth(135);
+        
+        tabela1.addRow(new Object[]{"  Saldo salário", String.valueOf(this.diastrabUltMes), this.salarioFinal.toString() });
+        tabela1.addRow(new Object[]{"  13º Proporcional", String.valueOf(this.mesesDecimo), this.decimoTerceiro.toString() });
+        tabela1.addRow(new Object[]{"  Férias proporcional", String.valueOf(this.mesesAqFerias), this.valorFerias.toString() });
+        tabela1.addRow(new Object[]{"  1/3 Férias proporcional", "-", this.valorTercoFerias.toString() });
+        tabela1.addRow(new Object[]{"  Férias vencidas", String.valueOf(this.qtdFeriasVencidas), this.valorFeriasVencidas.toString() });
+        tabela1.addRow(new Object[]{"  1/3 Férias vencidas", "-", this.valorFeriasVencidas.toString() });
+        tabela1.addRow(new Object[]{"  Aviso prévio", String.valueOf(this.diasAviso), this.valorAviso.toString() });
+        tabela1.addRow(new Object[]{   null, null, null });
+        tabela1.addRow(new Object[]{"  Valor total", "-", this.totVencimentos.toString() });
+    	
+    	
+        view.getjTable2().setModel(tabela2);
+        tabela2.addColumn(null);
+        tabela2.addColumn(null);
+        
+        
+        view.getjTable2().getColumnModel().getColumn(0).setResizable(false);
+        view.getjTable2().getColumnModel().getColumn(0).setPreferredWidth(350);
+        
+        view.getjTable2().getColumnModel().getColumn(1).setResizable(false);
+        view.getjTable2().getColumnModel().getColumn(1).setPreferredWidth(135);
+        
+        tabela2.addRow(new Object[]{"  Valores do FGTS estarão disponíveis para saque?", this.recebereiFgts});
+        tabela2.addRow(new Object[]{"  Saldo FGTS", this.saldoFgts});
+        tabela2.addRow(new Object[]{"  Multa de 40%", this.saldoFgts.toString()});
+        tabela2.addRow(new Object[]{null, null});
+        tabela2.addRow(new Object[]{"  Valor total", this.totSomaFGTS.toString()});
+        
+        /*Bloco de código responsável por centralizar as células */
+        
+        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        view.getjTable1().getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        view.getjTable1().getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        view.getjTable2().getColumnModel().getColumn(1).setCellRenderer(centralizado);
+
+        /*Fim do bloco*/
+        
+        
+        
+    	
+    	/*
+    	 * String.valueOf(this.diastrabUltMes)
+    	 * this.salarioFinal.toString()
+    	 * 
+    	 * 
+    	 * String.valueOf(this.mesesDecimo)
+    	 * this.decimoTerceiro.toString()
+    	 * 
+    	 * 
+    	 * String.valueOf(this.mesesAqFerias)
+    	 * this.valorFerias.toString()
+    	 * this.valorTercoFerias.toString()
+    	 * 
+    	 * 
+    	 * String.valueOf(this.qtdFeriasVencidas)
+    	 * this.valorFeriasVencidas.toString()
+    	 * 
+    	 * 
+    	 * String.valueOf(this.diasAviso)
+    	 * this.valorAviso.toString()
+    	 * 
+    	 * this.totVencimentos.toString()
+    	 * 
+    	 * 
+    	 * view.setReceberFgts(recebereiFgts);
+    	 * view.setSaldoFgts(this.saldoFgts.toString());
+    	 * view.setMultaFgts(this.multaFGTS.toString());
+    	 * view.setTotSomaFgts(this.totSomaFGTS.toString());
+    	 * 
+    	 * 
+    	 */
+    	
     }
 
 }
