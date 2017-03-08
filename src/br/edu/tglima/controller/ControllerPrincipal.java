@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
@@ -21,8 +22,8 @@ import br.edu.tglima.view.frames.FramePrincipal;
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.5.0
- * @build 20170307-1940
+ * @version 0.5.1
+ * @build 20170308-1930
  *
  */
 
@@ -30,6 +31,9 @@ public class ControllerPrincipal  {
 	
 //	Classes
 	private FramePrincipal view;
+	private Locale ptBr = new Locale("pt", "BR");
+    private NumberFormat df = NumberFormat.getCurrencyInstance(ptBr); 
+    private NumberFormat nf = new DecimalFormat("#,##0.00");
 	private Salario slr = new Salario();
 	private Data dt = new Data();
 	private Dia dia = new Dia();
@@ -37,6 +41,7 @@ public class ControllerPrincipal  {
 	private Fgts fgts = new Fgts();
 	private Ferias fr = new Ferias();
 	private AvisoPrevio ap = new AvisoPrevio();
+	
 
 //	--------------------------------------------------------------- //
 	
@@ -48,17 +53,24 @@ public class ControllerPrincipal  {
 	
 	
 // Atributos relativos a valores.
-	private BigDecimal salarioFinal, decimoTerceiro, valorFerias, valorTercoFerias;
-	private BigDecimal valorFeriasVencidas, valorTercoFeriasVencidas;
+	private BigDecimal salarioFinal, valorDecimo, valorFerias, valorTercoFerias;
+	private BigDecimal valorFeriasVenc, valorTercoFeriasVenc;
 	private BigDecimal valorAviso, multaFGTS, totVencimentos, totSomaFGTS;
 	
 //	Atributos relativos a datas e periodos.
-	private int diastrabUltMes, diasAviso, mesesDecimo,	mesesAqFerias, qtdFeriasVencidas;
+	private int qtdDiasTrabUltMes, qtdDiasAviso, mesesDecimo,	mesesAqFerias, qtdFeriasVenc;
 	
 //	Outros atributos
 	private String motivoSaida;
 	private String opAviso;
-	private String recebereiFgts;
+	private String receberFgts;
+	
+	private String strQtdDiasTrabUltMes, strSalarioFinal, strMesesDecimo, strValorDecimo,
+    strMesesAqFerias, strValorFerias, strValorTercoFerias,strQtdFeriasVenc, 
+    strValorFeriasVenc, strValorTercoFeriasVenc, strQtdDiasAviso, 
+    strValorAviso, strTotVencimento, stSaldoFgts, stMultaFgts, stTotSomaFgts;
+	
+	
 	
 //	--------------------------------------------------------------- //	
 	
@@ -245,39 +257,44 @@ public class ControllerPrincipal  {
 	private void jFormattedTextField3FocusLost(FocusEvent e) {
         String value = view.getjFormattedTextField3().getText();
         value = value.replace(" ", "").replace(".", "").replace(",", ".");
-        Locale ptBr = new Locale("pt", "BR");
         
         try {
-        	
-            NumberFormat nf = NumberFormat.getCurrencyInstance(ptBr);
             BigDecimal valor = new BigDecimal(value);
-            String valorFormatado = nf.format(valor);
+            String valorFormatado = df.format(valor);
             view.getjFormattedTextField3().setText(valorFormatado);
 			
-		} catch (Exception e2) {
+			}	catch (Exception e2) {
 //			
-		}
-        
-        
-        
-
+				}
 	}
 	
     private void jFormattedTextField4FocusLost(FocusEvent e) {                                               
-        String value = view.getjFormattedTextField4().getText();
-        value = value.replace(" ", "").replace(".", "").replace(",", ".");
-        Locale ptBr = new Locale("pt", "BR");
+        String valorObtido = view.getjFormattedTextField4().getText();
+        valorObtido = valorObtido.replace(" ", "").replace(".", "").replace(",", ".");
+        
         try {
-            NumberFormat nf = NumberFormat.getCurrencyInstance(ptBr);
-            BigDecimal valor = new BigDecimal(value);
-            String valorFormatado = nf.format(valor);
-            System.out.println(valorFormatado);
+            BigDecimal valor = new BigDecimal(valorObtido);
+            String valorFormatado = df.format(valor);
             view.getjFormattedTextField4().setText(valorFormatado);
-		} catch (Exception e2) {
+			}	catch (Exception e2) {
+//			
+				}
+
+    }
+    
+    private String formatarValores(BigDecimal valor){
+    	String valorFormatado = null;
+    	
+    	try {		
+            valorFormatado = df.format(valor);
+            System.out.println(valorFormatado);
+			
+		} catch (Exception e) {
 //			
 		}
-
-    } 
+    	
+    	return valorFormatado;
+    }
 
 //	--------------------------------------------------------------- //    
     
@@ -343,12 +360,12 @@ public class ControllerPrincipal  {
 			this.motivoSaida = (String) this.view.getjComboBox1().getSelectedItem();
 			
 /*			 Bloco referente ao último sálario.*/
-			this.diastrabUltMes = dia.calcDiasTrabUltimoMes(dataSaida);
-	    	this.salarioFinal =	this.slr.calcUltSal(this.diastrabUltMes, this.salarioInformado);
+			this.qtdDiasTrabUltMes = dia.calcDiasTrabUltimoMes(dataSaida);
+	    	this.salarioFinal =	this.slr.calcUltSal(this.qtdDiasTrabUltMes, this.salarioInformado);
 	    	
 /*	    	Bloco referente ao Décimo terceiro salário*/
 	    	this.mesesDecimo = mes.calcMesesTrabUltimoAno(dataEntrada, dataSaida);
-	    	this.decimoTerceiro = this.slr.calcDecimo(this.mesesDecimo, this.salarioInformado);
+	    	this.valorDecimo = this.slr.calcDecimo(this.mesesDecimo, this.salarioInformado);
 	    	
 /*	    	Bloco referente as Férias								*/
 	    	this.mesesAqFerias = mes.calcMesesAqFerias(dataEntrada, dataSaida);
@@ -356,17 +373,17 @@ public class ControllerPrincipal  {
 			this.valorTercoFerias = fr.calcTercoFerias(valorFerias);
 						
 			if (view.getjRadioButton1().isSelected()) {
-				this.valorFeriasVencidas = salarioInformado;
-				this.valorTercoFeriasVencidas = fr.calcTercoFerias(valorFeriasVencidas);
-				this.qtdFeriasVencidas = 1;
+				this.valorFeriasVenc = salarioInformado;
+				this.valorTercoFeriasVenc = fr.calcTercoFerias(valorFeriasVenc);
+				this.qtdFeriasVenc = 1;
 			} else {
-				this.valorFeriasVencidas = new BigDecimal("0");
-				this.valorTercoFeriasVencidas = new BigDecimal("0");
-				this.qtdFeriasVencidas = 0;
+				this.valorFeriasVenc = new BigDecimal("0");
+				this.valorTercoFeriasVenc = new BigDecimal("0");
+				this.qtdFeriasVenc = 0;
 			}
 			
 /*			Bloco referente aos cálculos do aviso prévio.									*/
-			this.diasAviso = dia.calcDiasAviso(dataEntrada, dataSaida);
+			this.qtdDiasAviso = dia.calcDiasAviso(dataEntrada, dataSaida);
 			this.opAviso = (String) view.getjComboBox2().getSelectedItem();
 			
 			switch (opAviso) {
@@ -375,16 +392,16 @@ public class ControllerPrincipal  {
 				break;
 				
 			case "Indenizado pela empresa":
-				this.valorAviso = ap.calcAvisoPrevio(salarioInformado, diasAviso);
+				this.valorAviso = ap.calcAvisoPrevio(salarioInformado, qtdDiasAviso);
 				break;
 
 			case "Descontado do funcionário":
-				this.valorAviso = new BigDecimal("-1").multiply(ap.calcAvisoPrevio(salarioInformado, diasAviso));
+				this.valorAviso = new BigDecimal("-1").multiply(ap.calcAvisoPrevio(salarioInformado, qtdDiasAviso));
 				break;
 				
 			default:
 				this.valorAviso = new BigDecimal("0");
-				this.diasAviso = 0;
+				this.qtdDiasAviso = 0;
 				break;
 			}
 			
@@ -415,8 +432,8 @@ public class ControllerPrincipal  {
 			}
     		
 /*			Soma de todos os vencimentos referentes há rescisão.										*/			
-	    	this.totVencimentos = salarioFinal.add(decimoTerceiro).add(valorFerias).add(valorTercoFerias)
-	    			.add(valorFeriasVencidas).add(valorTercoFeriasVencidas).add(valorAviso);
+	    	this.totVencimentos = salarioFinal.add(valorDecimo).add(valorFerias).add(valorTercoFerias)
+	    			.add(valorFeriasVenc).add(valorTercoFeriasVenc).add(valorAviso);
 	    	
 /*			Soma do saldo FGTS + o valor referente  há multa*/
 	    	
@@ -477,35 +494,35 @@ public class ControllerPrincipal  {
     	  
     private void opDemissao(){
     	
-    	this.diasAviso = 30;
-    	this.recebereiFgts = "Não";
+    	this.qtdDiasAviso = 30;
+    	this.receberFgts = "Não";
     	this.multaFGTS = new BigDecimal("0");
     	
     	
     }
     
     private void opFimContrato(){
-    	this.diasAviso = 0;
-    	this.recebereiFgts ="Sim";
+    	this.qtdDiasAviso = 0;
+    	this.receberFgts ="Sim";
     	this.multaFGTS = new BigDecimal("0");
     	
     }
 
     private void opSemJustaCau(){
     	
-    	this.recebereiFgts = "Sim";
+    	this.receberFgts = "Sim";
     	this.multaFGTS = fgts.calcMulta(saldoFgts);
     	
     }
 
     private void opPorJustaCau(){
     	
-    	this.recebereiFgts = "Não";
+    	this.receberFgts = "Não";
     	
     	int totDiasTrab = dia.calcTotDiasTrab(dataEntrada, dataSaida);
     	    	
     	if (totDiasTrab < 365) {
-        	this.decimoTerceiro = new BigDecimal("0");
+        	this.valorDecimo = new BigDecimal("0");
         	this.valorFerias = new BigDecimal("0");
         	this.valorTercoFerias = new BigDecimal("0");
 		} 
@@ -520,36 +537,13 @@ public class ControllerPrincipal  {
     
     private void mostrarResultado(){
     	
+    	/*Bloco responsável por direcionar o usuário para a tela de resultados.*/
         CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
         cl.show(view.getjPanel1(), "card2");
-    	
-    	System.out.println();
-    	System.out.println("\t\t********************************** RESCISÃO **********************************"); //Cabeçario
-    	System.out.println();
-    	
-    	System.out.println("Item \t\t\t\t\t\t\tReferência\t\t\t\t\t Valor");
-    	System.out.println();
-    	System.out.println("Saldo salário:\t\t\t\t\t\t " + this.diastrabUltMes + "/30\t\t\t\t\t\t R$ " + this.salarioFinal);
-    	System.out.println("13º Proporcional:\t\t\t\t\t " + this.mesesDecimo + "/12\t\t\t\t\t\t R$ " + this.decimoTerceiro);
-    	System.out.println("Férias Proporcional:\t\t\t\t\t " + this.mesesAqFerias + "/12\t\t\t\t\t\t R$ " + this.valorFerias);
-    	System.out.println("1/3 Férias Proporcional:\t\t\t\t  " + " - " + "\t\t\t\t\t\t R$ " + this.valorTercoFerias);
-    	System.out.println("Férias vencidas:\t\t\t\t\t   " + this.qtdFeriasVencidas + "\t\t\t\t\t\t R$ " + this.valorFeriasVencidas);
-    	System.out.println("1/3 Férias vencidas:\t\t\t\t\t  " + " - " + "\t\t\t\t\t\t R$ " + this.valorTercoFeriasVencidas);
-    	System.out.println("Aviso prévio:\t\t\t\t\t\t   " + this.diasAviso + "\t\t\t\t\t\t R$ " + this.valorAviso);
-    	System.out.println("Valor total:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.totVencimentos);
-    			
-    	System.out.println("\n");
-    	System.out.println("\t\t:::::::::::::::::::::::::::::::::::: FGTS ::::::::::::::::::::::::::::::::::::"); //Cabeçario
-    	System.out.println();
-    	
-    	System.out.println("Valores referentes ao FGTS estarão disponíveis para saque?\t\t\t\t\t\t " + this.recebereiFgts);
-    	System.out.println("Saldo do FGTS:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.saldoFgts);
-    	System.out.println("Multa de 40%:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.multaFGTS);
-    	System.out.println("Valor total:\t\t\t\t\t\t\t\t\t\t\t\t R$ " + this.totSomaFGTS);
-    	
-    	
-    	
-    	
+        /*Fim do bloco*/
+ 
+        
+        /*Bloco responsável por definições de Modelo das tabelas */
     	@SuppressWarnings("serial")
     	// Modelo padrão para definição da Jtable1
     	DefaultTableModel tabela1 = new DefaultTableModel() {
@@ -569,9 +563,10 @@ public class ControllerPrincipal  {
     			return false;
     		}
     	};
+        /*Fim do bloco*/
+    	
         
-        
-        
+        /*Bloco com definições e valores específicos da tabela de rescisão*/
     	view.getjTable1().setModel(tabela1);
         tabela1.addColumn("Item");
         tabela1.addColumn("Referência");
@@ -585,80 +580,92 @@ public class ControllerPrincipal  {
                 
         view.getjTable1().getColumnModel().getColumn(2).setResizable(false);
         view.getjTable1().getColumnModel().getColumn(2).setPreferredWidth(135);
+        /*Fim do bloco*/
         
-        tabela1.addRow(new Object[]{"  Saldo salário", String.valueOf(this.diastrabUltMes), this.salarioFinal.toString() });
-        tabela1.addRow(new Object[]{"  13º Proporcional", String.valueOf(this.mesesDecimo), this.decimoTerceiro.toString() });
-        tabela1.addRow(new Object[]{"  Férias proporcional", String.valueOf(this.mesesAqFerias), this.valorFerias.toString() });
-        tabela1.addRow(new Object[]{"  1/3 Férias proporcional", "-", this.valorTercoFerias.toString() });
-        tabela1.addRow(new Object[]{"  Férias vencidas", String.valueOf(this.qtdFeriasVencidas), this.valorFeriasVencidas.toString() });
-        tabela1.addRow(new Object[]{"  1/3 Férias vencidas", "-", this.valorFeriasVencidas.toString() });
-        tabela1.addRow(new Object[]{"  Aviso prévio", String.valueOf(this.diasAviso), this.valorAviso.toString() });
+        
+        /*Bloco referente as informações exibidas na tabela rescisão*/
+        
+//		Convertemos e formatamos todos os valores e informações para o formato String.        
+        
+        this.strQtdDiasTrabUltMes = String.valueOf(this.qtdDiasTrabUltMes) + " dias.";
+        this.strSalarioFinal = formatarValores(this.salarioFinal);
+        
+        this.strMesesDecimo = String.valueOf(this.mesesDecimo) + "/12";
+        this.strValorDecimo = formatarValores(this.valorDecimo);
+        
+        this.strMesesAqFerias = String.valueOf(this.mesesAqFerias) + "/12";
+        
+        this.strValorFerias =   formatarValores(this.valorFerias);
+        strValorTercoFerias = formatarValores(this.valorTercoFerias);
+        
+        this.strQtdFeriasVenc =  String.valueOf(this.qtdFeriasVenc);
+        this.strValorFeriasVenc = formatarValores(this.valorFeriasVenc);
+        this.strValorTercoFeriasVenc = formatarValores(this.valorTercoFeriasVenc);
+        
+        this.strQtdDiasAviso = String.valueOf(this.qtdDiasAviso) + " dias.";       
+        this.strValorAviso = "R$ " + nf.format(this.valorAviso);
+        
+        this.strTotVencimento = "R$ " + nf.format(this.totVencimentos);
+        
+        
+        
+//      Agora repassamos essas informações para a tabela correspondente.
+        tabela1.addRow(new Object[]{"  Saldo salário", this.strQtdDiasTrabUltMes, this.strSalarioFinal });
+        tabela1.addRow(new Object[]{"  13º Proporcional", this.strMesesDecimo, this.strValorDecimo });
+        tabela1.addRow(new Object[]{"  Férias proporcional", this.strMesesAqFerias, this.strValorFerias });
+        tabela1.addRow(new Object[]{"  1/3 Férias proporcional", "-", this.strValorTercoFerias });
+        tabela1.addRow(new Object[]{"  Férias vencidas", this.strQtdFeriasVenc, this.strValorFeriasVenc });
+        tabela1.addRow(new Object[]{"  1/3 Férias vencidas", "-", this.strValorTercoFeriasVenc });
+        tabela1.addRow(new Object[]{"  Aviso prévio", this.strQtdDiasAviso, this.strValorAviso });
         tabela1.addRow(new Object[]{   null, null, null });
-        tabela1.addRow(new Object[]{"  Valor total", "-", this.totVencimentos.toString() });
-    	
-    	
+        tabela1.addRow(new Object[]{"  Valor total", "-", this.strTotVencimento });
+    	/*Fim do bloco*/
+        
+        
+        /*Bloco com definições e valores específicos da tabela do FGTS*/
         view.getjTable2().setModel(tabela2);
         tabela2.addColumn(null);
         tabela2.addColumn(null);
-        
         
         view.getjTable2().getColumnModel().getColumn(0).setResizable(false);
         view.getjTable2().getColumnModel().getColumn(0).setPreferredWidth(350);
         
         view.getjTable2().getColumnModel().getColumn(1).setResizable(false);
         view.getjTable2().getColumnModel().getColumn(1).setPreferredWidth(135);
+        /*Fim do bloco */
         
-        tabela2.addRow(new Object[]{"  Valores do FGTS estarão disponíveis para saque?", this.recebereiFgts});
-        tabela2.addRow(new Object[]{"  Saldo FGTS", this.saldoFgts});
-        tabela2.addRow(new Object[]{"  Multa de 40%", this.saldoFgts.toString()});
+//		Convertemos e formatamos todos os valores e informações para o formato String.
+        this.stSaldoFgts = formatarValores(this.saldoFgts);
+        this.stMultaFgts = formatarValores(this.multaFGTS);
+        this.stTotSomaFgts = formatarValores(this.totSomaFGTS);
+        
+//      Agora repassamos essas informações para a tabela correspondente.
+        tabela2.addRow(new Object[]{"  Valores do FGTS estarão disponíveis para saque?", this.receberFgts});
+        tabela2.addRow(new Object[]{"  Saldo FGTS", this.stSaldoFgts});
+        tabela2.addRow(new Object[]{"  Multa de 40%", this.stMultaFgts});
         tabela2.addRow(new Object[]{null, null});
-        tabela2.addRow(new Object[]{"  Valor total", this.totSomaFGTS.toString()});
+        tabela2.addRow(new Object[]{"  Valor total", this.stTotSomaFgts});
+        /*Fim do bloco*/
+        
+        
+        
+        
         
         /*Bloco de código responsável por centralizar as células */
-        
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         
         view.getjTable1().getColumnModel().getColumn(1).setCellRenderer(centralizado);
         view.getjTable1().getColumnModel().getColumn(2).setCellRenderer(centralizado);
         view.getjTable2().getColumnModel().getColumn(1).setCellRenderer(centralizado);
-
         /*Fim do bloco*/
         
         
         
-    	
-    	/*
-    	 * String.valueOf(this.diastrabUltMes)
-    	 * this.salarioFinal.toString()
-    	 * 
-    	 * 
-    	 * String.valueOf(this.mesesDecimo)
-    	 * this.decimoTerceiro.toString()
-    	 * 
-    	 * 
-    	 * String.valueOf(this.mesesAqFerias)
-    	 * this.valorFerias.toString()
-    	 * this.valorTercoFerias.toString()
-    	 * 
-    	 * 
-    	 * String.valueOf(this.qtdFeriasVencidas)
-    	 * this.valorFeriasVencidas.toString()
-    	 * 
-    	 * 
-    	 * String.valueOf(this.diasAviso)
-    	 * this.valorAviso.toString()
-    	 * 
-    	 * this.totVencimentos.toString()
-    	 * 
-    	 * 
-    	 * view.setReceberFgts(recebereiFgts);
-    	 * view.setSaldoFgts(this.saldoFgts.toString());
-    	 * view.setMultaFgts(this.multaFGTS.toString());
-    	 * view.setTotSomaFgts(this.totSomaFGTS.toString());
-    	 * 
-    	 * 
-    	 */
+
+        
+        
+        
     	
     }
 

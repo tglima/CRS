@@ -28,7 +28,8 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
 @SuppressWarnings("serial")
-// Jframe Create in 2017-03-07 Version 0.5
+// Last edition. 2017-03-08
+
 public class FramePrincipal extends JFrame {
 
 	public FramePrincipal() {
@@ -121,18 +122,6 @@ public class FramePrincipal extends JFrame {
 		return jFormattedTextField4;
 	}
 
-	public JLabel getjLabel1() {
-		return jLabel1;
-	}
-
-	public JLabel getjLabel2() {
-		return jLabel2;
-	}
-
-	public JLabel getjLabel3() {
-		return jLabel3;
-	}
-
 	public JLabel getjLabel4() {
 		return jLabel4;
 	}
@@ -145,29 +134,10 @@ public class FramePrincipal extends JFrame {
 		return jLabel6;
 	}
 
-	public JLabel getjLabel7() {
-		return jLabel7;
-	}
-
-	public JLabel getjLabel8() {
-		return jLabel8;
-	}
-
 	public JLabel getjLabel9() {
 		return jLabel9;
 	}
 
-	public JLabel getjLabel10() {
-		return jLabel10;
-	}
-
-	public JLabel getjLabel11() {
-		return jLabel11;
-	}
-
-	public JLabel getjLabel12() {
-		return jLabel12;
-	}
 
 	public JMenu getjMenu1() {
 		return jMenu1;
@@ -691,54 +661,60 @@ public class FramePrincipal extends JFrame {
 	
 //	Start of variables declaration 
 
+	private JPanel jPanel1, card01Principal, card02Resultado;
+	private JPanel Card03Termos, Card04Limitacoes;
 
-	private ButtonGroup ButtonGroupFGTS;
-	private ButtonGroup ButtonGroupFerias;
-	private JPanel card01Principal;
-	private JPanel card02Resultado;
-	private JPanel Card03Termos;
-	private JPanel Card04Limitacoes;
-	private JButton jButton1;
-	private JButton jButton2;
-	private JButton jButton3;
-	private JButton jButton4;
-	private JButton jButton5;
-	private JComboBox<String> jComboBox1;
-	private JComboBox<String> jComboBox2;
-	private JFormattedTextField jFormattedTextField1;
-	private JFormattedTextField jFormattedTextField2;
-	private JFormattedTextField jFormattedTextField3;
-	private JFormattedTextField jFormattedTextField4;
-	private JLabel jLabel1;
-	private JLabel jLabel2;
-	private JLabel jLabel3;
-	private JLabel jLabel4;
-	private JLabel jLabel5;
-	private JLabel jLabel6;
-	private JLabel jLabel7;
-	private JLabel jLabel8;
-	private JLabel jLabel9;
-	private JLabel jLabel10;
-	private JLabel jLabel11;
-	private JLabel jLabel12;
+	private ButtonGroup ButtonGroupFGTS, ButtonGroupFerias;
+	
+	private JButton jButton1, jButton2, jButton3, jButton4, jButton5;                                       
+	private JComboBox<String> jComboBox1, jComboBox2;
+	
+	private JFormattedTextField jFormattedTextField1, jFormattedTextField2;
+	private JFormattedTextField jFormattedTextField3, jFormattedTextField4;
+	
+	private JLabel jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6;
+	private JLabel jLabel7, jLabel8, jLabel9, jLabel10, jLabel11, jLabel12;
+	
 	private JMenu jMenu1;
 	private JMenuBar jMenuBar1;
-	private JMenuItem jMenuItem1;
-	private JMenuItem jMenuItem2;
-	private JMenuItem jMenuItem3;
-	private JPanel jPanel1;
-	private JRadioButton jRadioButton1;
-	private JRadioButton jRadioButton2;
-	private JRadioButton jRadioButton3;
-	private JRadioButton jRadioButton4;
-	private JScrollPane jScrollPane1;
-	private JScrollPane jScrollPane2;
-	private JScrollPane jScrollPane3;
-	private JScrollPane jScrollPane4;
 	private JPopupMenu.Separator jSeparator1;
-	private JTable jTable1;
-	private JTable jTable2;
-	private JTextPane jTextPane1;
-	private JTextPane jTextPane2;
+	private JMenuItem jMenuItem1, jMenuItem2, jMenuItem3;
+	
+	private JRadioButton jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4;
+	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3, jScrollPane4;
+
+	private JTable jTable1, jTable2;
+	private JTextPane jTextPane1, jTextPane2;
+
+	
 	// End of variables declaration
+	
+//	private JPanel card01Principal;
+//	private JPanel card02Resultado;
+//	private JPanel Card04Limitacoes;
+//	private ButtonGroup ButtonGroupFerias;
+//	private JComboBox<String> jComboBox2;
+//	private JFormattedTextField jFormattedTextField2;
+//	private JFormattedTextField jFormattedTextField4;
+//	private JLabel jLabel2;
+//	private JLabel jLabel3;
+//	private JLabel jLabel4;
+//	private JLabel jLabel5;
+//	private JLabel jLabel6;
+//	private JLabel jLabel8;
+//	private JLabel jLabel9;
+//	private JLabel jLabel10;
+//	private JLabel jLabel11;
+//	private JLabel jLabel12;
+//	private JMenuItem jMenuItem2;
+//	private JMenuItem jMenuItem3;	
+//	private JRadioButton jRadioButton2;
+//	private JRadioButton jRadioButton3;
+//	private JRadioButton jRadioButton4;
+//	private JScrollPane jScrollPane2;
+//	private JScrollPane jScrollPane3;
+//	private JScrollPane jScrollPane4;
+//	private JTable jTable2;
+//	private JTextPane jTextPane2;	
+	
 }
