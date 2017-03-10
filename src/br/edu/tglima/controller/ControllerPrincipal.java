@@ -10,11 +10,12 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
-
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 import br.edu.tglima.model.periodos.*;
 import br.edu.tglima.model.proventos.*;
 import br.edu.tglima.view.frames.FramePrincipal;
@@ -22,8 +23,8 @@ import br.edu.tglima.view.frames.FramePrincipal;
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.5.1
- * @build 20170308-1930
+ * @version 0.5.2
+ * @build 20170310-2000
  *
  */
 
@@ -61,6 +62,7 @@ public class ControllerPrincipal  {
 	private int qtdDiasTrabUltMes, qtdDiasAviso, mesesDecimo,	mesesAqFerias, qtdFeriasVenc;
 	
 //	Outros atributos
+	private String msgErro;
 	private String motivoSaida;
 	private String opAviso;
 	private String receberFgts;
@@ -157,6 +159,20 @@ public class ControllerPrincipal  {
 			}
 		});
         
+        this.view.getjFormattedTextField2().addFocusListener(new FocusAdapter() {
+        	
+			@Override
+			public void focusLost(FocusEvent e) {
+				jFormattedTextField2FocusLost(e);
+				
+			}
+		});
+
+
+        
+//    	--------------------------------------------------------------- //        
+        
+        
         this.view.getjFormattedTextField3().addFocusListener(new FocusAdapter() {
             @Override
 			public void focusLost(FocusEvent e) {
@@ -205,8 +221,10 @@ public class ControllerPrincipal  {
         Por enquanto ela está redirecionando de volta para a tela inicial.
         Ela abrirá um menu popup exibindo as informações referentes
          */
-        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card2");
+/*        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
+        cl.show(view.getjPanel1(), "card2");*/
+
+    mostrarSobre();
     }   
 	
 
@@ -251,6 +269,36 @@ public class ControllerPrincipal  {
 	}
 
 //	--------------------------------------------------------------- //    
+
+/*	Método responsável por controlar os campos de férias vencidas */
+	
+	private void jFormattedTextField2FocusLost(FocusEvent e){
+		obterDatas();
+		
+		
+		try {
+
+			int difEntreDatas = dia.calcDiferDias(this.dataEntrada, this.dataSaida);
+			if (difEntreDatas > 365) {
+
+				view.getjLabel4().setEnabled(true);
+				view.getjRadioButton1().setEnabled(true);
+				view.getjRadioButton2().setEnabled(true);
+
+			} else {
+
+				view.getjLabel4().setEnabled(false);
+				view.getjRadioButton1().setEnabled(false);
+				view.getjRadioButton2().setEnabled(false);
+				view.getjRadioButton2().setSelected(true);
+
+			}
+
+		} catch (Exception e2) {/* Nada aqui*/}
+
+	}
+	
+//	--------------------------------------------------------------- //    	
 	
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
@@ -287,11 +335,8 @@ public class ControllerPrincipal  {
     	
     	try {		
             valorFormatado = df.format(valor);
-            System.out.println(valorFormatado);
 			
-		} catch (Exception e) {
-//			
-		}
+		} catch (Exception e) {/*Nada aqui*/}
     	
     	return valorFormatado;
     }
@@ -309,8 +354,11 @@ public class ControllerPrincipal  {
     	 * com as datas e o salário.
     	 */
     	
-    	this.dataEntrada = dt.capData((view.getjFormattedTextField1().getText()));
-    	this.dataSaida = dt.capData(view.getjFormattedTextField2().getText());
+    	obterDatas();
+    	
+    	
+//    	this.dataEntrada = dt.capData((view.getjFormattedTextField1().getText()));
+//    	this.dataSaida = dt.capData(view.getjFormattedTextField2().getText());
     	this.salarioInformado = slr.capturarValor(view.getjFormattedTextField3().getText());
     	
     	/*
@@ -330,25 +378,36 @@ public class ControllerPrincipal  {
     	
     	if (validarData(dataEntrada) == false) {
 			System.out.println("A data de entrada é inválida!");
+			this.msgErro = "Data de admissão inválida!\n"
+							+ "Apenas são aceitas datas apartir de 01/05/1943";
+			exibirErro();
 		}
     	
     	else if (validarData(dataSaida) == false){
-    		System.out.println("A data de saída é inválida!");
+    		System.out.println("Data de saída inválida");
+			this.msgErro = "Data de saída inválida!";
+			exibirErro();
     	} 
     	
     	else if (verificarDiferDatas(dataEntrada, dataSaida) == false) {
-    		System.out.println(dataSaida);
 			System.out.println("A data de saída é inferior a data de entrada!");
+			this.msgErro = "A data de saída é inferior a data de entrada!";
+			exibirErro();
 			
 		}
     	
     	else if (validarSalario(this.salarioInformado) == false){
     		System.out.println("O valor informado como salário é inválido!");
+			this.msgErro = "O valor informado como salário é inválido!\n"
+							+ "São aceitos apenas valores apartir de R$ 1,00.";
+			exibirErro();
     		
     	} 
     	
     	else if (validarFgts(this.saldoFgts) == false) {
 			System.out.println("O saldo informado como fgts é inválido!");
+			this.msgErro = "O saldo informado como fgts é inválido!";
+			exibirErro();
 			
 		} else {
 			
@@ -445,6 +504,12 @@ public class ControllerPrincipal  {
     } 
     
 //	--------------------------------------------------------------- //  
+    
+    private void obterDatas(){
+    	this.dataEntrada = dt.capData((view.getjFormattedTextField1().getText()));
+    	this.dataSaida = dt.capData(view.getjFormattedTextField2().getText());
+    	
+    }
     	
 	private boolean verificarDiferDatas(LocalDate dateInicio, LocalDate dateFim){
 		int difEntreDatas = dia.calcDiferDias(dateInicio, dateFim);
@@ -467,7 +532,7 @@ public class ControllerPrincipal  {
 	}
 	
 	private boolean validarSalario(BigDecimal valor){
-		if ( valor.compareTo(new BigDecimal("449") ) < 0){
+		if ( valor.compareTo(new BigDecimal("1") ) < 0){
 			
 			return false;
 			
@@ -492,6 +557,10 @@ public class ControllerPrincipal  {
 		
 	}
     	  
+	private void exibirErro(){
+		JOptionPane.showMessageDialog(null, this.msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+	}
+	
     private void opDemissao(){
     	
     	this.qtdDiasAviso = 30;
@@ -669,4 +738,22 @@ public class ControllerPrincipal  {
     	
     }
 
+    private void mostrarSobre(){
+    	String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n"
+    			+ "Versão 0.5.2 - Build 20170310-2000\n"
+    			+ "© 2017 - Thiago Lima de Sousa  < thg.limadesousa@gmail.com >\n"
+    			+ "Software sob a licença GNU GPL versão 3.\n\n"
+    			+ "As imagens utilizadas, são de: Sebastian Rubio.\n"
+    			+ "Pertencentes ao pacote Plateau Icons, o qual também está\n"
+    			+ "licenciado sob a licença GNU GPL versão 3.\n\n";
+    	
+    	UIManager.put("OptionPane.okButtonText", "Fechar");
+    	JOptionPane.showMessageDialog(null, 
+    			msgSobre, "Sobre", 
+    			JOptionPane.PLAIN_MESSAGE, new ImageIcon("/br/edu/tglima/view/images/calc-icon.png")
+    			);
+
+    	
+    }
+    
 }

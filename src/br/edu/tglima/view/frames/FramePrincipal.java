@@ -3,6 +3,7 @@ package br.edu.tglima.view.frames;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.text.ParseException;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -27,11 +28,14 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-@SuppressWarnings("serial")
-// Last edition. 2017-03-08
+// Last edition. 2017-03-10
 
 public class FramePrincipal extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3612299652519475518L;
 	public FramePrincipal() {
 		iniciarComponentes();
 	}
@@ -277,6 +281,7 @@ public class FramePrincipal extends JFrame {
         setPreferredSize(new java.awt.Dimension(525, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(525, 600));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/br/edu/tglima/view/images/calc-icon.png")));
 
         jPanel1.setPreferredSize(new Dimension(525, 600));
         jPanel1.setLayout(new CardLayout());
@@ -310,13 +315,20 @@ public class FramePrincipal extends JFrame {
         jFormattedTextField3.setHorizontalAlignment(SwingConstants.CENTER);
 
         jLabel4.setText("Possui férias vencidas?");
-
+        jLabel4.setEnabled(false);
+        
         ButtonGroupFerias.add(jRadioButton1);
         jRadioButton1.setText("Sim");
+        jRadioButton1.setEnabled(false);
+        
 
         ButtonGroupFerias.add(jRadioButton2);
         jRadioButton2.setSelected(true);
         jRadioButton2.setText("Não");
+        jRadioButton2.setEnabled(false);
+        
+        
+        
 
         jLabel5.setText("Informe o motivo da saída:");
 
