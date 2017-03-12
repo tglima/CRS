@@ -28,13 +28,10 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-// Last edition. 2017-03-10
+// Last edition. 2017-03-12
 
 public class FramePrincipal extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3612299652519475518L;
 	public FramePrincipal() {
 		iniciarComponentes();
@@ -46,42 +43,10 @@ public class FramePrincipal extends JFrame {
 		return jTable1;
 	}
 
-	public void setjTable1(JTable jTable1) {
-		this.jTable1 = jTable1;
-	}
-
 	public JTable getjTable2() {
 		return jTable2;
 	}
-
-	public void setjTable2(JTable jTable2) {
-		this.jTable2 = jTable2;
-	}
 	
-	public ButtonGroup getButtonGroupFGTS() {
-		return ButtonGroupFGTS;
-	}
-
-	public ButtonGroup getButtonGroupFerias() {
-		return ButtonGroupFerias;
-	}
-
-	public JPanel getCard01Principal() {
-		return card01Principal;
-	}
-
-	public JPanel getCard02Resultado() {
-		return card02Resultado;
-	}
-
-	public JPanel getCard03Termos() {
-		return Card03Termos;
-	}
-
-	public JPanel getCard04Limitacoes() {
-		return Card04Limitacoes;
-	}
-
 	public JButton getjButton1() {
 		return jButton1;
 	}
@@ -130,25 +95,12 @@ public class FramePrincipal extends JFrame {
 		return jLabel4;
 	}
 
-	public JLabel getjLabel5() {
-		return jLabel5;
-	}
-
 	public JLabel getjLabel6() {
 		return jLabel6;
 	}
 
-	public JLabel getjLabel9() {
-		return jLabel9;
-	}
-
-
-	public JMenu getjMenu1() {
-		return jMenu1;
-	}
-
-	public JMenuBar getjMenuBar1() {
-		return jMenuBar1;
+	public JLabel getjLabel8() {
+		return jLabel8;
 	}
 
 	public JMenuItem getjMenuItem1() {
@@ -181,26 +133,6 @@ public class FramePrincipal extends JFrame {
 
 	public JRadioButton getjRadioButton4() {
 		return jRadioButton4;
-	}
-
-	public JScrollPane getjScrollPane1() {
-		return jScrollPane1;
-	}
-
-	public JScrollPane getjScrollPane2() {
-		return jScrollPane2;
-	}
-
-	public JScrollPane getjScrollPane3() {
-		return jScrollPane3;
-	}
-
-	public JScrollPane getjScrollPane4() {
-		return jScrollPane4;
-	}
-
-	public JPopupMenu.Separator getjSeparator1() {
-		return jSeparator1;
 	}
 
 	public JTextPane getjTextPane1() {
@@ -348,6 +280,7 @@ public class FramePrincipal extends JFrame {
         jRadioButton4.setText("Não");
 
         jLabel8.setText("Informe o saldo:");
+        jLabel8.setEnabled(false);
 
         jFormattedTextField4.setHorizontalAlignment(SwingConstants.CENTER);
         jFormattedTextField4.setEnabled(false);
@@ -539,7 +472,7 @@ public class FramePrincipal extends JFrame {
         jTextPane1.setEditable(false);
         jScrollPane3.setViewportView(jTextPane1);
 
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 36));
         jLabel11.setText("Termos de uso");
 
         jButton5.setText("Voltar");
@@ -697,36 +630,5 @@ public class FramePrincipal extends JFrame {
 
 	private JTable jTable1, jTable2;
 	private JTextPane jTextPane1, jTextPane2;
-
-	
-	// End of variables declaration
-	
-//	private JPanel card01Principal;
-//	private JPanel card02Resultado;
-//	private JPanel Card04Limitacoes;
-//	private ButtonGroup ButtonGroupFerias;
-//	private JComboBox<String> jComboBox2;
-//	private JFormattedTextField jFormattedTextField2;
-//	private JFormattedTextField jFormattedTextField4;
-//	private JLabel jLabel2;
-//	private JLabel jLabel3;
-//	private JLabel jLabel4;
-//	private JLabel jLabel5;
-//	private JLabel jLabel6;
-//	private JLabel jLabel8;
-//	private JLabel jLabel9;
-//	private JLabel jLabel10;
-//	private JLabel jLabel11;
-//	private JLabel jLabel12;
-//	private JMenuItem jMenuItem2;
-//	private JMenuItem jMenuItem3;	
-//	private JRadioButton jRadioButton2;
-//	private JRadioButton jRadioButton3;
-//	private JRadioButton jRadioButton4;
-//	private JScrollPane jScrollPane2;
-//	private JScrollPane jScrollPane3;
-//	private JScrollPane jScrollPane4;
-//	private JTable jTable2;
-//	private JTextPane jTextPane2;	
 	
 }

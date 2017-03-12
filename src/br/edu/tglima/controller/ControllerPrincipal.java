@@ -23,8 +23,8 @@ import br.edu.tglima.view.frames.FramePrincipal;
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.5.2
- * @build 20170310-2000
+ * @version 0.5.3
+ * @build 20170312-2010
  *
  */
 
@@ -243,14 +243,14 @@ public class ControllerPrincipal  {
 
         if (true) {
             view.getjFormattedTextField4().setEnabled(true);
-            view.getjLabel9().setEnabled(true);
+            view.getjLabel8().setEnabled(true);
         }
     }   
 	
     private void RadioButton4ActionPerformed(ActionEvent e) {                                              
         if (true) {
             view.getjFormattedTextField4().setEnabled(false);
-            view.getjLabel9().setEnabled(false);
+            view.getjLabel8().setEnabled(false);
         }
     }    
 	
@@ -613,10 +613,11 @@ public class ControllerPrincipal  {
  
         
         /*Bloco responsável por definições de Modelo das tabelas */
-    	@SuppressWarnings("serial")
     	// Modelo padrão para definição da Jtable1
     	DefaultTableModel tabela1 = new DefaultTableModel() {
-    		// Método resṕonsável por bloquear a edição das células
+			private static final long serialVersionUID = -4898544871403933182L;
+
+			// Método resṕonsável por bloquear a edição das células
     		@Override
 			public boolean isCellEditable(int linha, int coluna) {
     			return false;
@@ -624,9 +625,10 @@ public class ControllerPrincipal  {
 
     	};
 
-    	@SuppressWarnings("serial")
     	DefaultTableModel tabela2 = new DefaultTableModel() {
-    		// Modelo padrão para definição da Jtable2
+			private static final long serialVersionUID = 3583475816933228919L;
+
+			// Modelo padrão para definição da Jtable2
     		@Override
 			public boolean isCellEditable(int linha, int coluna) {
     			return false;
@@ -716,10 +718,6 @@ public class ControllerPrincipal  {
         tabela2.addRow(new Object[]{"  Valor total", this.stTotSomaFgts});
         /*Fim do bloco*/
         
-        
-        
-        
-        
         /*Bloco de código responsável por centralizar as células */
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -729,31 +727,28 @@ public class ControllerPrincipal  {
         view.getjTable2().getColumnModel().getColumn(1).setCellRenderer(centralizado);
         /*Fim do bloco*/
         
-        
-        
-
-        
-        
-        
-    	
     }
 
     private void mostrarSobre(){
     	String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n"
-    			+ "Versão 0.5.2 - Build 20170310-2000\n"
-    			+ "© 2017 - Thiago Lima de Sousa  < thg.limadesousa@gmail.com >\n"
-    			+ "Software sob a licença GNU GPL versão 3.\n\n"
-    			+ "As imagens utilizadas, são de: Sebastian Rubio.\n"
-    			+ "Pertencentes ao pacote Plateau Icons, o qual também está\n"
-    			+ "licenciado sob a licença GNU GPL versão 3.\n\n";
-    	
+    			+ "Versão 0.5.3 - Build 20170312-2010 \n"
+    			+ "Copyright (c) 2017 Thiago Lima de Sousa\n"
+    			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
+    			+ "GPLv3).\n\n"
+    			+ "Este programa é um Software Livre: você pode\n"
+    			+ "redistribuí-lo e/ou modificá-lo sob os termos da\n"
+    			+ "Licença Pública Geral GNU publicada pela Free\n"
+    			+ "Software Foundation (GPLv3)\n\n"
+    			+ "Código fonte disponível no link abaixo:\n"
+    			+ "http://www.github.com/tglima/crt";
+    	        
     	UIManager.put("OptionPane.okButtonText", "Fechar");
+    	UIManager.put("OptionPane.messageFont", new java.awt.Font("Dialog", 1, 12)); 
     	JOptionPane.showMessageDialog(null, 
-    			msgSobre, "Sobre", 
-    			JOptionPane.PLAIN_MESSAGE, new ImageIcon("/br/edu/tglima/view/images/calc-icon.png")
-    			);
-
-    	
+    		msgSobre, "Sobre",
+    		JOptionPane.INFORMATION_MESSAGE,
+    		new ImageIcon(ControllerPrincipal.class.getResource("/br/edu/tglima/view/images/calc-icon-128x128.png") )
+    	);
     }
     
 }
