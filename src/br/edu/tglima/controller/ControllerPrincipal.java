@@ -5,26 +5,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
-import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import br.edu.tglima.model.periodos.*;
 import br.edu.tglima.model.proventos.*;
+import br.edu.tglima.view.frames.DialogSobre;
 import br.edu.tglima.view.frames.FramePrincipal;
 
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.5.3
- * @build 20170312-2010
+ * @version 0.5.4
+ * @build 20170313-2000
  *
  */
 
@@ -32,6 +34,7 @@ public class ControllerPrincipal  {
 	
 //	Classes
 	private FramePrincipal view;
+	private DialogSobre dialog = new DialogSobre();
 	private Locale ptBr = new Locale("pt", "BR");
     private NumberFormat df = NumberFormat.getCurrencyInstance(ptBr); 
     private NumberFormat nf = new DecimalFormat("#,##0.00");
@@ -136,8 +139,27 @@ public class ControllerPrincipal  {
             }
         });
 		
-
-
+		this.dialog.getFecharButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				fecharButtonActionPerfomed(e);				
+			}
+		});
+		
+		
+		
+		this.dialog.getLblLink().addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Mouse foi clicado, fique calmo.!");
+				
+			}
+			
+		});
+		
         this.view.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -227,15 +249,18 @@ public class ControllerPrincipal  {
     mostrarSobre();
     }   
 	
-
     private void voltarInicio(ActionEvent e) {                                         
         //Volta para a tela inicial do programa
         CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
         cl.show(view.getjPanel1(), "card1");
     } 
+
+    private void fecharButtonActionPerfomed(ActionEvent e){
+    	dialog.setVisible(false);
+    }
+    
     
 //	--------------------------------------------------------------- //    
-    
     
 /*	Métodos responsáveis pelas escolhas feitas com os radio buttons */    
     
@@ -729,26 +754,15 @@ public class ControllerPrincipal  {
         
     }
 
+    
+    
     private void mostrarSobre(){
-    	String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n"
-    			+ "Versão 0.5.3 - Build 20170312-2010 \n"
-    			+ "Copyright (c) 2017 Thiago Lima de Sousa\n"
-    			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
-    			+ "GPLv3).\n\n"
-    			+ "Este programa é um Software Livre: você pode\n"
-    			+ "redistribuí-lo e/ou modificá-lo sob os termos da\n"
-    			+ "Licença Pública Geral GNU publicada pela Free\n"
-    			+ "Software Foundation (GPLv3)\n\n"
-    			+ "Código fonte disponível no link abaixo:\n"
-    			+ "http://www.github.com/tglima/crt";
-    	        
-    	UIManager.put("OptionPane.okButtonText", "Fechar");
-    	UIManager.put("OptionPane.messageFont", new java.awt.Font("Dialog", 1, 12)); 
-    	JOptionPane.showMessageDialog(null, 
-    		msgSobre, "Sobre",
-    		JOptionPane.INFORMATION_MESSAGE,
-    		new ImageIcon(ControllerPrincipal.class.getResource("/br/edu/tglima/view/images/calc-icon-128x128.png") )
-    	);
+    	
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+		dialog.setLocationRelativeTo(null);
+
+
     }
     
 }

@@ -28,7 +28,7 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-// Last edition. 2017-03-12
+// Last edition. 2017-03-13
 
 public class FramePrincipal extends JFrame {
 
@@ -553,31 +553,16 @@ public class FramePrincipal extends JFrame {
         jMenu1.setText("Ajuda");
 
         jMenuItem1.setText("Limitações");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                jMenuItem1ActionPerformed(evt);
-            }
-        });
+
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Termos de uso");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                jMenuItem2ActionPerformed(evt);
-            }
-        });
+
         jMenu1.add(jMenuItem2);
         jMenu1.add(jSeparator1);
 
         jMenuItem3.setText("Sobre");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                jMenuItem3ActionPerformed(evt);
-            }
-        });
+
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
