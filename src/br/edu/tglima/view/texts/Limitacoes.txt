@@ -1,0 +1,52 @@
+﻿  Mesmo após ter investido várias horas no desenvolvimento deste
+aplicativo, sei muito bem que ele está longe de ser “perfeito”. Além
+de possuir alguns erros, ele também possuí algumas limitações, sobre
+estas limitações é importante que você usuário conheça-as para que 
+possa tirar o melhor proveito possível deste aplicativo.
+
+::: Datas :::
+
+  No campo data de admissão, só será aceita datas a partir de 
+10/11/1943. Data na qual entra em vigor nossa C.L.T 
+( Consolidação das Leis do Trabalho ).
+
+  No campo data de saída, será aceita até a seguinte data 
+31/12/2067. Como nossas leis estão em constantes mudanças,
+determinei como prazo máximo de 50 anos, onde possivelmente
+todas os critérios usados aqui não devem mais ser aplicados.
+
+::: Salário Bruto :::
+
+  No campo SALÁRIO desta aplicação você deve informar uma média
+geral de todos os valores BRUTOS que o funcionário recebeu durante
+o  período em que ele trabalhou na empresa. NÃO DEVEM SER SOMADOS AO
+SALÁRIO outros valores como: Comissão, Horas extras, gratificações,
+etc. INFORME APENAS O SALÁRIO DESCRITO EM SUA CARTEIRA DE TRABALHO.
+
+::: Férias vencidas :::
+
+  As opções de férias vencidas só ficam disponíveis, caso o tempo
+trabalhado do funcionário seja de pelo menos 1 ano. O cálculo é feito
+automaticamente após ser informado a data de admissão e a data de saída
+em seus campos respectivos.
+
+  Este programa foi planejado para contabilizar apenas 1 FÉRIAS
+VENCIDA. Isso porque no caso de 2 FÉRIAS VENCIDAS deve ser aplicado
+ao empregador pagar em dobro a respectiva remuneração. Este tipo de
+situação é algo atípico, e que os empregadores evitam ao máximo.
+Para evitar possíveis erros, foi implementada esta limitação, onde
+será computado no máximo o período de 1 FÉRIAS VENCIDA + 1 período
+de FÉRIAS NORMAL.
+
+PARA SABER MAIS SOBRE FÉRIAS VISITE:
+
+http://www.planalto.gov.br/ccivil_03/decreto-lei/Del1535.htm
+
+
+::: Motivos para saída :::
+  Diante dos vários motivos que podem levar um funcionário a sair de
+uma empresa, optei pelos 5 mais comuns.
+
+
+::: Descontos :::
+

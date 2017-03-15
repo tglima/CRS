@@ -27,7 +27,7 @@ public class DialogSobre extends JDialog {
 	private JButton fecharButton = new JButton("Fechar");
 	
 	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.5.4 - Build 20170313-2000\n"
+			+ "Versão 0.5.5 - Build 20170315-1930"
 			+ "Copyright (c) 2017 Thiago Lima de Sousa\n"
 			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
 			+ "GPLv3).\n\n"
@@ -50,7 +50,7 @@ public class DialogSobre extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Sobre");
 		setResizable(false);
-		setBounds(100, 100, 400, 300);
+		setBounds(100, 100, 400, 320);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

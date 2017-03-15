@@ -1,6 +1,7 @@
 package br.edu.tglima.view.frames;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -28,7 +29,7 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-// Last edition. 2017-03-13
+// Last edition. 2017-03-15
 
 public class FramePrincipal extends JFrame {
 
@@ -213,7 +214,8 @@ public class FramePrincipal extends JFrame {
         setPreferredSize(new java.awt.Dimension(525, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(525, 600));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/br/edu/tglima/view/images/calc-icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource
+        		("/br/edu/tglima/view/images/calc-icon.png")));
 
         jPanel1.setPreferredSize(new Dimension(525, 600));
         jPanel1.setLayout(new CardLayout());
@@ -223,7 +225,9 @@ public class FramePrincipal extends JFrame {
         jLabel1.setText("Data de admissão:");
 
         try {
-            jFormattedTextField1.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##/##/####")));
+            jFormattedTextField1.setFormatterFactory(new DefaultFormatterFactory
+            		(new MaskFormatter("##/##/####")));
+            
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -234,7 +238,9 @@ public class FramePrincipal extends JFrame {
         jLabel2.setText("Data de saída:");
 
         try {
-            jFormattedTextField2.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("##/##/####")));
+            jFormattedTextField2.setFormatterFactory(new DefaultFormatterFactory
+            		(new MaskFormatter("##/##/####")));
+            
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -264,11 +270,16 @@ public class FramePrincipal extends JFrame {
 
         jLabel5.setText("Informe o motivo da saída:");
 
-        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] { "Pedido de demissão", "Fim do Contrato de Trabalho", "Demissão sem justa causa", "Demissão por Justa Causa", "Falecimento" }));
+        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] 
+        		{ "Pedido de demissão", "Fim do Contrato de Trabalho", 
+        				"Demissão sem justa causa", "Demissão por Justa Causa",
+        				"Falecimento" }));
 
         jLabel6.setText("Como foi o aviso prévio?");
 
-        jComboBox2.setModel(new DefaultComboBoxModel<>(new String[] { "Trabalhado", "Indenizado pela empresa", "Descontado do funcionário" }));
+        jComboBox2.setModel(new DefaultComboBoxModel<>(new String[] 
+        		{ "Trabalhado", "Indenizado pela empresa", 
+        				"Descontado do funcionário" }));
 
         jLabel7.setText("Conhece o saldo do FGTS?");
 
@@ -454,7 +465,7 @@ public class FramePrincipal extends JFrame {
                 .addContainerGap()
                 .addComponent(jLabel9, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -470,6 +481,21 @@ public class FramePrincipal extends JFrame {
 
         Card03Termos.setPreferredSize(new java.awt.Dimension(525, 600));
         jTextPane1.setEditable(false);
+        jTextPane1.setFont(Font.decode("UTF-8") );
+        jTextPane1.setFont(new Font("",Font.PLAIN,13));
+        jTextPane1.setContentType("text/plain; charset=UTF-8");
+        
+        try {
+
+        	jTextPane1.setPage(FramePrincipal.class.getResource
+        			("/br/edu/tglima/view/texts/License.txt"));
+			
+		} catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+		}
+        
+        
+        
         jScrollPane3.setViewportView(jTextPane1);
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 36));
@@ -507,6 +533,23 @@ public class FramePrincipal extends JFrame {
         jPanel1.add(Card03Termos, "card3");
 
         jTextPane2.setEditable(false);
+        jTextPane2.setFont(Font.decode("UTF-8") );
+        jTextPane2.setFont(new Font("",Font.PLAIN,13));
+
+        jTextPane2.setForeground(Color.BLACK);
+        jTextPane2.setBackground(Color.WHITE);
+        jTextPane2.setContentType("text/plain; charset=UTF-8");
+        
+        try {
+        	jTextPane2.setPage(FramePrincipal.class.getResource
+        			("/br/edu/tglima/view/texts/Limitacoes.txt"));
+
+		} catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+
+		}
+        
+        
         jScrollPane4.setViewportView(jTextPane2);
 
         jButton4.setText("Voltar");
@@ -590,7 +633,7 @@ public class FramePrincipal extends JFrame {
 	
 	
 //	Start of variables declaration 
-
+	
 	private JPanel jPanel1, card01Principal, card02Resultado;
 	private JPanel Card03Termos, Card04Limitacoes;
 

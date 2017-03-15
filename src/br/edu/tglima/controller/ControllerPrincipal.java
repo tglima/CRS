@@ -1,6 +1,7 @@
 package br.edu.tglima.controller;
 
 import java.awt.CardLayout;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -8,6 +9,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -25,8 +27,8 @@ import br.edu.tglima.view.frames.FramePrincipal;
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.5.4
- * @build 20170313-2000
+ * @version 0.5.5
+ * @build 20170315-1930
  *
  */
 
@@ -153,8 +155,14 @@ public class ControllerPrincipal  {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Mouse foi clicado, fique calmo.!");
+				try {
+					URI link = new URI("http://www.oracle.com/technetwork/java/index.html");
+					Desktop.getDesktop().browse(link);
+					
+				} catch (Exception error) {
+					// TODO: handle exception
+					System.out.println("Não foi possível lançar o navegador!");
+				}
 				
 			}
 			
@@ -237,16 +245,9 @@ public class ControllerPrincipal  {
         cl.show(view.getjPanel1(), "card3");
     }                                         
 
-    private void jMenuItem3ActionPerformed(ActionEvent e) {                                           
-        /*
-        Carrega a tela Versão
-        Por enquanto ela está redirecionando de volta para a tela inicial.
-        Ela abrirá um menu popup exibindo as informações referentes
-         */
-/*        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card2");*/
-
-    mostrarSobre();
+    private void jMenuItem3ActionPerformed(ActionEvent e) {    
+    	//Carrega o jDialog com as informações sobre o aplicativo.
+    	mostrarSobre();
     }   
 	
     private void voltarInicio(ActionEvent e) {                                         
