@@ -27,7 +27,7 @@ public class DialogSobre extends JDialog {
 	private JButton fecharButton = new JButton("Fechar");
 	
 	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.5.5 - Build 20170315-1930"
+			+ "Versão 0.5.5 - Build 20170315-2000\n"
 			+ "Copyright (c) 2017 Thiago Lima de Sousa\n"
 			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
 			+ "GPLv3).\n\n"
