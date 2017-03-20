@@ -31,12 +31,10 @@ import br.edu.tglima.view.frames.FramePrincipal;
 
 
 
-
-
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.6.0
- * @build 20170320-1100
+ * @version 0.7.0
+ * @build 20170320-1130
  *
  */
 
