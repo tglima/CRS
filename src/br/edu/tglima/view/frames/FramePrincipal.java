@@ -29,11 +29,12 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-// Last edition. 2017-03-15
+// Last edition. 2017-03-20
 
 public class FramePrincipal extends JFrame {
 
-	private static final long serialVersionUID = 3612299652519475518L;
+	private static final long serialVersionUID = 6848398531653529030L;
+	
 	public FramePrincipal() {
 		iniciarComponentes();
 	}
@@ -430,7 +431,7 @@ public class FramePrincipal extends JFrame {
         
      
         jButton2.setText("Voltar");
-        jButton3.setText("Salvar");
+        jButton3.setText("Exportar");
 
         GroupLayout card02ResultadoLayout = new GroupLayout(card02Resultado);
         card02Resultado.setLayout(card02ResultadoLayout);

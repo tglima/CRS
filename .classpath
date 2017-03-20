@@ -2,5 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/poi-scratchpad-3.15.jar"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/poi-ooxml-schemas-3.15.jar"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/poi-ooxml-3.15.jar"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/poi-excelant-3.15.jar"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/poi-3.15.jar"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/ooxml-lib/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="/home/tglima/Downloads/poi-3.15/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="lib"/>
 </classpath>

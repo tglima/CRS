@@ -17,18 +17,22 @@ import javax.swing.JEditorPane;
 import java.awt.Font;
 import javax.swing.UIManager;
 
-//Last edition. 2017-03-13
+//Last edition. 2017-03-20
 
 
 public class DialogSobre extends JDialog {
-	private static final long serialVersionUID = -2714596913058070102L;
+	
+	private static final long serialVersionUID = -8342309119073380926L;
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblLink;
 	private JButton fecharButton = new JButton("Fechar");
 	
 	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.5.5 - Build 20170315-2000\n"
-			+ "Copyright (c) 2017 Thiago Lima de Sousa\n"
+			+ "Versão 0.6.0 - Build 20170320-1100\n"
+			+ "Copyright (c) 2017 Thiago Lima de Sousa\n\n"
+			+ "Biblioteca Apache POI. Copyright 2003-2016\n"
+			+ "The Apache Software Foundation\n"
+			+ "(Licenciada sob APACHE LICENSE, VERSION 2.0\n\n"
 			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
 			+ "GPLv3).\n\n"
 			+ "Este programa é um Software Livre: você pode\n"
@@ -50,7 +54,7 @@ public class DialogSobre extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Sobre");
 		setResizable(false);
-		setBounds(100, 100, 400, 320);
+		setBounds(100, 100, 400, 400);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

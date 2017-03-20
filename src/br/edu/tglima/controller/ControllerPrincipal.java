@@ -8,6 +8,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.text.DecimalFormat;
@@ -15,26 +16,34 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import br.edu.tglima.model.periodos.*;
+import br.edu.tglima.model.persistencia.PlanilhaXLS;
 import br.edu.tglima.model.proventos.*;
 import br.edu.tglima.view.frames.DialogSobre;
 import br.edu.tglima.view.frames.FramePrincipal;
 
 
+
+
+
+
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.5.5
- * @build 20170315-2000
+ * @version 0.6.0
+ * @build 20170320-1100
  *
  */
 
 public class ControllerPrincipal  {
 	
-//	Classes
+/*	Classes																*/
+
 	private FramePrincipal view;
 	private DialogSobre dialog = new DialogSobre();
 	private Locale ptBr = new Locale("pt", "BR");
@@ -47,11 +56,12 @@ public class ControllerPrincipal  {
 	private Fgts fgts = new Fgts();
 	private Ferias fr = new Ferias();
 	private AvisoPrevio ap = new AvisoPrevio();
+	private PlanilhaXLS plan = new PlanilhaXLS();
 	
 
-//	--------------------------------------------------------------- //
+//	------------------------------------------------------------------------ //
 	
-/*	Lista de atributos */	
+/*	Lista de atributos 														*/	
 	
 //	Atributos fornecidos pelo usuário
 	private LocalDate dataEntrada, dataSaida;
@@ -79,9 +89,9 @@ public class ControllerPrincipal  {
 	
 	
 	
-//	--------------------------------------------------------------- //	
+//	------------------------------------------------------------------------ //	
 	
-/*	Método construtor da classe										*/
+/*	Método construtor da classe												*/
 	
 	public ControllerPrincipal(FramePrincipal framePrincipal) {
 		this.view = framePrincipal;
@@ -108,7 +118,6 @@ public class ControllerPrincipal  {
                 jMenuItem3ActionPerformed(e);
             }
         });
-		
 						
 		this.view.getjButton1().addActionListener(new ActionListener() {
             @Override
@@ -125,7 +134,7 @@ public class ControllerPrincipal  {
 		this.view.getjButton3().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
+            	exportarPlanilha();
             }
         });
 		this.view.getjButton4().addActionListener(new ActionListener() {
@@ -149,8 +158,6 @@ public class ControllerPrincipal  {
 			}
 		});
 		
-		
-		
 		this.dialog.getLblLink().addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -160,7 +167,6 @@ public class ControllerPrincipal  {
 					Desktop.getDesktop().browse(link);
 					
 				} catch (Exception error) {
-					// TODO: handle exception
 					System.out.println("Não foi possível lançar o navegador!");
 				}
 				
@@ -198,10 +204,8 @@ public class ControllerPrincipal  {
 			}
 		});
 
+//    	-------------------------------------------------------------------- //    
 
-        
-//    	--------------------------------------------------------------- //        
-        
         
         this.view.getjFormattedTextField3().addFocusListener(new FocusAdapter() {
             @Override
@@ -223,10 +227,10 @@ public class ControllerPrincipal  {
         //Fim do contrutor da classe
 	}
 	
-//	--------------------------------------------------------------- //
+//	------------------------------------------------------------------------ //    
+
 	
-	
-/*	Métodos responsáveis por navegar entre as telas do programa	   */
+/*	Métodos responsáveis por navegar entre as telas do programa	   			*/
 	
     private void jMenuItem1ActionPerformed(ActionEvent e) {                                           
         /*
@@ -259,9 +263,9 @@ public class ControllerPrincipal  {
     private void fecharButtonActionPerfomed(ActionEvent e){
     	dialog.setVisible(false);
     }
+
+//	------------------------------------------------------------------------ //    
     
-    
-//	--------------------------------------------------------------- //    
     
 /*	Métodos responsáveis pelas escolhas feitas com os radio buttons */    
     
@@ -280,7 +284,8 @@ public class ControllerPrincipal  {
         }
     }    
 	
-//	--------------------------------------------------------------- //        
+//	------------------------------------------------------------------------ //    
+        
     
 	private void jComboBox1ActionPerformed(ActionEvent e) {
 		if (view.getjComboBox1().getSelectedItem() == "Falecimento"
@@ -294,8 +299,9 @@ public class ControllerPrincipal  {
 
 	}
 
-//	--------------------------------------------------------------- //    
+//	------------------------------------------------------------------------ //    
 
+	
 /*	Método responsável por controlar os campos de férias vencidas */
 	
 	private void jFormattedTextField2FocusLost(FocusEvent e){
@@ -324,7 +330,9 @@ public class ControllerPrincipal  {
 
 	}
 	
-//	--------------------------------------------------------------- //    	
+//	------------------------------------------------------------------------ //    
+
+	
 	
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
@@ -367,7 +375,7 @@ public class ControllerPrincipal  {
     	return valorFormatado;
     }
 
-//	--------------------------------------------------------------- //    
+//	------------------------------------------------------------------------ //    
     
     
 /*	Método executado ao pressionar o botão calcular					*/    
@@ -382,9 +390,6 @@ public class ControllerPrincipal  {
     	
     	obterDatas();
     	
-    	
-//    	this.dataEntrada = dt.capData((view.getjFormattedTextField1().getText()));
-//    	this.dataSaida = dt.capData(view.getjFormattedTextField2().getText());
     	this.salarioInformado = slr.capturarValor(view.getjFormattedTextField3().getText());
     	
     	/*
@@ -402,53 +407,45 @@ public class ControllerPrincipal  {
     	 * 
     	 */
     	
-    	if (validarData(dataEntrada) == false) {
-			System.out.println("A data de entrada é inválida!");
-			this.msgErro = "Data de admissão inválida!\n"
-							+ "Apenas são aceitas datas apartir de 01/05/1943";
-			exibirErro();
+    	if (validarDataEntrada(dataEntrada) == false) {
+			System.err.println("Data de admissão inválida!");
 		}
     	
-    	else if (validarData(dataSaida) == false){
-    		System.out.println("Data de saída inválida");
-			this.msgErro = "Data de saída inválida!";
-			exibirErro();
-    	} 
+    	else if (validarDataSaida(dataSaida) == false) {
+			System.err.println("Data de saída inválida!");
+		}
     	
     	else if (verificarDiferDatas(dataEntrada, dataSaida) == false) {
 			System.out.println("A data de saída é inferior a data de entrada!");
 			this.msgErro = "A data de saída é inferior a data de entrada!";
-			exibirErro();
+			exibirErro(this.msgErro);
 			
 		}
     	
     	else if (validarSalario(this.salarioInformado) == false){
     		System.out.println("O valor informado como salário é inválido!");
+    		
 			this.msgErro = "O valor informado como salário é inválido!\n"
 							+ "São aceitos apenas valores apartir de R$ 1,00.";
-			exibirErro();
+			exibirErro(this.msgErro);
     		
     	} 
     	
     	else if (validarFgts(this.saldoFgts) == false) {
 			System.out.println("O saldo informado como fgts é inválido!");
+			
 			this.msgErro = "O saldo informado como fgts é inválido!";
-			exibirErro();
+			exibirErro(this.msgErro);
 			
 		} else {
 			
-//			System.out.println("Os dados fornecidos até o aqui estão corretos");
-
-//			Programa continuará sua execução			    
-			
-			
 			this.motivoSaida = (String) this.view.getjComboBox1().getSelectedItem();
 			
-/*			 Bloco referente ao último sálario.*/
+/*			 Bloco referente ao último sálario.						*/
 			this.qtdDiasTrabUltMes = dia.calcDiasTrabUltimoMes(dataSaida);
 	    	this.salarioFinal =	this.slr.calcUltSal(this.qtdDiasTrabUltMes, this.salarioInformado);
 	    	
-/*	    	Bloco referente ao Décimo terceiro salário*/
+/*	    	Bloco referente ao Décimo terceiro salário				*/
 	    	this.mesesDecimo = mes.calcMesesTrabUltimoAno(dataEntrada, dataSaida);
 	    	this.valorDecimo = this.slr.calcDecimo(this.mesesDecimo, this.salarioInformado);
 	    	
@@ -491,7 +488,7 @@ public class ControllerPrincipal  {
 			}
 			
 			
-/*			Bloco referente ao motivo da saída*/
+/*			Bloco referente ao motivo da saída			*/
 			switch (this.motivoSaida) {
 			case "Pedido de demissão":
 				opDemissao();
@@ -548,15 +545,57 @@ public class ControllerPrincipal  {
 			return true;
 		}		
 	}
-
-	private boolean validarData(LocalDate date){
-		LocalDate inicioClt = dt.capData("30/04/1943");		
-		if (dt.validarData(date) && verificarDiferDatas(inicioClt, date) ) {
+	private boolean validarDataEntrada(LocalDate date){
+		LocalDate inicioClt = dt.capData("10/11/1943");
+		
+		if (dt.validarData(date) == false) {
+			
+			this.msgErro = "Data de admissão inválida!"
+					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
+			
+			exibirErro(this.msgErro);
+			return false;
+			
+		} else if (verificarDiferDatas(inicioClt, date) == false) {
+			
+			this.msgErro = "Data de admissão inválida!"
+					+ "\nInforme datas superiores há 10/11/1943";
+			
+			exibirErro(this.msgErro);
+			return false;
+			
+		} else {
+			
 			return true;
-		} else
-		return false ;
+		}
+
 	}
-	
+	private boolean validarDataSaida(LocalDate date){
+		LocalDate dataLimite = dt.capData("01/01/2060");
+		
+		if (dt.validarData(date) == false) {
+			
+			this.msgErro = "Data de saída é inválida!"
+					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
+			
+			exibirErro(this.msgErro);
+			return false;
+			
+		} else if (verificarDiferDatas(date, dataLimite) == false) {
+			
+			this.msgErro = "Data de saída inválida!"
+					+ "\nInforme datas inferiores há 01/01/2060";
+			
+			exibirErro(this.msgErro);
+			return false;
+			
+		} else {
+			
+			return true;
+			
+		}
+
+	}
 	private boolean validarSalario(BigDecimal valor){
 		if ( valor.compareTo(new BigDecimal("1") ) < 0){
 			
@@ -583,8 +622,12 @@ public class ControllerPrincipal  {
 		
 	}
     	  
-	private void exibirErro(){
-		JOptionPane.showMessageDialog(null, this.msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+	private void exibirErro(String msgErro){
+		JOptionPane.showMessageDialog(null, msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+	}
+	private void exibirAlerta(String msgAlerta){ 
+		JOptionPane.showMessageDialog(null, msgAlerta, "Informação", JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 	
     private void opDemissao(){
@@ -755,8 +798,70 @@ public class ControllerPrincipal  {
         
     }
 
-    
-    
+    private void exportarPlanilha(){
+    	JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
+    	fileChooser.setSelectedFile(new File("ArquivoExportado.xls"));
+    	fileChooser.setFileFilter(new FileNameExtensionFilter("Planilha Excel (*.xls)", "xls"));
+    	fileChooser.setAcceptAllFileFilterUsed(false);
+    	
+    	int returnVal = fileChooser.showSaveDialog(null);
+    	
+        if (returnVal==1){
+        	
+        	System.out.println("Usuário cancelou a ação de salvar!");
+        	exibirAlerta("Dados não exportados, ação cancelada pelo usuário!");
+//        	Colocar um JoptionPane aqui mostrando a mensagem.
+        }
+        
+        else {
+        	
+        	try {
+        		
+        		File arquivo = fileChooser.getSelectedFile();
+        		
+/*				Carregar os resultado para a planilha		*/
+        		
+        		
+        		plan.setQtdDiasTrabUltMes(this.strQtdDiasTrabUltMes);
+        		plan.setSalarioFinal(this.strSalarioFinal);
+        		plan.setMesesDecimo(this.strMesesDecimo);
+        		plan.setValorDecimo(this.strValorDecimo);
+        		plan.setMesesAqFerias(this.strMesesAqFerias);
+        		plan.setValorFerias(this.strValorFerias);
+        		plan.setValorTercoFerias(this.strValorTercoFerias);
+        		plan.setQtdFeriasVenc(this.strQtdFeriasVenc);
+        		plan.setValorFeriasVenc(this.strValorFeriasVenc);
+        		plan.setQtdDiasAviso(this.strQtdDiasAviso);
+        		plan.setValorAviso(this.strValorAviso);
+        		plan.setTotVencimento(this.strTotVencimento);
+        		plan.setReceberFgts(this.receberFgts);
+        		plan.setSaldoFgts(this.stSaldoFgts);
+        		plan.setMultaFgts(this.stMultaFgts);
+        		plan.setTotSomaFgts(this.stTotSomaFgts);
+        		
+				
+        		if (plan.gerarPlanilha(arquivo)) {
+        			
+        	        System.out.println("Arquivo XLS exportado com sucesso!");
+        	        exibirAlerta("Arquivo XLS exportado com sucesso!");
+        			
+				}    		
+				
+			} catch (Exception e) {
+				
+	    		System.err.println("Não foi possível gerar seu arquivo!"
+	    				+ " \n" + e.getMessage());
+//	        	Colocar um JoptionPane aqui mostrando a mensagem.
+	    		
+	    		this.msgErro = e.getLocalizedMessage();
+	    		exibirErro(this.msgErro);
+				
+			}
+			
+		}
+        
+        
+    }
     private void mostrarSobre(){
     	
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -766,4 +871,5 @@ public class ControllerPrincipal  {
 
     }
     
+
 }
