@@ -25,16 +25,16 @@ import javax.swing.table.DefaultTableModel;
 import br.edu.tglima.model.periodos.*;
 import br.edu.tglima.model.persistencia.PlanilhaXLS;
 import br.edu.tglima.model.proventos.*;
-import br.edu.tglima.view.frames.DialogSobre;
-import br.edu.tglima.view.frames.FramePrincipal;
+import br.edu.tglima.view.DialogSobre;
+import br.edu.tglima.view.FramePrincipal;
 
 
 
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.7.0
- * @build 20170320-1130
+ * @version 0.8.0
+ * @build 20170323-1600
  *
  */
 
@@ -42,7 +42,7 @@ public class ControllerPrincipal  {
 	
 /*	Classes																*/
 
-	private FramePrincipal view;
+	private FramePrincipal gui;
 	private DialogSobre dialog = new DialogSobre();
 	private Locale ptBr = new Locale("pt", "BR");
     private NumberFormat df = NumberFormat.getCurrencyInstance(ptBr); 
@@ -58,6 +58,7 @@ public class ControllerPrincipal  {
 	
 
 //	------------------------------------------------------------------------ //
+
 	
 /*	Lista de atributos 														*/	
 	
@@ -91,57 +92,57 @@ public class ControllerPrincipal  {
 	
 /*	Método construtor da classe												*/
 	
-	public ControllerPrincipal(FramePrincipal framePrincipal) {
-		this.view = framePrincipal;
+	public ControllerPrincipal(FramePrincipal gui) {
+		this.gui = gui;
 		
         //Definindo os listeners para os botoes da view.
 		
-        this.view.getjMenuItem1().addActionListener(new ActionListener() {
+        this.gui.getjMenuItem1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 jMenuItem1ActionPerformed(e);
             }
         });
 		
-        this.view.getjMenuItem2().addActionListener(new ActionListener() {
+        this.gui.getjMenuItem2().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 jMenuItem2ActionPerformed(e);
             }
         });
 		
-        this.view.getjMenuItem3().addActionListener(new ActionListener() {
+        this.gui.getjMenuItem3().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 jMenuItem3ActionPerformed(e);
             }
         });
 						
-		this.view.getjButton1().addActionListener(new ActionListener() {
+		this.gui.getjButton1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
             	jButton1ActionPerformed(e);
             }
         });
-		this.view.getjButton2().addActionListener(new ActionListener() {
+		this.gui.getjButton2().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 voltarInicio(e);
             }
         });
-		this.view.getjButton3().addActionListener(new ActionListener() {
+		this.gui.getjButton3().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
             	exportarPlanilha();
             }
         });
-		this.view.getjButton4().addActionListener(new ActionListener() {
+		this.gui.getjButton4().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 voltarInicio(e);
             }
         });
-		this.view.getjButton5().addActionListener(new ActionListener() {
+		this.gui.getjButton5().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 voltarInicio(e);
@@ -172,28 +173,28 @@ public class ControllerPrincipal  {
 			
 		});
 		
-        this.view.getjRadioButton3().addActionListener(new ActionListener() {
+        this.gui.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RadioButton3ActionPerformed(e);
 			}
 		});
         
-        this.view.getjRadioButton4().addActionListener(new ActionListener() {
+        this.gui.getjRadioButton4().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RadioButton4ActionPerformed(e);
 			}
 		});
                 
-        this.view.getjComboBox1().addActionListener(new ActionListener() {
+        this.gui.getjComboBox1().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				jComboBox1ActionPerformed(e);
 			}
 		});
         
-        this.view.getjFormattedTextField2().addFocusListener(new FocusAdapter() {
+        this.gui.getjFormattedTextField2().addFocusListener(new FocusAdapter() {
         	
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -205,7 +206,7 @@ public class ControllerPrincipal  {
 //    	-------------------------------------------------------------------- //    
 
         
-        this.view.getjFormattedTextField3().addFocusListener(new FocusAdapter() {
+        this.gui.getjFormattedTextField3().addFocusListener(new FocusAdapter() {
             @Override
 			public void focusLost(FocusEvent e) {
                 jFormattedTextField3FocusLost(e);
@@ -213,7 +214,7 @@ public class ControllerPrincipal  {
 
         });
         
-        this.view.getjFormattedTextField4().addFocusListener(new FocusAdapter() {
+        this.gui.getjFormattedTextField4().addFocusListener(new FocusAdapter() {
             @Override
 			public void focusLost(FocusEvent e) {
                 jFormattedTextField4FocusLost(e);
@@ -234,8 +235,8 @@ public class ControllerPrincipal  {
         /*
         Carrega a tela de Limitações
          */
-        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card4");
+        CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
+        cl.show(gui.getjPanel1(), "card4");
 
     }                                          
 
@@ -243,8 +244,8 @@ public class ControllerPrincipal  {
         /*
         Carrega a tela Termos
          */
-        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card3");
+        CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
+        cl.show(gui.getjPanel1(), "card3");
     }                                         
 
     private void jMenuItem3ActionPerformed(ActionEvent e) {    
@@ -254,8 +255,8 @@ public class ControllerPrincipal  {
 	
     private void voltarInicio(ActionEvent e) {                                         
         //Volta para a tela inicial do programa
-        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card1");
+        CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
+        cl.show(gui.getjPanel1(), "card1");
     } 
 
     private void fecharButtonActionPerfomed(ActionEvent e){
@@ -270,15 +271,15 @@ public class ControllerPrincipal  {
     private void RadioButton3ActionPerformed(ActionEvent e) {                                              
 
         if (true) {
-            view.getjFormattedTextField4().setEnabled(true);
-            view.getjLabel8().setEnabled(true);
+            gui.getjFormattedTextField4().setEnabled(true);
+            gui.getjLabel8().setEnabled(true);
         }
     }   
 	
     private void RadioButton4ActionPerformed(ActionEvent e) {                                              
         if (true) {
-            view.getjFormattedTextField4().setEnabled(false);
-            view.getjLabel8().setEnabled(false);
+            gui.getjFormattedTextField4().setEnabled(false);
+            gui.getjLabel8().setEnabled(false);
         }
     }    
 	
@@ -286,13 +287,13 @@ public class ControllerPrincipal  {
         
     
 	private void jComboBox1ActionPerformed(ActionEvent e) {
-		if (view.getjComboBox1().getSelectedItem() == "Falecimento"
-				|| view.getjComboBox1().getSelectedItem() == "Fim do Contrato de Trabalho") {
-			view.getjLabel6().setEnabled(false);
-			view.getjComboBox2().setEnabled(false);
+		if (gui.getjComboBox1().getSelectedItem() == "Falecimento"
+				|| gui.getjComboBox1().getSelectedItem() == "Fim do Contrato de Trabalho") {
+			gui.getjLabel6().setEnabled(false);
+			gui.getjComboBox2().setEnabled(false);
 		} else {
-			view.getjLabel6().setEnabled(true);
-			view.getjComboBox2().setEnabled(true);
+			gui.getjLabel6().setEnabled(true);
+			gui.getjComboBox2().setEnabled(true);
 		}
 
 	}
@@ -311,16 +312,16 @@ public class ControllerPrincipal  {
 			int difEntreDatas = dia.calcDiferDias(this.dataEntrada, this.dataSaida);
 			if (difEntreDatas > 365) {
 
-				view.getjLabel4().setEnabled(true);
-				view.getjRadioButton1().setEnabled(true);
-				view.getjRadioButton2().setEnabled(true);
+				gui.getjLabel4().setEnabled(true);
+				gui.getjRadioButton1().setEnabled(true);
+				gui.getjRadioButton2().setEnabled(true);
 
 			} else {
 
-				view.getjLabel4().setEnabled(false);
-				view.getjRadioButton1().setEnabled(false);
-				view.getjRadioButton2().setEnabled(false);
-				view.getjRadioButton2().setSelected(true);
+				gui.getjLabel4().setEnabled(false);
+				gui.getjRadioButton1().setEnabled(false);
+				gui.getjRadioButton2().setEnabled(false);
+				gui.getjRadioButton2().setSelected(true);
 
 			}
 
@@ -335,13 +336,13 @@ public class ControllerPrincipal  {
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
 	private void jFormattedTextField3FocusLost(FocusEvent e) {
-        String value = view.getjFormattedTextField3().getText();
+        String value = gui.getjFormattedTextField3().getText();
         value = value.replace(" ", "").replace(".", "").replace(",", ".");
         
         try {
             BigDecimal valor = new BigDecimal(value);
             String valorFormatado = df.format(valor);
-            view.getjFormattedTextField3().setText(valorFormatado);
+            gui.getjFormattedTextField3().setText(valorFormatado);
 			
 			}	catch (Exception e2) {
 //			
@@ -349,13 +350,13 @@ public class ControllerPrincipal  {
 	}
 	
     private void jFormattedTextField4FocusLost(FocusEvent e) {                                               
-        String valorObtido = view.getjFormattedTextField4().getText();
+        String valorObtido = gui.getjFormattedTextField4().getText();
         valorObtido = valorObtido.replace(" ", "").replace(".", "").replace(",", ".");
         
         try {
             BigDecimal valor = new BigDecimal(valorObtido);
             String valorFormatado = df.format(valor);
-            view.getjFormattedTextField4().setText(valorFormatado);
+            gui.getjFormattedTextField4().setText(valorFormatado);
 			}	catch (Exception e2) {
 //			
 				}
@@ -388,14 +389,14 @@ public class ControllerPrincipal  {
     	
     	obterDatas();
     	
-    	this.salarioInformado = slr.capturarValor(view.getjFormattedTextField3().getText());
+    	this.salarioInformado = slr.capturarValor(gui.getjFormattedTextField3().getText());
     	
     	/*
     	 * O Fgts é opcional, caso ele não seja informado, o sistema realizará o cálculo
     	 * do saldo automáticamente.
     	 */
-    	if (view.getjRadioButton3().isSelected()) {
-			this.saldoFgts = fgts.capturarValor(view.getjFormattedTextField4().getText());
+    	if (gui.getjRadioButton3().isSelected()) {
+			this.saldoFgts = fgts.capturarValor(gui.getjFormattedTextField4().getText());
 		} else {
 	    	this.saldoFgts = fgts.calcSaldoFgts(this.salarioInformado, dia.calcTotDiasTrab(dataEntrada, dataSaida));
 		}
@@ -414,7 +415,7 @@ public class ControllerPrincipal  {
 		}
     	
     	else if (verificarDiferDatas(dataEntrada, dataSaida) == false) {
-			System.out.println("A data de saída é inferior a data de entrada!");
+			System.err.println("A data de saída é inferior a data de entrada!");
 			this.msgErro = "A data de saída é inferior a data de entrada!";
 			exibirErro(this.msgErro);
 			
@@ -437,7 +438,7 @@ public class ControllerPrincipal  {
 			
 		} else {
 			
-			this.motivoSaida = (String) this.view.getjComboBox1().getSelectedItem();
+			this.motivoSaida = (String) this.gui.getjComboBox1().getSelectedItem();
 			
 /*			 Bloco referente ao último sálario.						*/
 			this.qtdDiasTrabUltMes = dia.calcDiasTrabUltimoMes(dataSaida);
@@ -452,7 +453,7 @@ public class ControllerPrincipal  {
 	    	this.valorFerias = fr.calcValorFerias(salarioInformado, mesesAqFerias);
 			this.valorTercoFerias = fr.calcTercoFerias(valorFerias);
 						
-			if (view.getjRadioButton1().isSelected()) {
+			if (gui.getjRadioButton1().isSelected()) {
 				this.valorFeriasVenc = salarioInformado;
 				this.valorTercoFeriasVenc = fr.calcTercoFerias(valorFeriasVenc);
 				this.qtdFeriasVenc = 1;
@@ -464,7 +465,7 @@ public class ControllerPrincipal  {
 			
 /*			Bloco referente aos cálculos do aviso prévio.									*/
 			this.qtdDiasAviso = dia.calcDiasAviso(dataEntrada, dataSaida);
-			this.opAviso = (String) view.getjComboBox2().getSelectedItem();
+			this.opAviso = (String) gui.getjComboBox2().getSelectedItem();
 			
 			switch (opAviso) {
 			case "Trabalhado":
@@ -527,8 +528,8 @@ public class ControllerPrincipal  {
 //	--------------------------------------------------------------- //  
     
     private void obterDatas(){
-    	this.dataEntrada = dt.capData((view.getjFormattedTextField1().getText()));
-    	this.dataSaida = dt.capData(view.getjFormattedTextField2().getText());
+    	this.dataEntrada = dt.capData((gui.getjFormattedTextField1().getText()));
+    	this.dataSaida = dt.capData(gui.getjFormattedTextField2().getText());
     	
     }
     	
@@ -543,6 +544,7 @@ public class ControllerPrincipal  {
 			return true;
 		}		
 	}
+	
 	private boolean validarDataEntrada(LocalDate date){
 		LocalDate inicioClt = dt.capData("10/11/1943");
 		
@@ -568,6 +570,7 @@ public class ControllerPrincipal  {
 		}
 
 	}
+	
 	private boolean validarDataSaida(LocalDate date){
 		LocalDate dataLimite = dt.capData("01/01/2060");
 		
@@ -594,8 +597,23 @@ public class ControllerPrincipal  {
 		}
 
 	}
+	
 	private boolean validarSalario(BigDecimal valor){
 		if ( valor.compareTo(new BigDecimal("1") ) < 0){
+			
+			this.msgErro = "O valor informado como salário é inválido!\n"
+					+ "Use valores apartir de R$ 1,00.";
+			
+			exibirErro(this.msgErro);
+			
+			return false;
+			
+		}else if ( valor.compareTo(new BigDecimal("59999") ) > 0 ) {
+
+			this.msgErro = "O valor informado como salário é inválido!\n"
+					+ "Use valores inferiores há R$ 60.000,00.";
+			
+			exibirErro(this.msgErro);
 			
 			return false;
 			
@@ -608,6 +626,7 @@ public class ControllerPrincipal  {
 	}
     
 	private boolean validarFgts(BigDecimal valor){
+		
 		if ( valor.compareTo(new BigDecimal("0") ) < 0){
 			
 			return false;
@@ -623,6 +642,7 @@ public class ControllerPrincipal  {
 	private void exibirErro(String msgErro){
 		JOptionPane.showMessageDialog(null, msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
 	}
+
 	private void exibirAlerta(String msgAlerta){ 
 		JOptionPane.showMessageDialog(null, msgAlerta, "Informação", JOptionPane.INFORMATION_MESSAGE);
 		
@@ -654,14 +674,12 @@ public class ControllerPrincipal  {
     private void opPorJustaCau(){
     	
     	this.receberFgts = "Não";
-    	
-    	int totDiasTrab = dia.calcTotDiasTrab(dataEntrada, dataSaida);
     	    	
-    	if (totDiasTrab < 365) {
-        	this.valorDecimo = new BigDecimal("0");
-        	this.valorFerias = new BigDecimal("0");
-        	this.valorTercoFerias = new BigDecimal("0");
-		} 
+    	this.valorDecimo = new BigDecimal("0");
+
+    	this.valorFerias = new BigDecimal("0");
+    	
+    	this.valorTercoFerias = new BigDecimal("0");
     	
     	this.multaFGTS = new BigDecimal("0");
     	
@@ -674,8 +692,8 @@ public class ControllerPrincipal  {
     private void mostrarResultado(){
     	
     	/*Bloco responsável por direcionar o usuário para a tela de resultados.*/
-        CardLayout cl = (CardLayout) view.getjPanel1().getLayout();
-        cl.show(view.getjPanel1(), "card2");
+        CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
+        cl.show(gui.getjPanel1(), "card2");
         /*Fim do bloco*/
  
         
@@ -705,19 +723,19 @@ public class ControllerPrincipal  {
     	
         
         /*Bloco com definições e valores específicos da tabela de rescisão*/
-    	view.getjTable1().setModel(tabela1);
+    	gui.getjTable1().setModel(tabela1);
         tabela1.addColumn("Item");
         tabela1.addColumn("Referência");
         tabela1.addColumn("Valor");
                
-        view.getjTable1().getColumnModel().getColumn(0).setResizable(false);
-        view.getjTable1().getColumnModel().getColumn(0).setPreferredWidth(250);
+        gui.getjTable1().getColumnModel().getColumn(0).setResizable(false);
+        gui.getjTable1().getColumnModel().getColumn(0).setPreferredWidth(250);
         
-        view.getjTable1().getColumnModel().getColumn(1).setResizable(false);        
-        view.getjTable1().getColumnModel().getColumn(1).setPreferredWidth(100);
+        gui.getjTable1().getColumnModel().getColumn(1).setResizable(false);        
+        gui.getjTable1().getColumnModel().getColumn(1).setPreferredWidth(100);
                 
-        view.getjTable1().getColumnModel().getColumn(2).setResizable(false);
-        view.getjTable1().getColumnModel().getColumn(2).setPreferredWidth(135);
+        gui.getjTable1().getColumnModel().getColumn(2).setResizable(false);
+        gui.getjTable1().getColumnModel().getColumn(2).setPreferredWidth(135);
         /*Fim do bloco*/
         
         
@@ -761,15 +779,15 @@ public class ControllerPrincipal  {
         
         
         /*Bloco com definições e valores específicos da tabela do FGTS*/
-        view.getjTable2().setModel(tabela2);
+        gui.getjTable2().setModel(tabela2);
         tabela2.addColumn(null);
         tabela2.addColumn(null);
         
-        view.getjTable2().getColumnModel().getColumn(0).setResizable(false);
-        view.getjTable2().getColumnModel().getColumn(0).setPreferredWidth(350);
+        gui.getjTable2().getColumnModel().getColumn(0).setResizable(false);
+        gui.getjTable2().getColumnModel().getColumn(0).setPreferredWidth(350);
         
-        view.getjTable2().getColumnModel().getColumn(1).setResizable(false);
-        view.getjTable2().getColumnModel().getColumn(1).setPreferredWidth(135);
+        gui.getjTable2().getColumnModel().getColumn(1).setResizable(false);
+        gui.getjTable2().getColumnModel().getColumn(1).setPreferredWidth(135);
         /*Fim do bloco */
         
 //		Convertemos e formatamos todos os valores e informações para o formato String.
@@ -789,9 +807,9 @@ public class ControllerPrincipal  {
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         
-        view.getjTable1().getColumnModel().getColumn(1).setCellRenderer(centralizado);
-        view.getjTable1().getColumnModel().getColumn(2).setCellRenderer(centralizado);
-        view.getjTable2().getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        gui.getjTable1().getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        gui.getjTable1().getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        gui.getjTable2().getColumnModel().getColumn(1).setCellRenderer(centralizado);
         /*Fim do bloco*/
         
     }
@@ -860,6 +878,7 @@ public class ControllerPrincipal  {
         
         
     }
+
     private void mostrarSobre(){
     	
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -1,4 +1,4 @@
-package br.edu.tglima.view.frames;
+package br.edu.tglima.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,7 +17,7 @@ import javax.swing.JEditorPane;
 import java.awt.Font;
 import javax.swing.UIManager;
 
-//Last edition. 2017-03-20
+//Last edition. 2017-03-23
 
 
 public class DialogSobre extends JDialog {
@@ -28,7 +28,7 @@ public class DialogSobre extends JDialog {
 	private JButton fecharButton = new JButton("Fechar");
 	
 	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.7.0 - Build 20170320-1130\n"
+			+ "Versão 0.8.0 - Build 20170323-1600\n"
 			+ "Copyright (c) 2017 Thiago Lima de Sousa\n\n"
 			+ "Biblioteca Apache POI. Copyright 2003-2016\n"
 			+ "The Apache Software Foundation\n"
@@ -66,7 +66,7 @@ public class DialogSobre extends JDialog {
 		}
 		
 		JLabel lblImage = new JLabel("");
-		lblImage.setIcon(new ImageIcon(DialogSobre.class.getResource("/br/edu/tglima/view/images/calc-icon-64-64.png")));
+		lblImage.setIcon(new ImageIcon(DialogSobre.class.getResource("/br/edu/tglima/view/calc-icon-64-64.png")));
 		
 		JEditorPane dtrpnCrtClculos = new JEditorPane();
 		dtrpnCrtClculos.setText(msgSobre);
