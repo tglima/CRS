@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -30,11 +31,12 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
-// Last edition. 2017-03-23
+// Last edition. 2017-03-24
 
+@SuppressWarnings("serial")
 public class FramePrincipal extends JFrame {
 
-	private static final long serialVersionUID = 7129474732543450733L;	
+
 	
 	public FramePrincipal() {
 		iniciarComponentes();
@@ -42,39 +44,39 @@ public class FramePrincipal extends JFrame {
 
 	// Getter e Setters da Classe
 	
-	public JTable getjTable1() {
-		return jTable1;
+	public JTable getTblRescisao() {
+		return tblRescisao;
 	}
 
-	public JTable getjTable2() {
-		return jTable2;
+	public JTable getTblFGTS() {
+		return tblFGTS;
 	}
 	
-	public JButton getjButton1() {
-		return btCalcular;
+	public JButton getBtnCalcular() {
+		return btnCalcular;
 	}
 
-	public JButton getjButton2() {
-		return btVoltar1;
+	public JButton getBtnVoltar1() {
+		return btnVoltar1;
 	}
 
-	public JButton getjButton3() {
-		return btExportar;
+	public JButton getBtnVoltar2() {
+		return btnVoltar2;
 	}
 
-	public JButton getjButton4() {
-		return btVoltar2;
+	public JButton getBtnVoltar3() {
+		return btnVoltar3;
 	}
 
-	public JButton getjButton5() {
-		return btVoltar3;
+	public JButton getBtnExportar() {
+		return btnExportar;
 	}
-
-	public JComboBox<String> getjComboBox1() {
+	
+	public JComboBox<String> getComboMotivoSaida() {
 		return comboMotivoSaida;
 	}
 
-	public JComboBox<String> getjComboBox2() {
+	public JComboBox<String> getComboAvisoPrevio() {
 		return comboAvisoPrevio;
 	}
 
@@ -120,6 +122,10 @@ public class FramePrincipal extends JFrame {
 
 	public JPanel getjPanel1() {
 		return jPanel1;
+	}
+
+	public JPanel getCard01Principal() {
+		return card01Principal;
 	}
 
 	public JRadioButton getjRadioButton1() {
@@ -185,30 +191,30 @@ public class FramePrincipal extends JFrame {
         
         comboMotivoSaida 	= 	new JComboBox<>();
         comboAvisoPrevio 	= 	new JComboBox<>();
-        btCalcular 	= 	new JButton();
+        btnCalcular 	= 	new JButton();
         
         
         card02Resultado 	= 	new JPanel();
         jScrollPane1 		= 	new JScrollPane();
-        jTable1 			= 	new JTable();
+        tblRescisao 			= 	new JTable();
         jLabel10 			= 	new JLabel();
         jScrollPane2 		= 	new JScrollPane();
-        jTable2 			= 	new JTable();
-        btVoltar1 			= 	new JButton();
-        btExportar 			= 	new JButton();
+        tblFGTS 			= 	new JTable();
+        btnVoltar1 			= 	new JButton();
+        btnExportar 			= 	new JButton();
         
         
         Card03Termos 	= 	new JPanel();
         jScrollPane3 	= 	new JScrollPane();
         jTextPane1	 	= 	new JTextPane();
         jLabel11		= 	new JLabel();
-        btVoltar3 		= 	new JButton();
+        btnVoltar3 		= 	new JButton();
         
         Card04Limitacoes 	= 	new JPanel();
         jLabel12 			= 	new JLabel();
         jScrollPane4 		= 	new JScrollPane();
         jTextPane2 			= 	new JTextPane();
-        btVoltar2 			= 	new JButton();
+        btnVoltar2 			= 	new JButton();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cálculos Rescisórios");
@@ -298,7 +304,8 @@ public class FramePrincipal extends JFrame {
         jFormattedTextField4.setHorizontalAlignment(SwingConstants.CENTER);
         jFormattedTextField4.setEnabled(false);
 
-        btCalcular.setText("Calcular");
+        btnCalcular.setText("Calcular");
+        btnCalcular.setMnemonic(KeyEvent.VK_C);
 
         
         GroupLayout card01PrincipalLayout = new GroupLayout(card01Principal);
@@ -358,7 +365,7 @@ public class FramePrincipal extends JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(GroupLayout.Alignment.TRAILING, card01PrincipalLayout.createSequentialGroup()
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btCalcular, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCalcular, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
         );
         card01PrincipalLayout.setVerticalGroup(
@@ -397,7 +404,7 @@ public class FramePrincipal extends JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jFormattedTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
-                .addComponent(btCalcular, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCalcular, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -409,30 +416,32 @@ public class FramePrincipal extends JFrame {
         jLabel9.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel9.setText("Rescisão");
         
-        jTable1.setAutoResizeMode( JTable.AUTO_RESIZE_OFF);
-        jTable1.setAutoscrolls(false);
-        jTable1.setRowHeight(20);
-        jTable1.setRowSelectionAllowed(false);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        tblRescisao.setAutoResizeMode( JTable.AUTO_RESIZE_OFF);
+        tblRescisao.setAutoscrolls(false);
+        tblRescisao.setRowHeight(20);
+        tblRescisao.setRowSelectionAllowed(false);
+        tblRescisao.getTableHeader().setResizingAllowed(false);
+        tblRescisao.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblRescisao);
         
 
         jLabel10.setFont(new Font("Dialog", 1, 36)); 
         jLabel10.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel10.setText("FGTS");
         
-        jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jTable2.setRowHeight(20);
-        jTable2.setRowSelectionAllowed(false);
-        jTable2.setTableHeader(null);
-        jTable2.setUpdateSelectionOnSort(false);
-        jTable2.setVerifyInputWhenFocusTarget(false);
-        jScrollPane2.setViewportView(jTable2);
+        tblFGTS.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tblFGTS.setRowHeight(20);
+        tblFGTS.setRowSelectionAllowed(false);
+        tblFGTS.setTableHeader(null);
+        tblFGTS.setUpdateSelectionOnSort(false);
+        tblFGTS.setVerifyInputWhenFocusTarget(false);
+        jScrollPane2.setViewportView(tblFGTS);
         
      
-        btVoltar1.setText("Voltar");
-        btExportar.setText("Exportar");
+        btnVoltar1.setText("Voltar");
+        btnVoltar1.setMnemonic(KeyEvent.VK_V);
+        btnExportar.setText("Exportar");
+        btnExportar.setMnemonic(KeyEvent.VK_E);
 
         GroupLayout card02ResultadoLayout = new GroupLayout(card02Resultado);
         card02Resultado.setLayout(card02ResultadoLayout);
@@ -453,9 +462,9 @@ public class FramePrincipal extends JFrame {
                 .addGroup(card02ResultadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(card02ResultadoLayout.createSequentialGroup()
                         .addGap(145, 145, 145)
-                        .addComponent(btVoltar1)
+                        .addComponent(btnVoltar1)
                         .addGap(61, 61, 61)
-                        .addComponent(btExportar))
+                        .addComponent(btnExportar))
                     .addGroup(card02ResultadoLayout.createSequentialGroup()
                         .addGap(199, 199, 199)
                         .addComponent(jLabel10)))
@@ -474,8 +483,8 @@ public class FramePrincipal extends JFrame {
                 .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(card02ResultadoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btVoltar1)
-                    .addComponent(btExportar))
+                    .addComponent(btnVoltar1)
+                    .addComponent(btnExportar))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -486,7 +495,7 @@ public class FramePrincipal extends JFrame {
         
     	StyleSheet css = new StyleSheet();
     	css.addRule("h2 { margin: 0px, 0px, 0px, 0px; margin-top: 25px; padding: 0px; font-size: 1.40em;}");
-    	css.addRule("body {font-family: monospaced; font-size: 1em; line-height: 1.5em;}");
+    	css.addRule("body {font-family: sans serif; font-size: 1em; line-height: 1.5em;}");
     	css.addRule("strong {font-weight: bold;}");
     	css.addRule("ul {list-style-type: circle; padding: 25px;}");
     	css.addRule("li {list-style-type: circle; padding-bottom: 10px;}");
@@ -522,7 +531,8 @@ public class FramePrincipal extends JFrame {
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 36));
         jLabel11.setText("Termos de uso");
 
-        btVoltar3.setText("Voltar");
+        btnVoltar3.setText("Voltar");
+        btnVoltar3.setMnemonic(KeyEvent.VK_V);
 
         GroupLayout Card03TermosLayout = new GroupLayout(Card03Termos);
         Card03Termos.setLayout(Card03TermosLayout);
@@ -532,7 +542,7 @@ public class FramePrincipal extends JFrame {
         		.addGroup(Card03TermosLayout.createSequentialGroup().addGroup(Card03TermosLayout
         				.createParallelGroup(GroupLayout.Alignment.LEADING)
         				.addGroup(
-        						Card03TermosLayout.createSequentialGroup().addGap(222, 222, 222).addComponent(btVoltar3))
+        						Card03TermosLayout.createSequentialGroup().addGap(222, 222, 222).addComponent(btnVoltar3))
         				.addGroup(Card03TermosLayout.createSequentialGroup().addContainerGap().addComponent(
         						jScrollPane3, GroupLayout.PREFERRED_SIZE, 495,
         						GroupLayout.PREFERRED_SIZE))
@@ -547,7 +557,7 @@ public class FramePrincipal extends JFrame {
         						GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         				.addComponent(jScrollPane3, GroupLayout.PREFERRED_SIZE, 420,
         						GroupLayout.PREFERRED_SIZE)
-        				.addGap(18, 18, 18).addComponent(btVoltar3).addGap(30, 30, 30))
+        				.addGap(18, 18, 18).addComponent(btnVoltar3).addGap(30, 30, 30))
 
         		);
 
@@ -576,7 +586,8 @@ public class FramePrincipal extends JFrame {
         
         jScrollPane4.setViewportView(jTextPane2);
 
-        btVoltar2.setText("Voltar");
+        btnVoltar2.setText("Voltar");
+        btnVoltar2.setMnemonic(KeyEvent.VK_V);
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 36));
         jLabel12.setText("Limitações");
@@ -590,7 +601,7 @@ public class FramePrincipal extends JFrame {
         	.addGroup(Card04LimitacoesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(Card04LimitacoesLayout.createSequentialGroup()
             .addGap(222, 222, 222)
-            .addComponent(btVoltar2))
+            .addComponent(btnVoltar2))
             .addGroup(Card04LimitacoesLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(jScrollPane4, GroupLayout.PREFERRED_SIZE, 495, GroupLayout.PREFERRED_SIZE))
@@ -611,24 +622,28 @@ public class FramePrincipal extends JFrame {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btVoltar2)
+                .addComponent(btnVoltar2)
                 .addGap(30, 30, 30))
         );
 
         jPanel1.add(Card04Limitacoes, "card4");
 
         jMenu1.setText("Ajuda");
+        jMenu1.setMnemonic(KeyEvent.VK_A);
 
         jMenuItem1.setText("Limitações");
+        jMenuItem1.setMnemonic(KeyEvent.VK_L);
 
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Termos de uso");
-
+        jMenuItem2.setMnemonic(KeyEvent.VK_T);
+        
         jMenu1.add(jMenuItem2);
         jMenu1.add(jSeparator1);
 
         jMenuItem3.setText("Sobre");
+        jMenuItem3.setMnemonic(KeyEvent.VK_S);
 
         jMenu1.add(jMenuItem3);
 
@@ -663,7 +678,7 @@ public class FramePrincipal extends JFrame {
 
 	private ButtonGroup btGroupFGTS, btGroupFerias;
 	
-	private JButton btCalcular, btVoltar1, btExportar, btVoltar2, btVoltar3;                                       
+	private JButton btnCalcular, btnVoltar1, btnExportar, btnVoltar2, btnVoltar3;                                       
 	private JComboBox<String> comboMotivoSaida, comboAvisoPrevio;
 	
 	private JFormattedTextField jFormattedTextField1, jFormattedTextField2;
@@ -680,7 +695,7 @@ public class FramePrincipal extends JFrame {
 	private JRadioButton jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4;
 	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3, jScrollPane4;
 
-	private JTable jTable1, jTable2;
+	private JTable tblRescisao, tblFGTS;
 	private JTextPane jTextPane1, jTextPane2;
 //	private JTextPane jTextPane1;
 //	private JEditorPane jTextPane2;

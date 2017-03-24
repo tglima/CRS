@@ -15,20 +15,23 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+
 import javax.swing.UIManager;
 
-//Last edition. 2017-03-23
+//Last edition. 2017-03-24
 
 
+@SuppressWarnings("serial")
 public class DialogSobre extends JDialog {
 	
-	private static final long serialVersionUID = -8342309119073380926L;
+
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lblLink;
-	private JButton fecharButton = new JButton("Fechar");
+	private JButton btnFechar = new JButton("Fechar");
 	
 	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.8.0 - Build 20170323-1600\n"
+			+ "Versão 0.8.1 - Build 20170324-1900\n"
 			+ "Copyright (c) 2017 Thiago Lima de Sousa\n\n"
 			+ "Biblioteca Apache POI. Copyright 2003-2016\n"
 			+ "The Apache Software Foundation\n"
@@ -42,8 +45,8 @@ public class DialogSobre extends JDialog {
 			+ "Código fonte disponível no link abaixo:";
 	
 	
-	public JButton getFecharButton() {
-		return fecharButton;
+	public JButton getBtnFechar() {
+		return btnFechar;
 	}
 	
 	public JLabel getLblLink(){
@@ -55,6 +58,8 @@ public class DialogSobre extends JDialog {
 		setTitle("Sobre");
 		setResizable(false);
 		setBounds(100, 100, 400, 400);
+		
+		btnFechar.setMnemonic(KeyEvent.VK_F);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -102,8 +107,8 @@ public class DialogSobre extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				buttonPane.add(fecharButton);
-				getRootPane().setDefaultButton(fecharButton);
+				buttonPane.add(btnFechar);
+				getRootPane().setDefaultButton(btnFechar);
 			}
 		}
 	}

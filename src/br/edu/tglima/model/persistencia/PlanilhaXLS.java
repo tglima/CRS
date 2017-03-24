@@ -193,27 +193,27 @@ public class PlanilhaXLS {
 	        linha04.createCell(2).setCellValue(this.valorDecimo);
 	        
 	        //Colunas da Linha 5              
-	        linha05.createCell(0).setCellValue("Férias proporcional");
+	        linha05.createCell(0).setCellValue("Férias Proporcional");
 	        linha05.createCell(1).setCellValue(this.mesesAqFerias);
 	        linha05.createCell(2).setCellValue(this.valorFerias);
 	        
 	        //Colunas da Linha 6
-	        linha06.createCell(0).setCellValue("1/3 Férias proporcional");
+	        linha06.createCell(0).setCellValue("1/3 Férias Proporcional");
 	        linha06.createCell(1).setCellValue("-");
 	        linha06.createCell(2).setCellValue(this.valorTercoFerias);
 	        
 	        //Colunas da Linha 7
-	        linha07.createCell(0).setCellValue("Férias vencidas");                
+	        linha07.createCell(0).setCellValue("Férias Vencidas");                
 	        linha07.createCell(1).setCellValue(this.qtdFeriasVenc );                
 	        linha07.createCell(2).setCellValue(this.valorFeriasVenc);                
 	        
 	        //Colunas da linha 8                
-	        linha08.createCell(0).setCellValue("Aviso prévio"); 
+	        linha08.createCell(0).setCellValue("Aviso Prévio"); 
 	        linha08.createCell(1).setCellValue(this.qtdDiasAviso); 
 	        linha08.createCell(2).setCellValue(this.valorAviso); 
 	        
 	        //Colunas da Linha 10
-	        linha10.createCell(0).setCellValue("Valor total"); 
+	        linha10.createCell(0).setCellValue("Valor Total"); 
 	        linha10.createCell(1).setCellValue("-"); 
 	        linha10.createCell(2).setCellValue(this.totVencimento); 
 	        

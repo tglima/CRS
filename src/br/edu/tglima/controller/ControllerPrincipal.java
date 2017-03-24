@@ -28,16 +28,6 @@ import br.edu.tglima.model.proventos.*;
 import br.edu.tglima.view.DialogSobre;
 import br.edu.tglima.view.FramePrincipal;
 
-
-
-
-/**
- * @author tglima Thiago Lima de Sousa
- * @version 0.8.0
- * @build 20170323-1600
- *
- */
-
 public class ControllerPrincipal  {
 	
 /*	Classes																*/
@@ -75,18 +65,13 @@ public class ControllerPrincipal  {
 //	Atributos relativos a datas e periodos.
 	private int qtdDiasTrabUltMes, qtdDiasAviso, mesesDecimo,	mesesAqFerias, qtdFeriasVenc;
 	
-//	Outros atributos
-	private String msgErro;
-	private String motivoSaida;
-	private String opAviso;
-	private String receberFgts;
+//	Atributos relativos a mensagens e textos.
+	private String msgErro, motivoSaida, opAviso, receberFgts;
 	
 	private String strQtdDiasTrabUltMes, strSalarioFinal, strMesesDecimo, strValorDecimo,
     strMesesAqFerias, strValorFerias, strValorTercoFerias,strQtdFeriasVenc, 
     strValorFeriasVenc, strValorTercoFeriasVenc, strQtdDiasAviso, 
     strValorAviso, strTotVencimento, stSaldoFgts, stMultaFgts, stTotSomaFgts;
-	
-	
 	
 //	------------------------------------------------------------------------ //	
 	
@@ -95,7 +80,11 @@ public class ControllerPrincipal  {
 	public ControllerPrincipal(FramePrincipal gui) {
 		this.gui = gui;
 		
-        //Definindo os listeners para os botoes da view.
+		
+		
+		
+		
+        //Definindo os listeners.
 		
         this.gui.getjMenuItem1().addActionListener(new ActionListener() {
             @Override
@@ -118,38 +107,42 @@ public class ControllerPrincipal  {
             }
         });
 						
-		this.gui.getjButton1().addActionListener(new ActionListener() {
+		this.gui.getBtnCalcular().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-            	jButton1ActionPerformed(e);
+            	btnCalcularEvent(e);
             }
         });
-		this.gui.getjButton2().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
-            }
-        });
-		this.gui.getjButton3().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-            	exportarPlanilha();
-            }
-        });
-		this.gui.getjButton4().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
-            }
-        });
-		this.gui.getjButton5().addActionListener(new ActionListener() {
+	
+		this.gui.getBtnVoltar1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
                 voltarInicio(e);
             }
         });
 		
-		this.dialog.getFecharButton().addActionListener(new ActionListener() {
+		this.gui.getBtnExportar().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+            	exportarPlanilha();
+            }
+        });
+		
+		this.gui.getBtnVoltar2().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+                voltarInicio(e);
+            }
+        });
+		
+		this.gui.getBtnVoltar3().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+                voltarInicio(e);
+            }
+        });
+		
+		this.dialog.getBtnFechar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -187,7 +180,7 @@ public class ControllerPrincipal  {
 			}
 		});
                 
-        this.gui.getjComboBox1().addActionListener(new ActionListener() {
+        this.gui.getComboMotivoSaida().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				jComboBox1ActionPerformed(e);
@@ -203,9 +196,6 @@ public class ControllerPrincipal  {
 			}
 		});
 
-//    	-------------------------------------------------------------------- //    
-
-        
         this.gui.getjFormattedTextField3().addFocusListener(new FocusAdapter() {
             @Override
 			public void focusLost(FocusEvent e) {
@@ -222,8 +212,8 @@ public class ControllerPrincipal  {
 
         });
         
+/*	Fim do contrutor da classe												*/
         
-        //Fim do contrutor da classe
 	}
 	
 //	------------------------------------------------------------------------ //    
@@ -285,15 +275,15 @@ public class ControllerPrincipal  {
 	
 //	------------------------------------------------------------------------ //    
         
-    
+/*	Método responsável por desativar o ComboAvisoPrevio quando necessário */
 	private void jComboBox1ActionPerformed(ActionEvent e) {
-		if (gui.getjComboBox1().getSelectedItem() == "Falecimento"
-				|| gui.getjComboBox1().getSelectedItem() == "Fim do Contrato de Trabalho") {
+		if (gui.getComboMotivoSaida().getSelectedItem() == "Falecimento"
+				|| gui.getComboMotivoSaida().getSelectedItem() == "Fim do Contrato de Trabalho") {
 			gui.getjLabel6().setEnabled(false);
-			gui.getjComboBox2().setEnabled(false);
+			gui.getComboAvisoPrevio().setEnabled(false);
 		} else {
 			gui.getjLabel6().setEnabled(true);
-			gui.getjComboBox2().setEnabled(true);
+			gui.getComboAvisoPrevio().setEnabled(true);
 		}
 
 	}
@@ -331,8 +321,7 @@ public class ControllerPrincipal  {
 	
 //	------------------------------------------------------------------------ //    
 
-	
-	
+		
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
 	private void jFormattedTextField3FocusLost(FocusEvent e) {
@@ -379,8 +368,17 @@ public class ControllerPrincipal  {
     
 /*	Método executado ao pressionar o botão calcular					*/    
 
-    private void jButton1ActionPerformed(ActionEvent e) {                                         
+    private void btnCalcularEvent(ActionEvent e){
     	System.out.println("Botão calcular foi pressionado");
+    	
+    	realizarCalculo();
+    	
+    }
+    
+//	--------------------------------------------------------------- //  
+
+    
+    private void realizarCalculo() {                                         
     	
     	/*
     	 * Primeiro vamos obter os dados obrigátorios, começaremos
@@ -423,11 +421,7 @@ public class ControllerPrincipal  {
     	
     	else if (validarSalario(this.salarioInformado) == false){
     		System.out.println("O valor informado como salário é inválido!");
-    		
-			this.msgErro = "O valor informado como salário é inválido!\n"
-							+ "São aceitos apenas valores apartir de R$ 1,00.";
-			exibirErro(this.msgErro);
-    		
+    		   		
     	} 
     	
     	else if (validarFgts(this.saldoFgts) == false) {
@@ -438,7 +432,7 @@ public class ControllerPrincipal  {
 			
 		} else {
 			
-			this.motivoSaida = (String) this.gui.getjComboBox1().getSelectedItem();
+			this.motivoSaida = (String) gui.getComboMotivoSaida().getSelectedItem();
 			
 /*			 Bloco referente ao último sálario.						*/
 			this.qtdDiasTrabUltMes = dia.calcDiasTrabUltimoMes(dataSaida);
@@ -465,7 +459,7 @@ public class ControllerPrincipal  {
 			
 /*			Bloco referente aos cálculos do aviso prévio.									*/
 			this.qtdDiasAviso = dia.calcDiasAviso(dataEntrada, dataSaida);
-			this.opAviso = (String) gui.getjComboBox2().getSelectedItem();
+			this.opAviso = (String) gui.getComboAvisoPrevio().getSelectedItem();
 			
 			switch (opAviso) {
 			case "Trabalhado":
@@ -524,8 +518,6 @@ public class ControllerPrincipal  {
 		}
     	
     } 
-    
-//	--------------------------------------------------------------- //  
     
     private void obterDatas(){
     	this.dataEntrada = dt.capData((gui.getjFormattedTextField1().getText()));
@@ -601,8 +593,7 @@ public class ControllerPrincipal  {
 	private boolean validarSalario(BigDecimal valor){
 		if ( valor.compareTo(new BigDecimal("1") ) < 0){
 			
-			this.msgErro = "O valor informado como salário é inválido!\n"
-					+ "Use valores apartir de R$ 1,00.";
+			this.msgErro = "O valor informado como salário é inválido!\n";
 			
 			exibirErro(this.msgErro);
 			
@@ -723,19 +714,19 @@ public class ControllerPrincipal  {
     	
         
         /*Bloco com definições e valores específicos da tabela de rescisão*/
-    	gui.getjTable1().setModel(tabela1);
+    	gui.getTblRescisao().setModel(tabela1);
         tabela1.addColumn("Item");
         tabela1.addColumn("Referência");
         tabela1.addColumn("Valor");
                
-        gui.getjTable1().getColumnModel().getColumn(0).setResizable(false);
-        gui.getjTable1().getColumnModel().getColumn(0).setPreferredWidth(250);
+        gui.getTblRescisao().getColumnModel().getColumn(0).setResizable(false);
+        gui.getTblRescisao().getColumnModel().getColumn(0).setPreferredWidth(250);
         
-        gui.getjTable1().getColumnModel().getColumn(1).setResizable(false);        
-        gui.getjTable1().getColumnModel().getColumn(1).setPreferredWidth(100);
+        gui.getTblRescisao().getColumnModel().getColumn(1).setResizable(false);        
+        gui.getTblRescisao().getColumnModel().getColumn(1).setPreferredWidth(100);
                 
-        gui.getjTable1().getColumnModel().getColumn(2).setResizable(false);
-        gui.getjTable1().getColumnModel().getColumn(2).setPreferredWidth(135);
+        gui.getTblRescisao().getColumnModel().getColumn(2).setResizable(false);
+        gui.getTblRescisao().getColumnModel().getColumn(2).setPreferredWidth(135);
         /*Fim do bloco*/
         
         
@@ -766,28 +757,28 @@ public class ControllerPrincipal  {
         
         
 //      Agora repassamos essas informações para a tabela correspondente.
-        tabela1.addRow(new Object[]{"  Saldo salário", this.strQtdDiasTrabUltMes, this.strSalarioFinal });
+        tabela1.addRow(new Object[]{"  Saldo Salário", this.strQtdDiasTrabUltMes, this.strSalarioFinal });
         tabela1.addRow(new Object[]{"  13º Proporcional", this.strMesesDecimo, this.strValorDecimo });
-        tabela1.addRow(new Object[]{"  Férias proporcional", this.strMesesAqFerias, this.strValorFerias });
-        tabela1.addRow(new Object[]{"  1/3 Férias proporcional", "-", this.strValorTercoFerias });
-        tabela1.addRow(new Object[]{"  Férias vencidas", this.strQtdFeriasVenc, this.strValorFeriasVenc });
-        tabela1.addRow(new Object[]{"  1/3 Férias vencidas", "-", this.strValorTercoFeriasVenc });
-        tabela1.addRow(new Object[]{"  Aviso prévio", this.strQtdDiasAviso, this.strValorAviso });
+        tabela1.addRow(new Object[]{"  Férias Proporcional", this.strMesesAqFerias, this.strValorFerias });
+        tabela1.addRow(new Object[]{"  1/3 Férias Proporcional", "-", this.strValorTercoFerias });
+        tabela1.addRow(new Object[]{"  Férias Vencidas", this.strQtdFeriasVenc, this.strValorFeriasVenc });
+        tabela1.addRow(new Object[]{"  1/3 Férias Vencidas", "-", this.strValorTercoFeriasVenc });
+        tabela1.addRow(new Object[]{"  Aviso Prévio", this.strQtdDiasAviso, this.strValorAviso });
         tabela1.addRow(new Object[]{   null, null, null });
         tabela1.addRow(new Object[]{"  Valor total", "-", this.strTotVencimento });
     	/*Fim do bloco*/
         
         
         /*Bloco com definições e valores específicos da tabela do FGTS*/
-        gui.getjTable2().setModel(tabela2);
+        gui.getTblFGTS().setModel(tabela2);
         tabela2.addColumn(null);
         tabela2.addColumn(null);
         
-        gui.getjTable2().getColumnModel().getColumn(0).setResizable(false);
-        gui.getjTable2().getColumnModel().getColumn(0).setPreferredWidth(350);
+        gui.getTblFGTS().getColumnModel().getColumn(0).setResizable(false);
+        gui.getTblFGTS().getColumnModel().getColumn(0).setPreferredWidth(350);
         
-        gui.getjTable2().getColumnModel().getColumn(1).setResizable(false);
-        gui.getjTable2().getColumnModel().getColumn(1).setPreferredWidth(135);
+        gui.getTblFGTS().getColumnModel().getColumn(1).setResizable(false);
+        gui.getTblFGTS().getColumnModel().getColumn(1).setPreferredWidth(135);
         /*Fim do bloco */
         
 //		Convertemos e formatamos todos os valores e informações para o formato String.
@@ -800,16 +791,16 @@ public class ControllerPrincipal  {
         tabela2.addRow(new Object[]{"  Saldo FGTS", this.stSaldoFgts});
         tabela2.addRow(new Object[]{"  Multa de 40%", this.stMultaFgts});
         tabela2.addRow(new Object[]{null, null});
-        tabela2.addRow(new Object[]{"  Valor total", this.stTotSomaFgts});
+        tabela2.addRow(new Object[]{"  Valor Total", this.stTotSomaFgts});
         /*Fim do bloco*/
         
         /*Bloco de código responsável por centralizar as células */
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         
-        gui.getjTable1().getColumnModel().getColumn(1).setCellRenderer(centralizado);
-        gui.getjTable1().getColumnModel().getColumn(2).setCellRenderer(centralizado);
-        gui.getjTable2().getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        gui.getTblRescisao().getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        gui.getTblRescisao().getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        gui.getTblFGTS().getColumnModel().getColumn(1).setCellRenderer(centralizado);
         /*Fim do bloco*/
         
     }

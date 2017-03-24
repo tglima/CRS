@@ -5,6 +5,8 @@ import br.edu.tglima.view.FramePrincipal;
 
 /**
  * @author tglima Thiago Lima de Sousa
+ * @version 0.8.1
+ * @build 20170324-1900
  */
 
 public class StartApplication {
