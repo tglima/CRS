@@ -31,7 +31,7 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
-// Last edition. 2017-03-24
+// Last edition. 2017-03-28
 
 @SuppressWarnings("serial")
 public class FramePrincipal extends JFrame {
@@ -230,7 +230,7 @@ public class FramePrincipal extends JFrame {
 
         card01Principal.setPreferredSize(new Dimension(525, 600));
 
-        jLabel1.setText("Data de admissão:");
+        jLabel1.setText("Data de Entrada:");
 
         try {
             jFormattedTextField1.setFormatterFactory(new DefaultFormatterFactory
@@ -243,7 +243,7 @@ public class FramePrincipal extends JFrame {
         jFormattedTextField1.setHorizontalAlignment(SwingConstants.CENTER);
         jFormattedTextField1.setPreferredSize(new Dimension(100, 19));
 
-        jLabel2.setText("Data de saída:");
+        jLabel2.setText("Data de Saída:");
 
         try {
             jFormattedTextField2.setFormatterFactory(new DefaultFormatterFactory
@@ -260,7 +260,7 @@ public class FramePrincipal extends JFrame {
 
         jFormattedTextField3.setHorizontalAlignment(SwingConstants.CENTER);
 
-        jLabel4.setText("Possui férias vencidas?");
+        jLabel4.setText("Possuí Férias Vencidas?");
         jLabel4.setEnabled(false);
         
         btGroupFerias.add(jRadioButton1);
@@ -276,14 +276,14 @@ public class FramePrincipal extends JFrame {
         
         
 
-        jLabel5.setText("Informe o motivo da saída:");
+        jLabel5.setText("Informe o Motivo da Saída:");
 
         comboMotivoSaida.setModel(new DefaultComboBoxModel<>(new String[] 
         		{ "Pedido de demissão", "Fim do Contrato de Trabalho", 
         				"Demissão sem justa causa", "Demissão por Justa Causa",
         				"Falecimento" }));
 
-        jLabel6.setText("Como foi o aviso prévio?");
+        jLabel6.setText("Tipo de Aviso Prévio:");
 
         comboAvisoPrevio.setModel(new DefaultComboBoxModel<>(new String[] 
         		{ "Trabalhado", "Indenizado pela empresa", 
@@ -499,6 +499,7 @@ public class FramePrincipal extends JFrame {
     	css.addRule("strong {font-weight: bold;}");
     	css.addRule("ul {list-style-type: circle; padding: 25px;}");
     	css.addRule("li {list-style-type: circle; padding-bottom: 10px;}");
+    	css.addRule("a { color:#0000FF; text-decoration: underline;}");
     	
     	HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
     	htmlEditorKit.setStyleSheet(css);
@@ -509,11 +510,6 @@ public class FramePrincipal extends JFrame {
         jTextPane1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
         jTextPane1.setContentType("text/html; charset=UTF-8");
     	jTextPane1.setEditorKit(htmlEditorKit);
-        
-    	
-
-    	
-    	
         
         try {
 
@@ -697,7 +693,5 @@ public class FramePrincipal extends JFrame {
 
 	private JTable tblRescisao, tblFGTS;
 	private JTextPane jTextPane1, jTextPane2;
-//	private JTextPane jTextPane1;
-//	private JEditorPane jTextPane2;
 	
 }

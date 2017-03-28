@@ -19,6 +19,8 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -159,11 +161,31 @@ public class ControllerPrincipal  {
 					Desktop.getDesktop().browse(link);
 					
 				} catch (Exception error) {
-					System.out.println("Não foi possível lançar o navegador!");
+					System.err.println("Não foi possível lançar o navegador!"
+										+ "\n"  + error.getMessage()       );
 				}
 				
 			}
 			
+		});
+		
+		/*Listener responsável por processar o link do jTextPane2*/
+		this.gui.getjTextPane2().addHyperlinkListener(new HyperlinkListener(){
+
+			@Override
+			public void hyperlinkUpdate(HyperlinkEvent e) {
+				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+
+					try {
+						Desktop.getDesktop().browse(e.getURL().toURI());
+
+					} catch (Exception error) {
+						System.err.println("Não foi possível lançar o navegador!" + 
+											"\n" + error.getMessage()  );
+
+					}
+				}
+			}
 		});
 		
         this.gui.getjRadioButton3().addActionListener(new ActionListener() {
@@ -405,7 +427,7 @@ public class ControllerPrincipal  {
     	 */
     	
     	if (validarDataEntrada(dataEntrada) == false) {
-			System.err.println("Data de admissão inválida!");
+			System.err.println("Data de entrada inválida!");
 		}
     	
     	else if (validarDataSaida(dataSaida) == false) {
@@ -542,7 +564,7 @@ public class ControllerPrincipal  {
 		
 		if (dt.validarData(date) == false) {
 			
-			this.msgErro = "Data de admissão inválida!"
+			this.msgErro = "Data de entrada inválida!"
 					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
 			
 			exibirErro(this.msgErro);
@@ -550,7 +572,7 @@ public class ControllerPrincipal  {
 			
 		} else if (verificarDiferDatas(inicioClt, date) == false) {
 			
-			this.msgErro = "Data de admissão inválida!"
+			this.msgErro = "Data de entrada inválida!"
 					+ "\nInforme datas superiores há 10/11/1943";
 			
 			exibirErro(this.msgErro);
@@ -568,7 +590,7 @@ public class ControllerPrincipal  {
 		
 		if (dt.validarData(date) == false) {
 			
-			this.msgErro = "Data de saída é inválida!"
+			this.msgErro = "Data de saída inválida!"
 					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
 			
 			exibirErro(this.msgErro);
@@ -680,7 +702,8 @@ public class ControllerPrincipal  {
     	opFimContrato();
     }
     
-    private void mostrarResultado(){
+    @SuppressWarnings("serial")
+	private void mostrarResultado(){
     	
     	/*Bloco responsável por direcionar o usuário para a tela de resultados.*/
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
@@ -689,9 +712,9 @@ public class ControllerPrincipal  {
  
         
         /*Bloco responsável por definições de Modelo das tabelas */
+        
     	// Modelo padrão para definição da Jtable1
     	DefaultTableModel tabela1 = new DefaultTableModel() {
-			private static final long serialVersionUID = -4898544871403933182L;
 
 			// Método resṕonsável por bloquear a edição das células
     		@Override
@@ -701,15 +724,16 @@ public class ControllerPrincipal  {
 
     	};
 
-    	DefaultTableModel tabela2 = new DefaultTableModel() {
-			private static final long serialVersionUID = 3583475816933228919L;
 
-			// Modelo padrão para definição da Jtable2
+    	// Modelo padrão para definição da Jtable2
+		DefaultTableModel tabela2 = new DefaultTableModel() {
+
     		@Override
 			public boolean isCellEditable(int linha, int coluna) {
     			return false;
     		}
     	};
+    	
         /*Fim do bloco*/
     	
         
@@ -813,6 +837,20 @@ public class ControllerPrincipal  {
     	
     	int returnVal = fileChooser.showSaveDialog(null);
     	
+    	File xlsFile = fileChooser.getSelectedFile();
+    	
+
+    	if (xlsFile.exists()) {
+    	    int response = JOptionPane.showConfirmDialog(null, //
+    	            "Já existe um arquivo com esse nome, deseja sobrescrevê-lo?", //
+    	            "Sobrescrever", JOptionPane.YES_NO_OPTION, //
+    	            JOptionPane.QUESTION_MESSAGE);
+    	    if (response != JOptionPane.YES_OPTION) {
+    	        return;
+    	    } 
+    	}
+    	
+    	
         if (returnVal==1){
         	
         	System.out.println("Usuário cancelou a ação de salvar!");
@@ -824,10 +862,14 @@ public class ControllerPrincipal  {
         	
         	try {
         		
-        		File arquivo = fileChooser.getSelectedFile();
+//        		File arquivo = fileChooser.getSelectedFile();
         		
 /*				Carregar os resultado para a planilha		*/
         		
+        		plan.setDataEntrada(gui.getjFormattedTextField1().getText());
+        		plan.setDataSaida(gui.getjFormattedTextField2().getText());
+        		plan.setSalario(gui.getjFormattedTextField3().getText());
+        		plan.setMotivoSaida(motivoSaida);
         		
         		plan.setQtdDiasTrabUltMes(this.strQtdDiasTrabUltMes);
         		plan.setSalarioFinal(this.strSalarioFinal);
@@ -847,7 +889,7 @@ public class ControllerPrincipal  {
         		plan.setTotSomaFgts(this.stTotSomaFgts);
         		
 				
-        		if (plan.gerarPlanilha(arquivo)) {
+        		if (plan.gerarPlanilha(xlsFile)) {
         			
         	        System.out.println("Arquivo XLS exportado com sucesso!");
         	        exibirAlerta("Arquivo XLS exportado com sucesso!");

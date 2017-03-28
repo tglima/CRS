@@ -19,7 +19,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.UIManager;
 
-//Last edition. 2017-03-24
+//Last edition. 2017-03-28
 
 
 @SuppressWarnings("serial")
@@ -31,11 +31,8 @@ public class DialogSobre extends JDialog {
 	private JButton btnFechar = new JButton("Fechar");
 	
 	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.8.1 - Build 20170324-1900\n"
+			+ "Versão 0.9.0 - Build 20170328-1900\n"
 			+ "Copyright (c) 2017 Thiago Lima de Sousa\n\n"
-			+ "Biblioteca Apache POI. Copyright 2003-2016\n"
-			+ "The Apache Software Foundation\n"
-			+ "(Licenciada sob APACHE LICENSE, VERSION 2.0\n\n"
 			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
 			+ "GPLv3).\n\n"
 			+ "Este programa é um Software Livre: você pode\n"
@@ -57,15 +54,15 @@ public class DialogSobre extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Sobre");
 		setResizable(false);
-		setBounds(100, 100, 400, 400);
+		setBounds(100, 100, 400, 340);
 		
 		btnFechar.setMnemonic(KeyEvent.VK_F);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
-			lblLink = new JLabel("<html> <u>http://www.github.com/tglima/crtproject</u>");
-			lblLink.setFont(new Font("Dialog", Font.PLAIN, 11));
+			lblLink = new JLabel(" http://www.github.com/tglima/crtproject");
+			lblLink.setFont(new Font("Dialog", Font.BOLD, 11));
 			lblLink.setForeground(Color.blue);
 			lblLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
