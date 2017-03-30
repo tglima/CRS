@@ -23,15 +23,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.math.BigDecimal;
-import java.net.URI;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -105,6 +103,8 @@ public class ControllerPrincipal  {
 		
         //Definindo os listeners.
 		
+		/*Listeners do FramePrincipal*/		
+		
         this.gui.getjMenuItem1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
@@ -125,85 +125,31 @@ public class ControllerPrincipal  {
                 jMenuItem3ActionPerformed(e);
             }
         });
-						
-		this.gui.getBtnCalcular().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-            	btnCalcularEvent(e);
-            }
-        });
-	
-		this.gui.getBtnVoltar1().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
-            }
-        });
 		
-		this.gui.getBtnExportar().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-            	exportarPlanilha();
-            }
-        });
-		
-		this.gui.getBtnVoltar2().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
-            }
-        });
-		
-		this.gui.getBtnVoltar3().addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
-            }
-        });
-		
-		this.dialog.getBtnFechar().addActionListener(new ActionListener() {
+        this.gui.getDataSaidaFmt().addFocusListener(new FocusAdapter() {
+        	
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				fecharButtonActionPerfomed(e);				
-			}
-		});
-		
-		this.dialog.getLblLink().addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					URI link = new URI("http://www.oracle.com/technetwork/java/index.html");
-					Desktop.getDesktop().browse(link);
-					
-				} catch (Exception error) {
-					System.err.println("Não foi possível lançar o navegador!"
-										+ "\n"  + error.getMessage()       );
-				}
+			public void focusLost(FocusEvent e) {
+				jFormattedTextField2FocusLost(e);
 				
 			}
-			
 		});
-		
-		/*Listener responsável por processar o link do jTextPane2*/
-		this.gui.getjTextPane2().addHyperlinkListener(new HyperlinkListener(){
 
-			@Override
-			public void hyperlinkUpdate(HyperlinkEvent e) {
-				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+        this.gui.getSalarioFmt().addFocusListener(new FocusAdapter() {
+            @Override
+			public void focusLost(FocusEvent e) {
+                jFormattedTextField3FocusLost(e);
+            }
 
-					try {
-						Desktop.getDesktop().browse(e.getURL().toURI());
+        });
+        
+        this.gui.getSaldoFgtsFmt().addFocusListener(new FocusAdapter() {
+            @Override
+			public void focusLost(FocusEvent e) {
+                jFormattedTextField4FocusLost(e);
+            }
 
-					} catch (Exception error) {
-						System.err.println("Não foi possível lançar o navegador!" + 
-											"\n" + error.getMessage()  );
-
-					}
-				}
-			}
-		});
+        });
 		
         this.gui.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
@@ -225,31 +171,75 @@ public class ControllerPrincipal  {
 				jComboBox1ActionPerformed(e);
 			}
 		});
-        
-        this.gui.getjFormattedTextField2().addFocusListener(new FocusAdapter() {
-        	
+		
+		this.gui.getBtnCalcular().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+            	btnCalcularEvent(e);
+            }
+        });
+		
+		this.gui.getBtnExportar().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+            	exportarPlanilha();
+            }
+        });
+
+		this.gui.getBtnVoltar1().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+                voltarInicio(e);
+            }
+        });
+
+		this.gui.getBtnVoltar2().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+                voltarInicio(e);
+            }
+        });
+		
+		this.gui.getBtnVoltar3().addActionListener(new ActionListener() {
+            @Override
+			public void actionPerformed(ActionEvent e) {
+                voltarInicio(e);
+            }
+        });
+
+		
+		/*Responsável por processar o link do jTextPane2*/
+		this.gui.getjTextPane2().addHyperlinkListener(new HyperlinkListener(){
+
 			@Override
-			public void focusLost(FocusEvent e) {
-				jFormattedTextField2FocusLost(e);
-				
+			public void hyperlinkUpdate(HyperlinkEvent e) {
+				abrirlink(e);
 			}
 		});
 
-        this.gui.getjFormattedTextField3().addFocusListener(new FocusAdapter() {
-            @Override
-			public void focusLost(FocusEvent e) {
-                jFormattedTextField3FocusLost(e);
-            }
-
-        });
+		
+		//Listeners da Janela Sobre		
+		
+		/*Responsável pelo botão fechar*/
+		this.dialog.getBtnFechar().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fecharButtonActionPerfomed(e);				
+			}
+		});
+				
+		/*Responsável por processar os links do jTextPane3*/
+		this.dialog.getjTextPane3().addHyperlinkListener(new HyperlinkListener() {
+			
+			@Override
+			public void hyperlinkUpdate(HyperlinkEvent e) {
+				abrirlink(e);
+			}
+		});
+		        
         
-        this.gui.getjFormattedTextField4().addFocusListener(new FocusAdapter() {
-            @Override
-			public void focusLost(FocusEvent e) {
-                jFormattedTextField4FocusLost(e);
-            }
-
-        });
+        
+        
         
 /*	Fim do contrutor da classe												*/
         
@@ -279,7 +269,7 @@ public class ControllerPrincipal  {
 
     private void jMenuItem3ActionPerformed(ActionEvent e) {    
     	//Carrega o jDialog com as informações sobre o aplicativo.
-    	mostrarSobre();
+    	mostrarTelaSobre();
     }   
 	
     private void voltarInicio(ActionEvent e) {                                         
@@ -300,15 +290,15 @@ public class ControllerPrincipal  {
     private void RadioButton3ActionPerformed(ActionEvent e) {                                              
 
         if (true) {
-            gui.getjFormattedTextField4().setEnabled(true);
-            gui.getjLabel8().setEnabled(true);
+            gui.getSaldoFgtsFmt().setEnabled(true);
+            gui.getLblInformeFgts().setEnabled(true);
         }
     }   
 	
     private void RadioButton4ActionPerformed(ActionEvent e) {                                              
         if (true) {
-            gui.getjFormattedTextField4().setEnabled(false);
-            gui.getjLabel8().setEnabled(false);
+            gui.getSaldoFgtsFmt().setEnabled(false);
+            gui.getLblInformeFgts().setEnabled(false);
         }
     }    
 	
@@ -318,10 +308,10 @@ public class ControllerPrincipal  {
 	private void jComboBox1ActionPerformed(ActionEvent e) {
 		if (gui.getComboMotivoSaida().getSelectedItem() == "Falecimento"
 				|| gui.getComboMotivoSaida().getSelectedItem() == "Fim do Contrato de Trabalho") {
-			gui.getjLabel6().setEnabled(false);
+			gui.getLblAvisoPrevio().setEnabled(false);
 			gui.getComboAvisoPrevio().setEnabled(false);
 		} else {
-			gui.getjLabel6().setEnabled(true);
+			gui.getLblAvisoPrevio().setEnabled(true);
 			gui.getComboAvisoPrevio().setEnabled(true);
 		}
 
@@ -341,13 +331,13 @@ public class ControllerPrincipal  {
 			int difEntreDatas = dia.calcDiferDias(this.dataEntrada, this.dataSaida);
 			if (difEntreDatas > 365) {
 
-				gui.getjLabel4().setEnabled(true);
+				gui.getLblFeriasVencidas().setEnabled(true);
 				gui.getjRadioButton1().setEnabled(true);
 				gui.getjRadioButton2().setEnabled(true);
 
 			} else {
 
-				gui.getjLabel4().setEnabled(false);
+				gui.getLblFeriasVencidas().setEnabled(false);
 				gui.getjRadioButton1().setEnabled(false);
 				gui.getjRadioButton2().setEnabled(false);
 				gui.getjRadioButton2().setSelected(true);
@@ -364,13 +354,13 @@ public class ControllerPrincipal  {
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
 	private void jFormattedTextField3FocusLost(FocusEvent e) {
-        String value = gui.getjFormattedTextField3().getText();
+        String value = gui.getSalarioFmt().getText();
         value = value.replace(" ", "").replace(".", "").replace(",", ".");
         
         try {
             BigDecimal valor = new BigDecimal(value);
             String valorFormatado = df.format(valor);
-            gui.getjFormattedTextField3().setText(valorFormatado);
+            gui.getSalarioFmt().setText(valorFormatado);
 			
 			}	catch (Exception e2) {
 //			
@@ -378,13 +368,13 @@ public class ControllerPrincipal  {
 	}
 	
     private void jFormattedTextField4FocusLost(FocusEvent e) {                                               
-        String valorObtido = gui.getjFormattedTextField4().getText();
+        String valorObtido = gui.getSaldoFgtsFmt().getText();
         valorObtido = valorObtido.replace(" ", "").replace(".", "").replace(",", ".");
         
         try {
             BigDecimal valor = new BigDecimal(valorObtido);
             String valorFormatado = df.format(valor);
-            gui.getjFormattedTextField4().setText(valorFormatado);
+            gui.getSaldoFgtsFmt().setText(valorFormatado);
 			}	catch (Exception e2) {
 //			
 				}
@@ -426,14 +416,14 @@ public class ControllerPrincipal  {
     	
     	obterDatas();
     	
-    	this.salarioInformado = slr.capturarValor(gui.getjFormattedTextField3().getText());
+    	this.salarioInformado = slr.capturarValor(gui.getSalarioFmt().getText());
     	
     	/*
     	 * O Fgts é opcional, caso ele não seja informado, o sistema realizará o cálculo
     	 * do saldo automáticamente.
     	 */
     	if (gui.getjRadioButton3().isSelected()) {
-			this.saldoFgts = fgts.capturarValor(gui.getjFormattedTextField4().getText());
+			this.saldoFgts = fgts.capturarValor(gui.getSaldoFgtsFmt().getText());
 		} else {
 	    	this.saldoFgts = fgts.calcSaldoFgts(this.salarioInformado, dia.calcTotDiasTrab(dataEntrada, dataSaida));
 		}
@@ -559,8 +549,8 @@ public class ControllerPrincipal  {
     } 
     
     private void obterDatas(){
-    	this.dataEntrada = dt.capData((gui.getjFormattedTextField1().getText()));
-    	this.dataSaida = dt.capData(gui.getjFormattedTextField2().getText());
+    	this.dataEntrada = dt.capData((gui.getDataEntradaFmt().getText()));
+    	this.dataSaida = dt.capData(gui.getDataSaidaFmt().getText());
     	
     }
     	
@@ -670,12 +660,16 @@ public class ControllerPrincipal  {
 	}
     	  
 	private void exibirErro(String msgErro){
-		JOptionPane.showMessageDialog(null, msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+		
+		final ImageIcon errorIcon = new ImageIcon(getClass().getResource("/br/edu/tglima/resource/imgs/error-48.png"));
+		JOptionPane.showMessageDialog(null, msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE, errorIcon);
+
 	}
 
-	private void exibirAlerta(String msgAlerta){ 
-		JOptionPane.showMessageDialog(null, msgAlerta, "Informação", JOptionPane.INFORMATION_MESSAGE);
+	private void exibirAlerta(String msgAlerta){
 		
+		final ImageIcon AlertIcon = new ImageIcon(getClass().getResource("/br/edu/tglima/resource/imgs/alert-48.png"));
+		JOptionPane.showMessageDialog(null, msgAlerta, "Informação", JOptionPane.INFORMATION_MESSAGE, AlertIcon);
 	}
 	
     private void opDemissao(){
@@ -846,6 +840,18 @@ public class ControllerPrincipal  {
         
     }
 
+    private void abrirlink(HyperlinkEvent e){
+		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+			
+			try {
+				Desktop.getDesktop().browse(e.getURL().toURI());
+			} catch (Exception error) {
+				System.err.println("Não foi possível lançar o navegador!" 
+						+ "\n" + error.getMessage());
+			}
+		}	
+    }
+    
     private void exportarPlanilha(){
     	JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
     	fileChooser.setSelectedFile(new File("ArquivoExportado.xls"));
@@ -858,10 +864,12 @@ public class ControllerPrincipal  {
     	
 
     	if (xlsFile.exists()) {
+    		final ImageIcon questionIcon = new ImageIcon(getClass().getResource("/br/edu/tglima/resource/imgs/question-48.png"));
     	    int response = JOptionPane.showConfirmDialog(null, //
     	            "Já existe um arquivo com esse nome, deseja sobrescrevê-lo?", //
     	            "Sobrescrever", JOptionPane.YES_NO_OPTION, //
-    	            JOptionPane.QUESTION_MESSAGE);
+    	            JOptionPane.QUESTION_MESSAGE, //
+    	            questionIcon);
     	    if (response != JOptionPane.YES_OPTION) {
     	        return;
     	    } 
@@ -870,8 +878,8 @@ public class ControllerPrincipal  {
     	
         if (returnVal==1){
         	
-        	System.out.println("Usuário cancelou a ação de salvar!");
-        	exibirAlerta("Dados não exportados, ação cancelada pelo usuário!");
+        	System.err.println("Usuário cancelou a ação de salvar!");
+        	exibirErro("Dados não exportados, ação cancelada pelo usuário!");
 //        	Colocar um JoptionPane aqui mostrando a mensagem.
         }
         
@@ -883,9 +891,9 @@ public class ControllerPrincipal  {
         		
 /*				Carregar os resultado para a planilha		*/
         		
-        		plan.setDataEntrada(gui.getjFormattedTextField1().getText());
-        		plan.setDataSaida(gui.getjFormattedTextField2().getText());
-        		plan.setSalario(gui.getjFormattedTextField3().getText());
+        		plan.setDataEntrada(gui.getDataEntradaFmt().getText());
+        		plan.setDataSaida(gui.getDataSaidaFmt().getText());
+        		plan.setSalario(gui.getSalarioFmt().getText());
         		plan.setMotivoSaida(motivoSaida);
         		
         		plan.setQtdDiasTrabUltMes(this.strQtdDiasTrabUltMes);
@@ -929,7 +937,7 @@ public class ControllerPrincipal  {
         
     }
 
-    private void mostrarSobre(){
+    private void mostrarTelaSobre(){
     	
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);

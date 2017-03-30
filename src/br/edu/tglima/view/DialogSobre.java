@@ -18,112 +18,147 @@
 package br.edu.tglima.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
-import java.awt.Font;
-import java.awt.event.KeyEvent;
-
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 
-//Last edition. 2017-03-28
-
+/*Last edition: 2017-03-29	*/
 
 @SuppressWarnings("serial")
 public class DialogSobre extends JDialog {
-	
 
+/*	Lista de atributos 														*/	
+	
 	private final JPanel contentPanel = new JPanel();
-	private JLabel lblLink;
-	private JButton btnFechar = new JButton("Fechar");
+	private final JPanel buttonPane = new JPanel();
+	private final JLabel lblImage = new JLabel("");
+	private final JButton btnFechar = new JButton("Fechar");
+	private final JTextPane jTextPane3 = new JTextPane();
+	private final GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
+	private final GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+	private final HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+	private final StyleSheet css = new StyleSheet();
 	
-	private final String msgSobre = "CRT - CÁLCULOS DE RESCISÃO DE TRABALHO\n\n"
-			+ "Versão 0.9.1 - Build 20170329-1000\n"
-			+ "Copyright (c) 2017 Thiago Lima de Sousa\n\n"
-			+ "Imagens de Sebastian Rubio. (Licenciadas sob\n"
-			+ "GPLv3).\n\n"
-			+ "Este programa é um Software Livre: você pode\n"
-			+ "redistribuí-lo e/ou modificá-lo sob os termos da\n"
-			+ "Licença Pública Geral GNU publicada pela Free\n"
-			+ "Software Foundation (GPLv3).\n\n"
-			+ "Código fonte disponível no link abaixo:";
+//	------------------------------------------------------------------------ //
+
 	
+/*	Getters e Setters da Classe												*/	
 	
 	public JButton getBtnFechar() {
 		return btnFechar;
 	}
 	
-	public JLabel getLblLink(){
-		return lblLink;
+	public JTextPane getjTextPane3(){
+		return jTextPane3;
 	}
 
+//	------------------------------------------------------------------------ //	
+	
+	
+/*	Método construtor da classe												*/
+	
 	public DialogSobre() {
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Sobre");
 		setResizable(false);
-		setBounds(100, 100, 400, 340);
+		setBackground(UIManager.getColor("Panel.background"));
+		setBounds(100, 100, 450, 350);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource
+        		("/br/edu/tglima/resource/imgs/calc-500.png")));
+
+		lblImage.setIcon(new ImageIcon(DialogSobre.class.getResource("/br/edu/tglima/resource/imgs/calc-64.png")));
+		lblImage.setVerticalAlignment(SwingConstants.TOP);
+		btnFechar.setMnemonic(KeyEvent.VK_F); 
+
+    	css.addRule("h2 { margin: 0px, 0px, 0px, 0px; margin-top: 25px; padding: 0px; font-size: 1.40em;}");
+    	css.addRule("body {font-family: sans serif; font-size: 1em; line-height: 1.5em;}");
+    	css.addRule("strong {font-weight: bold;}");
+    	css.addRule("ul {list-style-type: circle; padding: 25px;}");
+    	css.addRule("li {list-style-type: circle; padding-bottom: 10px;}");
+    	css.addRule("a { color:#0000FF; text-decoration: underline;}");
+    	
+    	htmlEditorKit.setStyleSheet(css);
+    	
+		jTextPane3.setBackground(UIManager.getColor("Button.background"));
+		jTextPane3.setEditable(false);
+		jTextPane3.setBackground(UIManager.getColor("Panel.background"));
+        jTextPane3.setFont(Font.decode("UTF-8") );
+        jTextPane3.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
+        jTextPane3.setContentType("text/html; charset=UTF-8");
+    	jTextPane3.setEditorKit(htmlEditorKit);
+    	
+        try {
+
+        	jTextPane3.setPage(DialogSobre.class.getResource
+        			("/br/edu/tglima/resource/html/About.html"));
+			
+		} catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+		}
+    	
+    	
+		buttonPane.setLayout(gl_buttonPane);
+    	
+    	
 		
-		btnFechar.setMnemonic(KeyEvent.VK_F);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			lblLink = new JLabel(" http://www.github.com/tglima/crtproject");
-			lblLink.setFont(new Font("Dialog", Font.BOLD, 11));
-			lblLink.setForeground(Color.blue);
-			lblLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
 		
-		JLabel lblImage = new JLabel("");
-		lblImage.setIcon(new ImageIcon(DialogSobre.class.getResource("/br/edu/tglima/view/calc-icon-64-64.png")));
-		
-		JEditorPane dtrpnCrtClculos = new JEditorPane();
-		dtrpnCrtClculos.setText(msgSobre);
-		dtrpnCrtClculos.setBackground(UIManager.getColor("ComboBox.background"));
-		dtrpnCrtClculos.setFont(new Font("Dialog", Font.PLAIN, 11));
-		dtrpnCrtClculos.setEditable(false);
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
 					.addComponent(lblImage)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblLink)
-						.addComponent(dtrpnCrtClculos))
+					.addComponent(jTextPane3, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblImage)
-						.addComponent(dtrpnCrtClculos, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblLink)
-					.addGap(30))
+						.addComponent(jTextPane3, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				buttonPane.add(btnFechar);
+
 				getRootPane().setDefaultButton(btnFechar);
 			}
+
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
+						.addContainerGap(356, Short.MAX_VALUE)
+						.addComponent(btnFechar)
+						.addContainerGap())
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addComponent(btnFechar)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
+
 		}
 	}
+
+//	------------------------------------------------------------------------ //
 }

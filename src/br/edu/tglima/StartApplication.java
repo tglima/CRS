@@ -22,8 +22,8 @@ import br.edu.tglima.view.FramePrincipal;
 
 /**
  * @author tglima Thiago Lima de Sousa
- * @version 0.9.1
- * @build 20170329-1000
+ * @version 0.10.0
+ * @build 20170330-1100
  */
 
 public class StartApplication {
