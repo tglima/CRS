@@ -136,9 +136,16 @@ public class PlanilhaXLS {
 	public boolean gerarPlanilha(File arquivo){
 		
 		try {
-
-			HSSFSheet sheet = workbook.createSheet("Valores Exportados");
 			
+			//Verificamos se já existe um arquivo com esse "nome".
+			//Caso ele exista, ele será removido e o novo arquivo será gerado.
+			if (workbook.getNumberOfSheets() > 0) {
+				workbook.removeSheetAt(0);
+			}
+			
+				
+			HSSFSheet sheet = workbook.createSheet("Valores Exportados");
+	
 
 /*			Criando as linhas. --------------------------------------------- */
 	       
