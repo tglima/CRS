@@ -18,12 +18,13 @@
 package br.edu.tglima;
 
 import br.edu.tglima.controller.*;
+import br.edu.tglima.view.DialogSobre;
 import br.edu.tglima.view.FramePrincipal;
 
 /**
- * @author tglima Thiago Lima de Sousa
- * @version 0.10.1
- * @build 20170403-0900
+ * @author Thiago Lima de Sousa
+ * @version 0.11.1
+ * @build 20170411-1800
  */
 
 public class StartApplication {
@@ -31,8 +32,11 @@ public class StartApplication {
 	public static void main(String[] args) {
 				
 		FramePrincipal gui = new FramePrincipal();
-        new ControllerPrincipal(gui);
-        gui.setVisible(true);			
+		DialogSobre dialog = new DialogSobre();
+		
+		new ControllerPrincipal(gui, dialog);
+        gui.setVisible(true);
+        
 			
 	}
 

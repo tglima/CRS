@@ -49,7 +49,13 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
 // Last edition. 2017-03-30
-
+/**
+ * @author Thiago Lima de Sousa
+ * @version 2017.04.11-1
+ * @see Classe responsável por todos os elementos visuais da janela principal
+ * do programa.
+ * 
+ */
 @SuppressWarnings("serial")
 public class FramePrincipal extends JFrame {
 

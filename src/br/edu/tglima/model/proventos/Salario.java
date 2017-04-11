@@ -20,41 +20,25 @@ package br.edu.tglima.model.proventos;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Salario implements ICaptura {
+/**
+ * @author Thiago Lima de Sousa
+ * @version 2017.04.09-1
+ * @see Classe responsável pelo cálculo do último salário do funcionário.
+ *
+ */
+public class Salario {
 	
-	/**
-	 * Método responsável por fazer o tratamento e conversão
-	 * do valor obtido da view.
-	 * 
-	 *  @param s Referente ao valor digitado pelo usuário na view.
-	 *  @return Este método retorna um valor do tipo BigDecimal.
-	 *  
-	 */
-	@Override
-	public BigDecimal capturarValor(String s) {
-		BigDecimal valorCapturado = new BigDecimal("-1"); 
-        s = s.replace(" ", "").replace(".", "").replace(",", ".").replace("R$", "");
-
-        try {
-            valorCapturado = new BigDecimal(s);
-        } catch (Exception e) {
-        }
-        return valorCapturado; 
-	}
-	
-	/**
-	 * Este método realiza o cálculo referente ao último sálario que
-	 * que o funcionário vai receber de acordo com a quantida de dias
-	 * que ele trabalhou no último mês.
-	 * 
-	 * @param qtdDias Referente há quantidade de dias trabalhados no
-	 * último mês.
-	 * @param salario Referente ao valor do salário base.
-	 * @return 
-	 */
+/**	
+ * 	Realiza o calculo proporcional do último salário que o funcionário irá
+ *  receber, levando em conta o total de dias trabalhados no mês e o salário
+ *  base do mesmo. 
+ *  
+ *  @param qtdDias Referente ao total de dias trabalhados no último mês.
+ *  @param salario Referente ao salário base do funcionário.
+ *  
+ */
 	public BigDecimal calcUltSal(int qtdDias, BigDecimal salario) {
-		BigDecimal salarioFinal = new BigDecimal("-1");
-		
+		BigDecimal salarioFinal = new BigDecimal("0");
 		
 		if (qtdDias >= 30) {
 			salarioFinal = salario;
@@ -65,21 +49,8 @@ public class Salario implements ICaptura {
 		}
 		
 		return salarioFinal;
+
 	}
 	
-	/**
-	 * Este método realiza o cálculo referente ao valor do décimo
-	 * terceiro salário.
-	 * 
-	 * @param qtdMeses Referente há quantidade de meses trabalhados
-	 * no último ano do funcionário.
-	 * @param salário Referente ao valo do salário base.
-	 * @return
-	 */
-	public BigDecimal calcDecimo(int qtdMeses, BigDecimal salario) {
-		BigDecimal decimo;
-		decimo = (salario.divide(new BigDecimal("12"), 
-					2, RoundingMode.HALF_UP).multiply(new BigDecimal(qtdMeses)));
-		return decimo;
-	}
+	
 }

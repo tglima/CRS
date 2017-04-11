@@ -20,31 +20,45 @@ package br.edu.tglima.model.proventos;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * 
+ * @author Thiago Lima de Sousa
+ * @version 2017.04.11-1
+ * @see Classe responsável pelos cálculos dos valores do aviso prévio.
+ */
 public class AvisoPrevio {
-
+	
 	/**
-	 * Método responsável por calcular o valor do aviso prévio.
+	 * Realiza o cálculo referente ao valor do aviso prévio.
 	 * 
 	 * @param salario Referente ao valor do salário base do funcionário.
-	 * @param qtdDias Referente há quantidade de dias que esse funcionário
+	 * @param qtdDias Referente a quantidade de dias que esse funcionário
 	 * deve cumprir o aviso.
-	 * @return Este método retorna um valor do tipo BigDecimal.
+	 * @return O valor do aviso prévio.
 	 */
 	public BigDecimal calcAvisoPrevio(BigDecimal salario, int qtdDias) {
-		BigDecimal valorAviso = new BigDecimal("-1");
+		BigDecimal vlrAvisoP = new BigDecimal("0");
 		
 		if (qtdDias == 30) {
-			valorAviso = salario;
+			vlrAvisoP = salario;
 		} else {
 			
-			valorAviso = new BigDecimal(qtdDias).multiply
+			vlrAvisoP = new BigDecimal(qtdDias).multiply
 			(salario.divide(new BigDecimal("30"), 2, RoundingMode.HALF_UP));
 
 		}
-		return valorAviso;
+		return vlrAvisoP;
 		
+	}	
+	
+	/**
+	 * Realiza o cálculo do valor a ser descontado, caso o funcionário decida
+	 * não cumprir o aviso prévio obrigatório.
+	 * @param vlrAvisoP Refere-se ao valor correspondente do aviso prévio
+	 * @return O valor a ser descontado do funcionário. 
+	 */
+	public BigDecimal descAvisoPrevio(BigDecimal vlrAvisoP){
+		return new BigDecimal("-1").multiply(vlrAvisoP);
 	}
-	
-	
-	
+
 }

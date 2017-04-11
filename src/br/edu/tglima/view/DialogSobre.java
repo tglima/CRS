@@ -36,10 +36,14 @@ import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 
-/*Last edition: 2017-03-29	*/
-
-@SuppressWarnings("serial")
+/**
+ * @author Thiago Lima de Sousa
+ * @version 2017.03.29-1
+ * @see Classe responsável por gerar o JDialog que contém as informações
+ * básicas do programa.
+ */
 public class DialogSobre extends JDialog {
+	private static final long serialVersionUID = 1L;
 
 /*	Lista de atributos 														*/	
 	

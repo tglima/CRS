@@ -24,11 +24,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -39,90 +34,51 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import br.edu.tglima.model.periodos.*;
-import br.edu.tglima.model.persistencia.PlanilhaXLS;
 import br.edu.tglima.model.proventos.*;
-import br.edu.tglima.view.DialogSobre;
-import br.edu.tglima.view.FramePrincipal;
+import br.edu.tglima.model.result.*;
+import br.edu.tglima.model.util.*;
+import br.edu.tglima.view.*;
 
-public class ControllerPrincipal  {
-	
-/*	Classes																*/
-
+/**
+ * @author Thiago Lima de Sousa
+ * @version 2017.04.11-1
+ */
+public class ControllerPrincipal {
 	private FramePrincipal gui;
-	private DialogSobre dialog = new DialogSobre();
-	private Locale ptBr = new Locale("pt", "BR");
-    private NumberFormat df = NumberFormat.getCurrencyInstance(ptBr); 
-    private NumberFormat nf = new DecimalFormat("#,##0.00");
-	private Salario slr = new Salario();
-	private Data dt = new Data();
-	private Dia dia = new Dia();
-	private Mes mes = new Mes();
-	private Fgts fgts = new Fgts();
-	private Ferias fr = new Ferias();
-	private AvisoPrevio ap = new AvisoPrevio();
-	private PlanilhaXLS plan = new PlanilhaXLS();
-	
+	private DialogSobre dialog;
+	private ConverteFormata cvt = new ConverteFormata();
+	private CalcPeriodos cp = new CalcPeriodos();
+	private Rescisao res = new Rescisao();
+	private Resultados rst = new Resultados();
 
-//	------------------------------------------------------------------------ //
 
-	
-/*	Lista de atributos 														*/	
-	
-//	Atributos fornecidos pelo usuário
-	private LocalDate dataEntrada, dataSaida;
-	private BigDecimal salarioInformado, saldoFgts;
-	
-	
-// Atributos relativos a valores.
-	private BigDecimal salarioFinal, valorDecimo, valorFerias, valorTercoFerias;
-	private BigDecimal valorFeriasVenc, valorTercoFeriasVenc;
-	private BigDecimal valorAviso, multaFGTS, totVencimentos, totSomaFGTS;
-	
-//	Atributos relativos a datas e periodos.
-	private int qtdDiasTrabUltMes, qtdDiasAviso, mesesDecimo,	mesesAqFerias, qtdFeriasVenc;
-	
-//	Atributos relativos a mensagens e textos.
-	private String msgErro, motivoSaida, opAviso, receberFgts;
-	
-	private String strQtdDiasTrabUltMes, strSalarioFinal, strMesesDecimo, strValorDecimo,
-    strMesesAqFerias, strValorFerias, strValorTercoFerias,strQtdFeriasVenc, 
-    strValorFeriasVenc, strValorTercoFeriasVenc, strQtdDiasAviso, 
-    strValorAviso, strTotVencimento, stSaldoFgts, stMultaFgts, stTotSomaFgts;
-	
-//	------------------------------------------------------------------------ //	
 	
 /*	Método construtor da classe												*/
-	
-	public ControllerPrincipal(FramePrincipal gui) {
+	public ControllerPrincipal(FramePrincipal gui, DialogSobre dialog) {
+		
 		this.gui = gui;
+		this.dialog = dialog;
 		
-		
-		
-		
-		
-        //Definindo os listeners.
-		
-		/*Listeners do FramePrincipal*/		
+		//Listeners do FramePrincipal
 		
         this.gui.getjMenuItem1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                jMenuItem1ActionPerformed(e);
+                mostrarTelaLimitacoes(e);
             }
         });
 		
         this.gui.getjMenuItem2().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                jMenuItem2ActionPerformed(e);
+                mostrarTelaTermos(e);
             }
         });
 		
         this.gui.getjMenuItem3().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                jMenuItem3ActionPerformed(e);
+                mostrarTelaSobre(e);
             }
         });
 		
@@ -175,7 +131,7 @@ public class ControllerPrincipal  {
 		this.gui.getBtnCalcular().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-            	btnCalcularEvent(e);
+            	eventBtnCalcular(e);
             }
         });
 		
@@ -224,7 +180,7 @@ public class ControllerPrincipal  {
 		this.dialog.getBtnFechar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fecharButtonActionPerfomed(e);				
+				fecharTelaSobre(e);				
 			}
 		});
 				
@@ -244,48 +200,69 @@ public class ControllerPrincipal  {
 /*	Fim do contrutor da classe												*/
         
 	}
-	
+
 //	------------------------------------------------------------------------ //    
 
 	
 /*	Métodos responsáveis por navegar entre as telas do programa	   			*/
 	
-    private void jMenuItem1ActionPerformed(ActionEvent e) {                                           
-        /*
-        Carrega a tela de Limitações
-         */
+    private void mostrarTelaLimitacoes(ActionEvent e) {                                           
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
         cl.show(gui.getjPanel1(), "card4");
 
     }                                          
 
-    private void jMenuItem2ActionPerformed(ActionEvent e) {                                           
-        /*
-        Carrega a tela Termos
-         */
+    
+    private void mostrarTelaTermos(ActionEvent e) {                                           
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
         cl.show(gui.getjPanel1(), "card3");
     }                                         
 
-    private void jMenuItem3ActionPerformed(ActionEvent e) {    
-    	//Carrega o jDialog com as informações sobre o aplicativo.
-    	mostrarTelaSobre();
-    }   
-	
-    private void voltarInicio(ActionEvent e) {                                         
-        //Volta para a tela inicial do programa
+    
+	private void mostrarTelaResultado(){
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
-        cl.show(gui.getjPanel1(), "card1");
-    } 
+        cl.show(gui.getjPanel1(), "card2");
+	}
+    
+	
+    private void mostrarTelaSobre(ActionEvent e) {
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setVisible(true);
+		dialog.setLocationRelativeTo(null);
+    }   
 
-    private void fecharButtonActionPerfomed(ActionEvent e){
+    
+    private void fecharTelaSobre(ActionEvent e){
     	dialog.setVisible(false);
     }
 
+    
+    private void voltarInicio(ActionEvent e) {                                         
+        CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
+        cl.show(gui.getjPanel1(), "card1");
+    } 
+    
 //	------------------------------------------------------------------------ //    
     
     
-/*	Métodos responsáveis pelas escolhas feitas com os radio buttons */    
+/*	Método responsável por lançar o Browser, quando o usuário clicar no link*/    
+    
+    private void abrirlink(HyperlinkEvent e){
+		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+			
+			try {
+				Desktop.getDesktop().browse(e.getURL().toURI());
+			} catch (Exception error) {
+				System.err.println("Não foi possível lançar o navegador!" 
+						+ "\n" + error.getMessage());
+			}
+		}	
+    }
+    
+//	------------------------------------------------------------------------ //    
+
+    
+/*	Métodos responsáveis pelas escolhas feitas com os radio buttons 		*/    
     
     private void RadioButton3ActionPerformed(ActionEvent e) {                                              
 
@@ -303,7 +280,8 @@ public class ControllerPrincipal  {
     }    
 	
 //	------------------------------------------------------------------------ //    
-        
+
+    
 /*	Método responsável por desativar o ComboAvisoPrevio quando necessário */
 	private void jComboBox1ActionPerformed(ActionEvent e) {
 		if (gui.getComboMotivoSaida().getSelectedItem() == "Falecimento"
@@ -325,11 +303,12 @@ public class ControllerPrincipal  {
 	private void jFormattedTextField2FocusLost(FocusEvent e){
 		obterDatas();
 		
-		
 		try {
-
-			int difEntreDatas = dia.calcDiferDias(this.dataEntrada, this.dataSaida);
-			if (difEntreDatas > 365) {
+			
+			calcTotDiasTrab();
+			
+			int difDatas = this.res.getTotDiasTrab();
+			if (difDatas > 365) {
 
 				gui.getLblFeriasVencidas().setEnabled(true);
 				gui.getjRadioButton1().setEnabled(true);
@@ -344,7 +323,10 @@ public class ControllerPrincipal  {
 
 			}
 
-		} catch (Exception e2) {/* Nada aqui*/}
+		} catch (Exception error){
+			System.err.println("Erro ao calcular a diferença entre as datas"
+					+ " de entrada e saída!"
+					+ error.getMessage());}
 
 	}
 	
@@ -353,401 +335,390 @@ public class ControllerPrincipal  {
 		
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
-	private void jFormattedTextField3FocusLost(FocusEvent e) {
-        String value = gui.getSalarioFmt().getText();
-        value = value.replace(" ", "").replace(".", "").replace(",", ".");
-        
-        try {
-            BigDecimal valor = new BigDecimal(value);
-            String valorFormatado = df.format(valor);
-            gui.getSalarioFmt().setText(valorFormatado);
-			
-			}	catch (Exception e2) {
-//			
-				}
+	private void jFormattedTextField3FocusLost(FocusEvent e) {			
+		String vlrDigitado = gui.getSalarioFmt().getText();
+		vlrDigitado = cvt.formatStrVlrMonetario(vlrDigitado);
+		gui.getSalarioFmt().setText(vlrDigitado);
 	}
 	
-    private void jFormattedTextField4FocusLost(FocusEvent e) {                                               
-        String valorObtido = gui.getSaldoFgtsFmt().getText();
-        valorObtido = valorObtido.replace(" ", "").replace(".", "").replace(",", ".");
-        
-        try {
-            BigDecimal valor = new BigDecimal(valorObtido);
-            String valorFormatado = df.format(valor);
-            gui.getSaldoFgtsFmt().setText(valorFormatado);
-			}	catch (Exception e2) {
-//			
-				}
+    private void jFormattedTextField4FocusLost(FocusEvent e) {
+    	String strFgtsFormatado;
+    	strFgtsFormatado = cvt.formatStrVlrMonetario(gui.getSaldoFgtsFmt().getText());
+    	gui.getSaldoFgtsFmt().setText(strFgtsFormatado);
 
     }
     
-    private String formatarValores(BigDecimal valor){
-    	String valorFormatado = null;
-    	
-    	try {		
-            valorFormatado = df.format(valor);
-			
-		} catch (Exception e) {/*Nada aqui*/}
-    	
-    	return valorFormatado;
-    }
+
 
 //	------------------------------------------------------------------------ //    
     
     
-/*	Método executado ao pressionar o botão calcular					*/    
+/*	Métodos executados ao pressionar o botão calcular					*/    
 
-    private void btnCalcularEvent(ActionEvent e){
+    private void eventBtnCalcular(ActionEvent e){
     	System.out.println("Botão calcular foi pressionado");
-    	
-    	realizarCalculo();
-    	
-    }
-    
-//	--------------------------------------------------------------- //  
-
-    
-    private void realizarCalculo() {                                         
     	
     	/*
     	 * Primeiro vamos obter os dados obrigátorios, começaremos
-    	 * com as datas e o salário.
+    	 * com as datas, o salário e por fim o saldo do FGTS.
     	 */
     	
     	obterDatas();
-    	
-    	this.salarioInformado = slr.capturarValor(gui.getSalarioFmt().getText());
-    	
-    	/*
-    	 * O Fgts é opcional, caso ele não seja informado, o sistema realizará o cálculo
-    	 * do saldo automáticamente.
-    	 */
-    	if (gui.getjRadioButton3().isSelected()) {
-			this.saldoFgts = fgts.capturarValor(gui.getSaldoFgtsFmt().getText());
-		} else {
-	    	this.saldoFgts = fgts.calcSaldoFgts(this.salarioInformado, dia.calcTotDiasTrab(dataEntrada, dataSaida));
-		}
+    	obterSalario();
+    	carregarVlrFgts();
     	
     	/*
-    	 * Agora válidamos os dados fornecidos
-    	 * 
+    	 * Validamos esses dados e se tudo deu certo continuámos.
     	 */
     	
-    	if (validarDataEntrada(dataEntrada) == false) {
-			System.err.println("Data de entrada inválida!");
-		}
-    	
-    	else if (validarDataSaida(dataSaida) == false) {
-			System.err.println("Data de saída inválida!");
-		}
-    	
-    	else if (verificarDiferDatas(dataEntrada, dataSaida) == false) {
-			System.err.println("A data de saída é inferior a data de entrada!");
-			this.msgErro = "A data de saída é inferior a data de entrada!";
-			exibirErro(this.msgErro);
-			
-		}
-    	
-    	else if (validarSalario(this.salarioInformado) == false){
-    		System.out.println("O valor informado como salário é inválido!");
-    		   		
-    	} 
-    	
-    	else if (validarFgts(this.saldoFgts) == false) {
-			System.out.println("O saldo informado como fgts é inválido!");
-			
-			this.msgErro = "O saldo informado como fgts é inválido!";
-			exibirErro(this.msgErro);
-			
-		} else {
-			
-			this.motivoSaida = (String) gui.getComboMotivoSaida().getSelectedItem();
-			
-/*			 Bloco referente ao último sálario.						*/
-			this.qtdDiasTrabUltMes = dia.calcDiasTrabUltimoMes(dataSaida);
-	    	this.salarioFinal =	this.slr.calcUltSal(this.qtdDiasTrabUltMes, this.salarioInformado);
-	    	
-/*	    	Bloco referente ao Décimo terceiro salário				*/
-	    	this.mesesDecimo = mes.calcMesesTrabUltimoAno(dataEntrada, dataSaida);
-	    	this.valorDecimo = this.slr.calcDecimo(this.mesesDecimo, this.salarioInformado);
-	    	
-/*	    	Bloco referente as Férias								*/
-	    	this.mesesAqFerias = mes.calcMesesAqFerias(dataEntrada, dataSaida);
-	    	this.valorFerias = fr.calcValorFerias(salarioInformado, mesesAqFerias);
-			this.valorTercoFerias = fr.calcTercoFerias(valorFerias);
-						
-			if (gui.getjRadioButton1().isSelected()) {
-				this.valorFeriasVenc = salarioInformado;
-				this.valorTercoFeriasVenc = fr.calcTercoFerias(valorFeriasVenc);
-				this.qtdFeriasVenc = 1;
-			} else {
-				this.valorFeriasVenc = new BigDecimal("0");
-				this.valorTercoFeriasVenc = new BigDecimal("0");
-				this.qtdFeriasVenc = 0;
-			}
-			
-/*			Bloco referente aos cálculos do aviso prévio.									*/
-			this.qtdDiasAviso = dia.calcDiasAviso(dataEntrada, dataSaida);
-			this.opAviso = (String) gui.getComboAvisoPrevio().getSelectedItem();
-			
-			switch (opAviso) {
-			case "Trabalhado":
-				this.valorAviso = new BigDecimal("0");
-				break;
-				
-			case "Indenizado pela empresa":
-				this.valorAviso = ap.calcAvisoPrevio(salarioInformado, qtdDiasAviso);
-				break;
-
-			case "Descontado do funcionário":
-				this.valorAviso = new BigDecimal("-1").multiply(ap.calcAvisoPrevio(salarioInformado, qtdDiasAviso));
-				break;
-				
-			default:
-				this.valorAviso = new BigDecimal("0");
-				this.qtdDiasAviso = 0;
-				break;
-			}
-			
-			
-/*			Bloco referente ao motivo da saída			*/
-			switch (this.motivoSaida) {
-			case "Pedido de demissão":
-				opDemissao();
-				break;
-				
-			case "Fim do Contrato de Trabalho":
-				opFimContrato();
-				break;
-
-			case "Demissão sem justa causa":
-				opSemJustaCau();
-				break;
-
-				
-			case "Demissão por Justa Causa": 
-				opPorJustaCau();
-				break;
-				
-			case "Falecimento":
-				opFalecimento();
-				break;
-				
-			}
+    	if (validarCamposDigitados()) {
     		
-/*			Soma de todos os vencimentos referentes há rescisão.										*/			
-	    	this.totVencimentos = salarioFinal.add(valorDecimo).add(valorFerias).add(valorTercoFerias)
-	    			.add(valorFeriasVenc).add(valorTercoFeriasVenc).add(valorAviso);
-	    	
-/*			Soma do saldo FGTS + o valor referente  há multa*/
-	    	
-	    	this.totSomaFGTS = saldoFgts.add(multaFGTS);
+			calcTotDiasTrabUltMes();
+			calcTotMesesTrabUlAno();
+			calcTotDiasAviso();
+			calcTotMesesAqFerias();
+			calcUltSalario();
+			calcDecimo();
+			carregarVlrsFerias();
+			carregarVlrAvisoP();
+			carregarVlrMultaFgts();
+			calcVlrTotFgts();
+			realizarRescisao();
+			calcTotVencimento();
+			exibirResultadoNaTela();
 			
-			mostrarResultado();
 		}
-    	
-    } 
+    }
+    
+//	------------------------------------------------------------------------ //
+
+
+/*	Métodos que definirão os principais atributos da classe Rescisão.	*/    
     
     private void obterDatas(){
-    	this.dataEntrada = dt.capData((gui.getDataEntradaFmt().getText()));
-    	this.dataSaida = dt.capData(gui.getDataSaidaFmt().getText());
+    	this.res.setDataEntrada(cvt.cvtStrToDate(gui.getDataEntradaFmt().getText()));
+    	this.res.setDataSaida(cvt.cvtStrToDate(gui.getDataSaidaFmt().getText()));
+    }
+
+    
+    private void calcTotDiasTrab(){
+    	this.res.setTotDiasTrab(this.cp.calcTotalDiasTrab(
+    			this.res.getDataEntrada(), this.res.getDataSaida()));
+    }    
+
+    
+    private void calcTotDiasTrabUltMes(){
+    	this.res.setTotDiasTrabUltMes(this.cp.calcDiasTrabUltimoMes(
+    			this.res.getDataSaida()));
+    }
+
+    
+    private void calcTotMesesTrabUlAno(){
+    	this.res.setTotMesesTrabUltAno(this.cp.calcMesesTrabUltimoAno(
+    			this.res.getDataEntrada(), this.res.getDataSaida()));
+    }
+
+    
+    private void calcTotDiasAviso(){
+    	this.res.setTotDiasAviso(this.cp.calcDiasAviso(
+    			this.res.getDataEntrada(), this.res.getDataSaida()));
+    }
+
+    
+    private void calcTotMesesAqFerias(){
+    	this.res.setTotMesesAqFerias(cp.calcMesesAqFerias(
+    			this.res.getDataEntrada(), this.res.getDataSaida()));
+    }
+
+    
+    private void obterSalario(){
+    	this.res.setSalario(cvt.cvtStrToBigDecimal(gui.getSalarioFmt().getText()));
+    }
+
+    
+    private void calcUltSalario(){
+    	Salario slr = new Salario();
+    	
+    	this.res.setUltSalario(slr.calcUltSal(
+    			this.res.getTotDiasTrabUltMes(), this.res.getSalario()));
+    }
+
+    
+    private void calcDecimo(){
+    	Decimo decimo = new Decimo();
+    	
+    	this.res.setVlrDecimo(decimo.calcDecimo(
+    			this.res.getTotMesesTrabUltAno(), this.res.getSalario()));
+    }
+
+    
+    private void carregarVlrsFerias(){
+    	Ferias fr = new Ferias();
+    	Boolean object = gui.getjRadioButton1().isSelected();
+    	
+    	this.res.setVlrFerias(fr.calcValorFerias(
+    			this.res.getSalario(), this.res.getTotMesesAqFerias()));
+
+    	this.res.setVlrTercoFerias(fr.calcTercoFerias(
+    			this.res.getVlrFerias()));
+    	
+    	this.res.setVlrFeriasVenc(fr.calcVlrFeriasVenc(
+    			this.res.getSalario(), object));
+    	
+    	this.res.setVlrTerFeriasV(fr.calcVlrTerFeriasV(
+    			this.res.getVlrFeriasVenc(), object));
+    	
+    	this.res.setTotFeriasVenc(fr.definirTotFeriasVenc(object));
+    }
+
+    
+    private void carregarVlrAvisoP(){
+    	AvisoPrevio ap = new AvisoPrevio();
+    	
+//    	Primeiro calculamos e definimos o total de dias de aviso prévio
+    	this.res.setTotDiasAviso(this.cp.calcDiasAviso(
+    			this.res.getDataEntrada(), this.res.getDataSaida()));
+    	
+//		Calculamos quanto seria o valor do aviso pŕevio
+    	this.res.setVlrAvisoP(ap.calcAvisoPrevio(this.res.getSalario(), 
+				this.res.getTotDiasAviso()));
+    	
+    	String opAviso = (String) gui.getComboAvisoPrevio().getSelectedItem();
+    	
+//    	De acordo com a opção feita na view é aplicado uma das regras abaixo:
+    	switch(opAviso){
+    	case "Trabalhado":
+    		this.res.setVlrAvisoP(cvt.cvtStrToBigDecimal("0"));
+    		break;
+    	case "Indenizado pela empresa":
+    		//Não precisa ser feito nada aqui
+    		break;
+    	case "Descontado do funcionário":
+    		this.res.setVlrAvisoP(ap.descAvisoPrevio(this.res.getVlrAvisoP()));
+    		break;
+    	default:
+    		this.res.setVlrAvisoP(cvt.cvtStrToBigDecimal("0"));
+    		this.res.setTotDiasAviso(0);
+    		break;
+    	}
+    	
     	
     }
-    	
-	private boolean verificarDiferDatas(LocalDate dateInicio, LocalDate dateFim){
-		int difEntreDatas = dia.calcDiferDias(dateInicio, dateFim);
-		
-		if (difEntreDatas <= 0) {
-			return false;
-			
-		} else {
 
-			return true;
-		}		
-	}
-	
-	private boolean validarDataEntrada(LocalDate date){
-		LocalDate inicioClt = dt.capData("10/11/1943");
-		
-		if (dt.validarData(date) == false) {
-			
-			this.msgErro = "Data de entrada inválida!"
-					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
-			
-			exibirErro(this.msgErro);
-			return false;
-			
-		} else if (verificarDiferDatas(inicioClt, date) == false) {
-			
-			this.msgErro = "Data de entrada inválida!"
-					+ "\nInforme datas superiores há 10/11/1943";
-			
-			exibirErro(this.msgErro);
-			return false;
-			
-		} else {
-			
-			return true;
-		}
-
-	}
-	
-	private boolean validarDataSaida(LocalDate date){
-		LocalDate dataLimite = dt.capData("01/01/2060");
-		
-		if (dt.validarData(date) == false) {
-			
-			this.msgErro = "Data de saída inválida!"
-					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
-			
-			exibirErro(this.msgErro);
-			return false;
-			
-		} else if (verificarDiferDatas(date, dataLimite) == false) {
-			
-			this.msgErro = "Data de saída inválida!"
-					+ "\nInforme datas inferiores há 01/01/2060";
-			
-			exibirErro(this.msgErro);
-			return false;
-			
-		} else {
-			
-			return true;
-			
-		}
-
-	}
-	
-	private boolean validarSalario(BigDecimal valor){
-		if ( valor.compareTo(new BigDecimal("1") ) < 0){
-			
-			this.msgErro = "O valor informado como salário é inválido!\n";
-			
-			exibirErro(this.msgErro);
-			
-			return false;
-			
-		}else if ( valor.compareTo(new BigDecimal("59999") ) > 0 ) {
-
-			this.msgErro = "O valor informado como salário é inválido!\n"
-					+ "Use valores inferiores há R$ 60.000,00.";
-			
-			exibirErro(this.msgErro);
-			
-			return false;
-			
-		} else {
-			
-			return true;
-
-		}
-		
-	}
     
-	private boolean validarFgts(BigDecimal valor){
-		
-		if ( valor.compareTo(new BigDecimal("0") ) < 0){
-			
-			return false;
-			
+    private void carregarVlrFgts(){
+    	boolean object = gui.getjRadioButton3().isSelected();
+    	
+    	if (object) {
+        	this.res.setSaldoFgts(cvt.cvtStrToBigDecimal(gui.getSaldoFgtsFmt().getText()));
+
 		} else {
 			
-			return true;
-
+	    	Fgts fgts = new Fgts();
+	    	this.res.setSaldoFgts(fgts.calcSaldoFgts(this.res.getSalario(), 
+	    			this.res.getTotDiasTrab()));
 		}
-		
+    	
+    }
+
+    
+    private void carregarVlrMultaFgts(){
+    	Fgts fgts = new Fgts();
+    	
+    	String motivoRes = (String) gui.getComboMotivoSaida().getSelectedItem();
+    	
+    	if (motivoRes.equals("Demissão sem justa causa")) {
+    		this.res.setVlrMulta(fgts.calcMulta(this.res.getSaldoFgts()));
+		} else {
+			this.res.setVlrMulta(cvt.cvtStrToBigDecimal("0"));
+		}
+    	
+    	
+    }
+
+    
+    private void calcVlrTotFgts(){
+    	Fgts fgts = new Fgts();
+    	this.res.setVlrTotFgts(fgts.SomarMultaeFgts(
+    			this.res.getSaldoFgts(), this.res.getVlrMulta()));
+    }
+    
+    
+    private void calcTotVencimento() {
+    	this.res.setVlrTotVenc(res.somarTodosVencimentos());
 	}
-    	  
+
+    
+    private void realizarRescisao(){
+    	String motivoRes = (String) gui.getComboMotivoSaida().getSelectedItem();
+    	res.realizarRescisao(motivoRes);
+    	
+    }
+
+//	------------------------------------------------------------------------ //    
+
+    
+/*	Método responsável pelas validações dos campos digitáveis				*/   
+    
+    private boolean validarCamposDigitados(){
+    	Validacoes vld = new Validacoes();
+    	String msgErro;
+    	if (!vld.validarData(this.res.getDataEntrada())) {
+    		System.err.println("Data de entrada inválida!");
+    		msgErro = "Data de entrada inválida!"
+					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
+			exibirErro(msgErro);
+			return false;    
+		}
+    	
+    	else if (!vld.validarData(this.res.getDataSaida())) {
+    		System.err.println("Data de saída inválida!");
+    		msgErro = "Data de saída inválida!"
+					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
+			exibirErro(msgErro);
+			return false;    
+		}
+    	
+    	else if(!vld.verificarDiferDatas(this.res.getDataEntrada(), this.res.getDataSaida())){
+			System.err.println("A data de saída é inferior a data de entrada!");
+			msgErro = "A data de saída é inferior a data de entrada!";
+			exibirErro(msgErro);
+			return false;    
+    	}
+    	
+    	else if(!vld.valDataMin(this.res.getDataEntrada())){
+    		System.err.println("Data de entrada inválida!");
+			msgErro = "Data de entrada inválida!"
+					+ "\nInforme datas superiores há 10/11/1943";
+			exibirErro(msgErro);
+			return false;    		
+    	}
+    	
+    	else if(!vld.valDataMax(this.res.getDataSaida())){
+    		System.err.println("Data de saída inválida!");
+			msgErro = "Data de saída inválida!"
+					+ "\nInforme datas inferiores há 01/01/2060";
+			exibirErro(msgErro);
+    		return false;
+    	}
+    	
+    	else if(!vld.valSalMin(this.res.getSalario())){
+    		System.err.println("O valor informado como salário é inválido!");
+			msgErro = "O valor informado como salário é inválido!\n";
+			exibirErro(msgErro);
+    		return false;
+    	}
+    	
+    	else if(!vld.valSalMax(this.res.getSalario())){
+    		System.err.println("O valor informado como salário é inválido!");
+			msgErro = "O valor informado como salário é inválido!\n"
+					+ "Use valores inferiores há R$ 60.000,00.";
+			exibirErro(msgErro);
+			return false;
+    	}
+    	
+    	
+    	else if(!vld.valFgts(this.res.getSaldoFgts())){
+			System.err.println("O saldo informado como fgts é inválido!");
+			msgErro = "O saldo informado como fgts é inválido!";
+			exibirErro(msgErro);
+    		return false;
+    	}
+    	
+    	else {
+    		return true;
+		}
+    }
+
+    
+    
+//	------------------------------------------------------------------------ //	
+    
+    
+/*	Métodos responsáveis por exibir mensagens de erros e alertas ao usuário	*/   
+    
 	private void exibirErro(String msgErro){
 		
-		final ImageIcon errorIcon = new ImageIcon(getClass().getResource("/br/edu/tglima/resource/imgs/error-48.png"));
-		JOptionPane.showMessageDialog(null, msgErro, "Ocorreu um erro", JOptionPane.ERROR_MESSAGE, errorIcon);
+		final ImageIcon errorIcon = new ImageIcon(getClass().getResource(
+				"/br/edu/tglima/resource/imgs/error-48.png"));
+		JOptionPane.showMessageDialog(null, msgErro, "Ocorreu um erro", 
+				JOptionPane.ERROR_MESSAGE, errorIcon);
 
 	}
 
+	
 	private void exibirAlerta(String msgAlerta){
 		
-		final ImageIcon AlertIcon = new ImageIcon(getClass().getResource("/br/edu/tglima/resource/imgs/alert-48.png"));
-		JOptionPane.showMessageDialog(null, msgAlerta, "Informação", JOptionPane.INFORMATION_MESSAGE, AlertIcon);
+		final ImageIcon AlertIcon = new ImageIcon(getClass().getResource(
+				"/br/edu/tglima/resource/imgs/alert-48.png"));
+		JOptionPane.showMessageDialog(null, msgAlerta, "Informação",
+				JOptionPane.INFORMATION_MESSAGE, AlertIcon);
+	}    
+
+	
+//	------------------------------------------------------------------------ //
+	
+	
+	
+/*																			*/	
+
+	private void carregarResultados(){
+		ConverteFormata cvt = new ConverteFormata();
+		String motivoRes = (String) gui.getComboMotivoSaida().getSelectedItem();
+		
+/*		Converteremos todos os valores e informações para o formato String
+		para que depois possamos exibi-los ou exportá-los de acordo com a 
+		nossa necessidade.*/
+		
+		this.rst.setDataEntrada(gui.getDataEntradaFmt().getText());
+		this.rst.setDataSaida(gui.getDataSaidaFmt().getText());
+		this.rst.setSalario(cvt.cvtBigToStrComFM(this.res.getSalario()));
+		this.rst.setUltSalario(cvt.cvtBigToStrComFM(this.res.getUltSalario()));
+		this.rst.setTotDiasTrab(cvt.cvtIntToStr(this.res.getTotDiasTrab()) + " dias.");
+		this.rst.setTotDiasTrabUltMes(cvt.cvtIntToStr(this.res.getTotDiasTrabUltMes()) + " dias.");
+		this.rst.setTotMesesTrabUltAno(cvt.cvtIntToStr(this.res.getTotMesesTrabUltAno()) + "/12");
+		this.rst.setTotDiasAviso(cvt.cvtIntToStr(this.res.getTotDiasAviso()) + " dias.");
+		this.rst.setTotMesesAqFerias(cvt.cvtIntToStr(this.res.getTotMesesAqFerias()) + "/12");
+		this.rst.setTotFeriasVenc(cvt.cvtIntToStr(this.res.getTotFeriasVenc()));
+		this.rst.setVlrDecimo(cvt.cvtBigToStrComFM(this.res.getVlrDecimo()));
+		this.rst.setVlrFerias(cvt.cvtBigToStrComFM(this.res.getVlrFerias()));
+		this.rst.setVlrTercoFerias(cvt.cvtBigToStrComFM(this.res.getVlrTercoFerias()));
+		this.rst.setVlrFeriasVenc(cvt.cvtBigToStrComFM(this.res.getVlrFeriasVenc()));
+		this.rst.setVlrTerFeriasV(cvt.cvtBigToStrComFM(this.res.getVlrTerFeriasV()));
+		
+		this.rst.setVlrAvisoP("R$ " + cvt.cvtBigToStrSemFM(this.res.getVlrAvisoP())); //Atenção esta linha pode dar erro.
+		this.rst.setVlrTotVenc("R$ " + cvt.cvtBigToStrSemFM(res.getVlrTotVenc()));   //Atenção esta linha pode dar erro.
+		
+		
+		this.rst.setSaldoFgts(cvt.cvtBigToStrComFM(this.res.getSaldoFgts()));
+		this.rst.setVlrMulta(cvt.cvtBigToStrComFM(this.res.getVlrMulta()));
+		this.rst.setVlrTotFgts(cvt.cvtBigToStrComFM(this.res.getVlrTotFgts()));
+		this.rst.setReceberFgts(this.res.getReceberFgts());
+		this.rst.setMotivoRes(motivoRes);
+		
+		
 	}
 	
-    private void opDemissao(){
-    	
-    	this.qtdDiasAviso = 30;
-    	this.receberFgts = "Não";
-    	this.multaFGTS = new BigDecimal("0");
-    	
-    	
-    }
-    
-    private void opFimContrato(){
-    	this.qtdDiasAviso = 0;
-    	this.receberFgts ="Sim";
-    	this.multaFGTS = new BigDecimal("0");
-    	
-    }
-
-    private void opSemJustaCau(){
-    	
-    	this.receberFgts = "Sim";
-    	this.multaFGTS = fgts.calcMulta(saldoFgts);
-    	
-    }
-
-    private void opPorJustaCau(){
-    	
-    	this.receberFgts = "Não";
-    	    	
-    	this.valorDecimo = new BigDecimal("0");
-
-    	this.valorFerias = new BigDecimal("0");
-    	
-    	this.valorTercoFerias = new BigDecimal("0");
-    	
-    	this.multaFGTS = new BigDecimal("0");
-    	
-    }
-
-    private void opFalecimento(){
-    	opFimContrato();
-    }
-    
-    @SuppressWarnings("serial")
-	private void mostrarResultado(){
-    	
-    	/*Bloco responsável por direcionar o usuário para a tela de resultados.*/
-        CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
-        cl.show(gui.getjPanel1(), "card2");
-        /*Fim do bloco*/
- 
-        
-        /*Bloco responsável por definições de Modelo das tabelas */
-        
+//	------------------------------------------------------------------------ //	
+	
+	
+/*	Métodos responsáveis por exibir os valores na tela resultado			*/	
+	
+	private DefaultTableModel CriarTabela1(){
     	// Modelo padrão para definição da Jtable1
     	DefaultTableModel tabela1 = new DefaultTableModel() {
+    		private static final long serialVersionUID = 1L;
+
+
 
 			// Método resṕonsável por bloquear a edição das células
     		@Override
 			public boolean isCellEditable(int linha, int coluna) {
     			return false;
     		}
-
-    	};
-
-
-    	// Modelo padrão para definição da Jtable2
-		DefaultTableModel tabela2 = new DefaultTableModel() {
-
-    		@Override
-			public boolean isCellEditable(int linha, int coluna) {
-    			return false;
-    		}
     	};
     	
-        /*Fim do bloco*/
     	
-        
         /*Bloco com definições e valores específicos da tabela de rescisão*/
     	gui.getTblRescisao().setModel(tabela1);
         tabela1.addColumn("Item");
@@ -763,47 +734,22 @@ public class ControllerPrincipal  {
         gui.getTblRescisao().getColumnModel().getColumn(2).setResizable(false);
         gui.getTblRescisao().getColumnModel().getColumn(2).setPreferredWidth(135);
         /*Fim do bloco*/
-        
-        
-        /*Bloco referente as informações exibidas na tabela rescisão*/
-        
-//		Convertemos e formatamos todos os valores e informações para o formato String.        
-        
-        this.strQtdDiasTrabUltMes = String.valueOf(this.qtdDiasTrabUltMes) + " dias.";
-        this.strSalarioFinal = formatarValores(this.salarioFinal);
-        
-        this.strMesesDecimo = String.valueOf(this.mesesDecimo) + "/12";
-        this.strValorDecimo = formatarValores(this.valorDecimo);
-        
-        this.strMesesAqFerias = String.valueOf(this.mesesAqFerias) + "/12";
-        
-        this.strValorFerias =   formatarValores(this.valorFerias);
-        strValorTercoFerias = formatarValores(this.valorTercoFerias);
-        
-        this.strQtdFeriasVenc =  String.valueOf(this.qtdFeriasVenc);
-        this.strValorFeriasVenc = formatarValores(this.valorFeriasVenc);
-        this.strValorTercoFeriasVenc = formatarValores(this.valorTercoFeriasVenc);
-        
-        this.strQtdDiasAviso = String.valueOf(this.qtdDiasAviso) + " dias.";       
-        this.strValorAviso = "R$ " + nf.format(this.valorAviso);
-        
-        this.strTotVencimento = "R$ " + nf.format(this.totVencimentos);
-        
-        
-        
-//      Agora repassamos essas informações para a tabela correspondente.
-        tabela1.addRow(new Object[]{"  Saldo Salário", this.strQtdDiasTrabUltMes, this.strSalarioFinal });
-        tabela1.addRow(new Object[]{"  13º Proporcional", this.strMesesDecimo, this.strValorDecimo });
-        tabela1.addRow(new Object[]{"  Férias Proporcional", this.strMesesAqFerias, this.strValorFerias });
-        tabela1.addRow(new Object[]{"  1/3 Férias Proporcional", "-", this.strValorTercoFerias });
-        tabela1.addRow(new Object[]{"  Férias Vencidas", this.strQtdFeriasVenc, this.strValorFeriasVenc });
-        tabela1.addRow(new Object[]{"  1/3 Férias Vencidas", "-", this.strValorTercoFeriasVenc });
-        tabela1.addRow(new Object[]{"  Aviso Prévio", this.strQtdDiasAviso, this.strValorAviso });
-        tabela1.addRow(new Object[]{   null, null, null });
-        tabela1.addRow(new Object[]{"  Valor total", "-", this.strTotVencimento });
-    	/*Fim do bloco*/
-        
-        
+    	
+    	return tabela1;
+	}
+
+	
+	private DefaultTableModel CriarTabela2(){
+		DefaultTableModel tabela2 = new DefaultTableModel() {
+    		private static final long serialVersionUID = 1L;
+    		
+    		@Override
+			public boolean isCellEditable(int linha, int coluna) {
+    			return false;
+    		}
+    	};
+    	
+    	
         /*Bloco com definições e valores específicos da tabela do FGTS*/
         gui.getTblFGTS().setModel(tabela2);
         tabela2.addColumn(null);
@@ -815,20 +761,13 @@ public class ControllerPrincipal  {
         gui.getTblFGTS().getColumnModel().getColumn(1).setResizable(false);
         gui.getTblFGTS().getColumnModel().getColumn(1).setPreferredWidth(135);
         /*Fim do bloco */
-        
-//		Convertemos e formatamos todos os valores e informações para o formato String.
-        this.stSaldoFgts = formatarValores(this.saldoFgts);
-        this.stMultaFgts = formatarValores(this.multaFGTS);
-        this.stTotSomaFgts = formatarValores(this.totSomaFGTS);
-        
-//      Agora repassamos essas informações para a tabela correspondente.
-        tabela2.addRow(new Object[]{"  Valores do FGTS estarão disponíveis para saque?", this.receberFgts});
-        tabela2.addRow(new Object[]{"  Saldo FGTS", this.stSaldoFgts});
-        tabela2.addRow(new Object[]{"  Multa de 40%", this.stMultaFgts});
-        tabela2.addRow(new Object[]{null, null});
-        tabela2.addRow(new Object[]{"  Valor Total", this.stTotSomaFgts});
-        /*Fim do bloco*/
-        
+    	
+    	return tabela2;
+	}	
+	
+	
+	private void aplicarEstiloTabelas(){
+                
         /*Bloco de código responsável por centralizar as células */
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -837,22 +776,50 @@ public class ControllerPrincipal  {
         gui.getTblRescisao().getColumnModel().getColumn(2).setCellRenderer(centralizado);
         gui.getTblFGTS().getColumnModel().getColumn(1).setCellRenderer(centralizado);
         /*Fim do bloco*/
+		
+	}
+	
+	
+	private void carregarVlrsTabelas(DefaultTableModel tabela1, DefaultTableModel tabela2){
         
-    }
+//      Agora repassamos essas informações para a tabela correspondente.
+        tabela1.addRow(new Object[]{"  Saldo Salário", this.rst.getTotDiasTrabUltMes(), this.rst.getUltSalario() });
+        tabela1.addRow(new Object[]{"  13º Proporcional", this.rst.getTotMesesTrabUltAno(), this.rst.getVlrDecimo() });
+        tabela1.addRow(new Object[]{"  Férias Proporcional", this.rst.getTotMesesAqFerias(), this.rst.getVlrFerias() });
+        tabela1.addRow(new Object[]{"  1/3 Férias Proporcional", "-", this.rst.getVlrTercoFerias() });
+        tabela1.addRow(new Object[]{"  Férias Vencidas", this.rst.getTotFeriasVenc(), this.rst.getVlrFeriasVenc() });
+        tabela1.addRow(new Object[]{"  1/3 Férias Vencidas", "-", this.rst.getVlrTerFeriasV() });
+        tabela1.addRow(new Object[]{"  Aviso Prévio", this.rst.getTotDiasAviso(), this.rst.getVlrAvisoP() });
+        tabela1.addRow(new Object[]{   null, null, null });
+        tabela1.addRow(new Object[]{"  Valor total", "-", this.rst.getVlrTotVenc() });
+        /*Fim do bloco*/  
+        
+        
+//      Agora repassamos essas informações para a tabela correspondente.
+        tabela2.addRow(new Object[]{"  Valores do FGTS estarão disponíveis para saque?", this.rst.getReceberFgts()});
+        tabela2.addRow(new Object[]{"  Saldo FGTS", this.rst.getSaldoFgts()});
+        tabela2.addRow(new Object[]{"  Multa de 40%", this.rst.getVlrMulta()});
+        tabela2.addRow(new Object[]{null, null});
+        tabela2.addRow(new Object[]{"  Valor Total", this.rst.getVlrTotFgts()});
+        /*Fim do bloco*/     
+		
+	}
 
-    private void abrirlink(HyperlinkEvent e){
-		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			
-			try {
-				Desktop.getDesktop().browse(e.getURL().toURI());
-			} catch (Exception error) {
-				System.err.println("Não foi possível lançar o navegador!" 
-						+ "\n" + error.getMessage());
-			}
-		}	
-    }
-    
+	
+	private void exibirResultadoNaTela(){
+		mostrarTelaResultado();
+		carregarResultados();
+		DefaultTableModel tabela1 = CriarTabela1(); 
+		DefaultTableModel tabela2 = CriarTabela2();
+		aplicarEstiloTabelas();
+		carregarVlrsTabelas(tabela1, tabela2);
+	};
+	
+//	------------------------------------------------------------------------ //	
+	
+	
     private void exportarPlanilha(){
+    	PlanilhaXLS plan = new PlanilhaXLS(rst);
     	JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
     	fileChooser.setSelectedFile(new File("ArquivoExportado.xls"));
     	fileChooser.setFileFilter(new FileNameExtensionFilter("Planilha Excel (*.xls)", "xls"));
@@ -880,39 +847,11 @@ public class ControllerPrincipal  {
         	
         	System.err.println("Usuário cancelou a ação de salvar!");
         	exibirErro("Dados não exportados, ação cancelada pelo usuário!");
-//        	Colocar um JoptionPane aqui mostrando a mensagem.
         }
         
         else {
         	
-        	try {
-        		
-//        		File arquivo = fileChooser.getSelectedFile();
-        		
-/*				Carregar os resultado para a planilha		*/
-        		
-        		plan.setDataEntrada(gui.getDataEntradaFmt().getText());
-        		plan.setDataSaida(gui.getDataSaidaFmt().getText());
-        		plan.setSalario(gui.getSalarioFmt().getText());
-        		plan.setMotivoSaida(motivoSaida);
-        		
-        		plan.setQtdDiasTrabUltMes(this.strQtdDiasTrabUltMes);
-        		plan.setSalarioFinal(this.strSalarioFinal);
-        		plan.setMesesDecimo(this.strMesesDecimo);
-        		plan.setValorDecimo(this.strValorDecimo);
-        		plan.setMesesAqFerias(this.strMesesAqFerias);
-        		plan.setValorFerias(this.strValorFerias);
-        		plan.setValorTercoFerias(this.strValorTercoFerias);
-        		plan.setQtdFeriasVenc(this.strQtdFeriasVenc);
-        		plan.setValorFeriasVenc(this.strValorFeriasVenc);
-        		plan.setQtdDiasAviso(this.strQtdDiasAviso);
-        		plan.setValorAviso(this.strValorAviso);
-        		plan.setTotVencimento(this.strTotVencimento);
-        		plan.setReceberFgts(this.receberFgts);
-        		plan.setSaldoFgts(this.stSaldoFgts);
-        		plan.setMultaFgts(this.stMultaFgts);
-        		plan.setTotSomaFgts(this.stTotSomaFgts);
-        		
+        	try {    		
 				
         		if (plan.gerarPlanilha(xlsFile)) {
         			
@@ -923,28 +862,13 @@ public class ControllerPrincipal  {
 				
 			} catch (Exception e) {
 				
-	    		System.err.println("Não foi possível gerar seu arquivo!"
-	    				+ " \n" + e.getMessage());
-//	        	Colocar um JoptionPane aqui mostrando a mensagem.
-	    		
-	    		this.msgErro = e.getLocalizedMessage();
-	    		exibirErro(this.msgErro);
+				String msgErro = ("Não foi possível gerar seu arquivo!"
+						+"\n" + e.getMessage());
+				
+	    		System.err.println(msgErro);
+	    		exibirErro(msgErro);
 				
 			}
-			
 		}
-        
-        
-    }
-
-    private void mostrarTelaSobre(){
-    	
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.setVisible(true);
-		dialog.setLocationRelativeTo(null);
-
-
-    }
-    
-
+    }	
 }
