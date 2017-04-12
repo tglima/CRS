@@ -18,17 +18,22 @@
 package br.edu.tglima.controller;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
+
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import javax.swing.border.LineBorder;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -39,10 +44,6 @@ import br.edu.tglima.model.result.*;
 import br.edu.tglima.model.util.*;
 import br.edu.tglima.view.*;
 
-/**
- * @author Thiago Lima de Sousa
- * @version 2017.04.11-1
- */
 public class ControllerPrincipal {
 	private FramePrincipal gui;
 	private DialogSobre dialog;
@@ -568,6 +569,7 @@ public class ControllerPrincipal {
     		msgErro = "Data de entrada inválida!"
 					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getDataEntradaFmt());
 			return false;    
 		}
     	
@@ -576,6 +578,7 @@ public class ControllerPrincipal {
     		msgErro = "Data de saída inválida!"
 					+ "\nInforme a data no seguinte formato: dd/mm/aaaa";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getDataSaidaFmt());
 			return false;    
 		}
     	
@@ -583,6 +586,7 @@ public class ControllerPrincipal {
 			System.err.println("A data de saída é inferior a data de entrada!");
 			msgErro = "A data de saída é inferior a data de entrada!";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getDataSaidaFmt());
 			return false;    
     	}
     	
@@ -591,6 +595,7 @@ public class ControllerPrincipal {
 			msgErro = "Data de entrada inválida!"
 					+ "\nInforme datas superiores há 10/11/1943";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getDataEntradaFmt());
 			return false;    		
     	}
     	
@@ -599,6 +604,7 @@ public class ControllerPrincipal {
 			msgErro = "Data de saída inválida!"
 					+ "\nInforme datas inferiores há 01/01/2060";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getDataSaidaFmt());
     		return false;
     	}
     	
@@ -606,6 +612,7 @@ public class ControllerPrincipal {
     		System.err.println("O valor informado como salário é inválido!");
 			msgErro = "O valor informado como salário é inválido!\n";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getSalarioFmt());
     		return false;
     	}
     	
@@ -614,6 +621,7 @@ public class ControllerPrincipal {
 			msgErro = "O valor informado como salário é inválido!\n"
 					+ "Use valores inferiores há R$ 60.000,00.";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getSalarioFmt());
 			return false;
     	}
     	
@@ -622,6 +630,7 @@ public class ControllerPrincipal {
 			System.err.println("O saldo informado como fgts é inválido!");
 			msgErro = "O saldo informado como fgts é inválido!";
 			exibirErro(msgErro);
+			destacarCampo(this.gui.getSaldoFgtsFmt());
     		return false;
     	}
     	
@@ -653,8 +662,35 @@ public class ControllerPrincipal {
 				"/br/edu/tglima/resource/imgs/alert-48.png"));
 		JOptionPane.showMessageDialog(null, msgAlerta, "Informação",
 				JOptionPane.INFORMATION_MESSAGE, AlertIcon);
-	}    
+	}
+	
 
+	  
+	  private void destacarCampo(JFormattedTextField field) {
+		  final int timerDelay = 500, totalTime = 2000;
+		  final int totalCount = totalTime / timerDelay;
+		  Timer timer = new Timer(timerDelay, new ActionListener(){
+		    int count = 0;
+
+		    public void actionPerformed(ActionEvent evt) {
+		      if (count % 2 == 0) {
+		        field.setBorder(new LineBorder(Color.RED, 2, true));
+		        field.requestFocus();
+		      } else {
+			        field.setBorder(new LineBorder(Color.GRAY, 1, false));
+		        if (count >= totalCount) { 
+		          ((Timer)evt.getSource()).stop();
+		        }
+		      }
+		      count++;
+		    }
+		  });
+		  timer.start();
+		}
+	
+	
+	
+	
 	
 //	------------------------------------------------------------------------ //
 	

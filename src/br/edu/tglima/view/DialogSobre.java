@@ -38,7 +38,6 @@ import javax.swing.UIManager;
 
 /**
  * @author Thiago Lima de Sousa
- * @version 2017.03.29-1
  * @see Classe responsável por gerar o JDialog que contém as informações
  * básicas do programa.
  */
@@ -76,6 +75,10 @@ public class DialogSobre extends JDialog {
 /*	Método construtor da classe												*/
 	
 	public DialogSobre() {
+/*		Com o setModal sendo true, quando nosso DialogSobre for lançado o
+		FramePrincipal será bloqueado. Ao fechar o 
+		DialogSobre, o FramePrincipal será liberado. */
+		this.setModal(true); 
 		setTitle("Sobre");
 		setResizable(false);
 		setBackground(UIManager.getColor("Panel.background"));
