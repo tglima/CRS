@@ -8,11 +8,11 @@ O CRS é uma aplicação Java para Desktops que realiza de forma simplificada, a
 
 ## Last Release
 
-| JAR FILE:   |[CRS Release 0.60.1](https://github.com/tglima/CRS/releases/download/v0.60.1/0.60.1-build20170412-1800.jar)  |
-|-------------|----------------------------------|
-| VERSION:    | 0.60.1                           |
-| BUILD DATE: | April 12, 2017                   |
-| MD5SUM:     | 8de842c2f47d40605a6ca5b44f689c74 |
+| JAR FILE   | [CRS Release 0.60.1](https://github.com/tglima/CRS/releases/download/v0.60.1/0.60.1-build20170412-1800.jar)  |
+|:-------------|:----------------------------------|
+| Version      | 0.60.1                            |
+| Build Date   | April 12, 2017                    |
+| MD5SUM       | 8de842c2f47d40605a6ca5b44f689c74  |
 
 
 ## License
