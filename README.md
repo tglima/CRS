@@ -8,9 +8,9 @@ O CRS é uma aplicação Java para Desktops que realiza de forma simplificada, a
 
 # Recursos
 * Realiza os sequintes cálculos:
-  * Último salário (proporcional ao total de dias trabalhados.).
-  * Décimo terceiro salário.
-  * Férias proporcional.
+  * Último salário (proporcional ao total de dias trabalhados).
+  * 13º salário.
+  * Férias proporcionais.
   * 1/3 das férias.
   * Férias vencidas.
   * 1/3 das férias vencidas
