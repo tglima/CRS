@@ -23,7 +23,6 @@ import java.math.RoundingMode;
 /**
  * 
  * @author Thiago Lima de Sousa
- * @version 2017.04.09-1
  * @see Classe responsável pelos cálculos dos valores do FGTS.
  */
 public class Fgts {

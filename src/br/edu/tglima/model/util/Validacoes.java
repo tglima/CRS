@@ -23,7 +23,6 @@ import java.time.LocalDate;
 /**
  * 
  * @author Thiago Lima
- * @version 2017.04.10-1
  * @see Classe que contém os todos métodos de validações usados no programa.
  */
 public class Validacoes {
@@ -35,11 +34,15 @@ public class Validacoes {
 	 * @return Se a váriavel do tipo LocalDate está ou não vazia.
 	 */
 	public boolean validarData(LocalDate date) {
-		if (date == null) {
+		
+		return date != null;
+		
+		/*if (date == null) {
 			return false;
 		} else {
 			return true;
-		}
+		}*/
+		
 	}
 	
 	/**
@@ -54,13 +57,15 @@ public class Validacoes {
 		CalcPeriodos CP = new CalcPeriodos();
 		int difEntreDatas = CP.calcDiferDias(dataInicial, dataFinal);
 			
-		if (difEntreDatas <= 0) {
+		return difEntreDatas > 0;
+		
+/*		if (difEntreDatas <= 0) {
 			return false;
 			
 		} else {
 
 			return true;
-		}		
+		}*/		
 	}
 	
 	/**
@@ -100,11 +105,14 @@ public class Validacoes {
 	 * qualquer valor menor.
 	 */
 	public boolean valSalMin(BigDecimal valor) {
-		if (valor.compareTo(new BigDecimal("1")) < 0) {
+		return valor.compareTo(new BigDecimal("1")) >= 0;
+		
+/*		if (valor.compareTo(new BigDecimal("1")) < 0) {
 			return false;
 		} else {
 			return true;
-		}
+		}*/
+		
 	}
 
 	/**
@@ -115,11 +123,16 @@ public class Validacoes {
 	 * para qualquer valor superior ao limite.
 	 */
 	public boolean valSalMax(BigDecimal valor){
-		if (valor.compareTo(new BigDecimal("59999")) > 0) {
+		
+		return valor.compareTo(new BigDecimal("59999")) < 0;
+		
+/*		if (valor.compareTo(new BigDecimal("59999")) > 0) {
 			return false;
 		} else {
 			return true;
-		}
+		}*/
+		
+		
 	}
 
 	/**

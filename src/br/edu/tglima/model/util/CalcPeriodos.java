@@ -23,7 +23,6 @@ import java.time.temporal.ChronoUnit;
 
 /**
  * @author Thiago Lima
- * @version 2017.04.09-1
  * @see Classe responsável por calcular períodos de tempos específicos.
  */
 public class CalcPeriodos {

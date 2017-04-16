@@ -35,11 +35,11 @@ public class ConverteFormata {
 	 * Realiza o tratamento e conversão de uma string para o formato
 	 * LocalDate.
 	 * 
-	 *  @param dtString Referente a data informada pelo usuário na view.
+	 *  @param dtDigitada Referente a data informada pelo usuário na view.
 	 *  @return Retornará um valor do tipo LocalDate no seguinte 
 	 *  formato AAAA-MM-DD.
 	 */
-	public LocalDate cvtStrToDate(String dtString) {
+	public LocalDate cvtStrToDate(String dtDigitada) {
 		LocalDate date = null;
 		
 		
@@ -48,23 +48,22 @@ public class ConverteFormata {
 		 * que o usuário tenha informado no campo de data. 
 		 */
 		
-		dtString = dtString.replace(" ", "");
+		String strDate = dtDigitada.replace(" ", "");
 		
 		/*
 		 * Se o campo estiver correto, ele deve possuir exatos 10 caracteres,
 		 * qualquer coisa diferente disto, significa que a data informada é 
 		 * inválida.
-		 * 
 		 */
 		
-		if (dtString.length() == 10) {
+		if (strDate.length() == 10) {
 			
 			/*
 			 * Com a ajuda de um vetor, quebramos a String em 3 partes.
 			 * Depois remontamos ela no formato correto (AAAA-MM-DD),
 			 * para em seguida ser convertida no formato LocalDate
 			 */
-			String[] dataVetor = dtString.split("/");
+			String[] dataVetor = strDate.split("/");
 			String strData = dataVetor[2] + "-" + dataVetor[1] + "-"+ dataVetor[0];			
 			
 			try {
@@ -74,7 +73,6 @@ public class ConverteFormata {
 						+ "informado para o tipo LocalDate!\n"
 						+ error.getMessage());
 			}
-				
 			
 		} 
 		
@@ -85,21 +83,18 @@ public class ConverteFormata {
 	 * Realilza o tratamento e conversão de uma string para o formato
 	 * BigDecimal.
 	 * 
-	 *  @param vlrStr Referente ao valor informado pelo usuário na view.
+	 *  @param vlrDigitado Referente ao valor informado pelo usuário na view.
 	 *  @return O valor convertido em BigDecimal.
 	 */
-	public BigDecimal cvtStrToBigDecimal(String vlrStr) {
+	public BigDecimal cvtStrToBigDecimal(String vlrDigitado) {
 		BigDecimal vlrInformado = new BigDecimal("0"); 
 		
-/*		vlrStr = vlrStr.replace(" ", "").replace(".", "")
-				.replace(",", ".").replace("R$", "");*/
-
-		vlrStr = vlrStr.replace(" ", "").replace(",", ".")
+		String vlr = vlrDigitado.replace(" ", "").replace(",", ".")
 				.replace("R$", "");
 
 		
         try {
-            vlrInformado = new BigDecimal(vlrStr);
+            vlrInformado = new BigDecimal(vlr);
         } catch (Exception error) {
 			System.err.println("Não foi possível converter o valor informado." 
 					+ "\n" + error.getMessage());

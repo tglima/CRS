@@ -30,21 +30,23 @@ import org.apache.poi.ss.util.CellRangeAddress;
 /**
  * 
  * @author Thiago Lima de Sousa
- * @version 2017.04.10-1
  * @see Classe responsável por gerar o arquivo XLS e persistir ele disco rígido
  * do usuário.
  */
-public class PlanilhaXLS {
+public class PlanilhaXLS {	
+	/* Atributo Especial				*/	
+	private HSSFWorkbook workbook = new HSSFWorkbook();
+
+	/*Atributo recebido*/
 	private Resultados rst;
 	
+	/*Contrutor da classe*/
 	public PlanilhaXLS(Resultados rst) {
 		this.rst = rst;
 	}
 	
 
 
-/* Atributo Especial				*/	
-	private HSSFWorkbook workbook = new HSSFWorkbook();
 	
 
 	public void setWorkbook(HSSFWorkbook workbook) {
