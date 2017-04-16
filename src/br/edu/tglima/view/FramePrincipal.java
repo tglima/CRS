@@ -280,9 +280,9 @@ public class FramePrincipal extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cálculos Rescisórios Simples");
         setName("FramePrincipal"); 
-        setPreferredSize(new java.awt.Dimension(525, 600));
+        setPreferredSize(new Dimension(525, 600));
         setResizable(false);
-        setSize(new java.awt.Dimension(525, 600));
+        setSize(new Dimension(525, 600));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource
         		("/br/edu/tglima/resource/imgs/calc-500.png")));
 
@@ -310,7 +310,7 @@ public class FramePrincipal extends JFrame {
             dataSaidaFmt.setFormatterFactory(new DefaultFormatterFactory
             		(new MaskFormatter("##/##/####")));
             
-        } catch (java.text.ParseException ex) {
+        } catch (ParseException ex) {
             ex.printStackTrace();
         }
         
@@ -550,7 +550,7 @@ public class FramePrincipal extends JFrame {
         );
 
         jPanel1.add(card02Resultado, "card2");
-        Card03Termos.setPreferredSize(new java.awt.Dimension(525, 600));
+        Card03Termos.setPreferredSize(new Dimension(525, 600));
 
         
         
@@ -585,7 +585,7 @@ public class FramePrincipal extends JFrame {
         
         jScrollPane3.setViewportView(jTextPane1);
 
-        lblTermosDeUso.setFont(new java.awt.Font("Dialog", 1, 36));
+        lblTermosDeUso.setFont(new Font("Dialog", 1, 36));
         lblTermosDeUso.setText("Termos de uso");
 
         btnVoltar3.setText("Voltar");
@@ -646,7 +646,7 @@ public class FramePrincipal extends JFrame {
         btnVoltar2.setText("Voltar");
         btnVoltar2.setMnemonic(KeyEvent.VK_V);
 
-        lblLimitacoes.setFont(new java.awt.Font("Dialog", 1, 36));
+        lblLimitacoes.setFont(new Font("Dialog", 1, 36));
         lblLimitacoes.setText("Limitações");
 
         GroupLayout Card04LimitacoesLayout = new GroupLayout(Card04Limitacoes);

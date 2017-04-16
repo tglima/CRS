@@ -65,21 +65,21 @@ public class ControllerPrincipal {
         this.gui.getjMenuItem1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                mostrarTelaLimitacoes(e);
+                mostrarTelaLimitacoes();
             }
         });
 		
         this.gui.getjMenuItem2().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                mostrarTelaTermos(e);
+                mostrarTelaTermos();
             }
         });
 		
         this.gui.getjMenuItem3().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                mostrarTelaSobre(e);
+                mostrarTelaSobre();
             }
         });
 		
@@ -87,7 +87,7 @@ public class ControllerPrincipal {
         	
 			@Override
 			public void focusLost(FocusEvent e) {
-				jFormattedTextField2FocusLost(e);
+				jFormattedTextField2FocusLost();
 				
 			}
 		});
@@ -95,7 +95,7 @@ public class ControllerPrincipal {
         this.gui.getSalarioFmt().addFocusListener(new FocusAdapter() {
             @Override
 			public void focusLost(FocusEvent e) {
-                jFormattedTextField3FocusLost(e);
+                jFormattedTextField3FocusLost();
             }
 
         });
@@ -103,7 +103,7 @@ public class ControllerPrincipal {
         this.gui.getSaldoFgtsFmt().addFocusListener(new FocusAdapter() {
             @Override
 			public void focusLost(FocusEvent e) {
-                jFormattedTextField4FocusLost(e);
+                jFormattedTextField4FocusLost();
             }
 
         });
@@ -111,28 +111,28 @@ public class ControllerPrincipal {
         this.gui.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RadioButton3ActionPerformed(e);
+				RadioButton3ActionPerformed();
 			}
 		});
         
         this.gui.getjRadioButton4().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RadioButton4ActionPerformed(e);
+				RadioButton4ActionPerformed();
 			}
 		});
                 
         this.gui.getComboMotivoSaida().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jComboBox1ActionPerformed(e);
+				jComboBox1ActionPerformed();
 			}
 		});
 		
 		this.gui.getBtnCalcular().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-            	eventBtnCalcular(e);
+            	eventBtnCalcular();
             }
         });
 		
@@ -146,21 +146,21 @@ public class ControllerPrincipal {
 		this.gui.getBtnVoltar1().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
+                voltarInicio();
             }
         });
 
 		this.gui.getBtnVoltar2().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
+                voltarInicio();
             }
         });
 		
 		this.gui.getBtnVoltar3().addActionListener(new ActionListener() {
             @Override
 			public void actionPerformed(ActionEvent e) {
-                voltarInicio(e);
+                voltarInicio();
             }
         });
 
@@ -181,7 +181,7 @@ public class ControllerPrincipal {
 		this.dialog.getBtnFechar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fecharTelaSobre(e);				
+				fecharTelaSobre();				
 			}
 		});
 				
@@ -207,14 +207,14 @@ public class ControllerPrincipal {
 	
 /*	Métodos responsáveis por navegar entre as telas do programa	   			*/
 	
-    private void mostrarTelaLimitacoes(ActionEvent e) {                                           
+    private void mostrarTelaLimitacoes() {                                           
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
         cl.show(gui.getjPanel1(), "card4");
 
     }                                          
 
     
-    private void mostrarTelaTermos(ActionEvent e) {                                           
+    private void mostrarTelaTermos() {                                           
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
         cl.show(gui.getjPanel1(), "card3");
     }                                         
@@ -226,19 +226,19 @@ public class ControllerPrincipal {
 	}
     
 	
-    private void mostrarTelaSobre(ActionEvent e) {
+    private void mostrarTelaSobre() {
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 		dialog.setLocationRelativeTo(null);
     }   
 
     
-    private void fecharTelaSobre(ActionEvent e){
+    private void fecharTelaSobre(){
     	dialog.setVisible(false);
     }
 
     
-    private void voltarInicio(ActionEvent e) {                                         
+    private void voltarInicio() {                                         
         CardLayout cl = (CardLayout) gui.getjPanel1().getLayout();
         cl.show(gui.getjPanel1(), "card1");
     } 
@@ -265,15 +265,14 @@ public class ControllerPrincipal {
     
 /*	Métodos responsáveis pelas escolhas feitas com os radio buttons 		*/    
     
-    private void RadioButton3ActionPerformed(ActionEvent e) {                                              
-
+    private void RadioButton3ActionPerformed() {                                              
         if (true) {
             gui.getSaldoFgtsFmt().setEnabled(true);
             gui.getLblInformeFgts().setEnabled(true);
         }
     }   
 	
-    private void RadioButton4ActionPerformed(ActionEvent e) {                                              
+    private void RadioButton4ActionPerformed() {                                              
         if (true) {
             gui.getSaldoFgtsFmt().setEnabled(false);
             gui.getLblInformeFgts().setEnabled(false);
@@ -284,9 +283,9 @@ public class ControllerPrincipal {
 
     
 /*	Método responsável por desativar o ComboAvisoPrevio quando necessário */
-	private void jComboBox1ActionPerformed(ActionEvent e) {
-		if (gui.getComboMotivoSaida().getSelectedItem() == "Falecimento"
-				|| gui.getComboMotivoSaida().getSelectedItem() == "Fim do Contrato de Trabalho") {
+	private void jComboBox1ActionPerformed() {
+		if (gui.getComboMotivoSaida().getSelectedItem().equals("Falecimento")
+				|| gui.getComboMotivoSaida().getSelectedItem().equals("Fim do Contrato de Trabalho")) {
 			gui.getLblAvisoPrevio().setEnabled(false);
 			gui.getComboAvisoPrevio().setEnabled(false);
 		} else {
@@ -301,7 +300,7 @@ public class ControllerPrincipal {
 	
 /*	Método responsável por controlar os campos de férias vencidas */
 	
-	private void jFormattedTextField2FocusLost(FocusEvent e){
+	private void jFormattedTextField2FocusLost(){
 		obterDatas();
 		
 		try {
@@ -336,13 +335,13 @@ public class ControllerPrincipal {
 		
 /* 	Métodos resposáveis por capturar e tratar os valores informados  */
 	
-	private void jFormattedTextField3FocusLost(FocusEvent e) {			
+	private void jFormattedTextField3FocusLost() {			
 		String vlrDigitado = gui.getSalarioFmt().getText();
 		vlrDigitado = cvt.formatStrVlrMonetario(vlrDigitado);
 		gui.getSalarioFmt().setText(vlrDigitado);
 	}
 	
-    private void jFormattedTextField4FocusLost(FocusEvent e) {
+    private void jFormattedTextField4FocusLost() {
     	String strFgtsFormatado;
     	strFgtsFormatado = cvt.formatStrVlrMonetario(gui.getSaldoFgtsFmt().getText());
     	gui.getSaldoFgtsFmt().setText(strFgtsFormatado);
@@ -356,7 +355,7 @@ public class ControllerPrincipal {
     
 /*	Métodos executados ao pressionar o botão calcular					*/    
 
-    private void eventBtnCalcular(ActionEvent e){
+    private void eventBtnCalcular(){
     	System.out.println("Botão calcular foi pressionado");
     	
     	/*
