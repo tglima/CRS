@@ -162,10 +162,6 @@ public class FramePrincipal extends JFrame {
 		return jPanel1;
 	}
 
-/*	public JPanel getCard01Principal() {
-		return card01Principal;
-	}*/
-
 	public JRadioButton getjRadioButton1() {
 		return jRadioButton1;
 	}

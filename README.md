@@ -26,23 +26,21 @@ O CRS é uma aplicação Java para Desktops que realiza de forma simplificada, a
 ## Requisitos
 Ter o [Java 8](https://www.java.com/en/download/) baixado e instalado em sua máquina.
 
-
-
 ## Última versão lançada
 
 | Obter aplicação :                                |  
 |:-------------------------------------------------|
-| [0.60.1-build20170412-1800.jar](releases/download/v0.60.1/0.60.1-build20170412-1800.jar)                                       |
+| [0.60.2-build20170416-1600.jar](releases/download/v0.60.2/0.60.2-build20170416-1600.jar)                                       |
 
 
 | Tipo de arquivo    | Executável jar                    |
 |:-------------------|:----------------------------------|
-| Versão             | 0.60.1                            |
-| Build Date         | 12 de Abril de 2017               |  
+| Versão             | 0.60.2                            |
+| Build Date         | 16 de Abril de 2017               |  
 | Tamanho            | < 15MB                            |
-| MD5SUM             | 8de842c2f47d40605a6ca5b44f689c74  |
+| MD5SUM             | becbdb98e4d8cc3e67e70bdb743bd82b  |
 
-
+Últimas modificações do projeto: [CHANGELOG](CHANGELOG.md)
 
 
 
