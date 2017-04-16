@@ -25,7 +25,6 @@ import java.util.Locale;
 
 /**
  * @author Thiago Lima de Sousa
- * @version 2017.04.09-1
  * @see Classe responsável pelas formatações e conversões usadas no aplicativo.
  */
 public class ConverteFormata {

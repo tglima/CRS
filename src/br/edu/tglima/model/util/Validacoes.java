@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * 
  * @author Thiago Lima
  * @see Classe que contém os todos métodos de validações usados no programa.
  */

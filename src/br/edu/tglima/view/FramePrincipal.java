@@ -48,10 +48,8 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
-// Last edition. 2017-03-30
 /**
  * @author Thiago Lima de Sousa
- * @version 2017.04.11-1
  * @see Classe responsável por todos os elementos visuais da janela principal
  * do programa.
  * 
@@ -62,9 +60,6 @@ public class FramePrincipal extends JFrame {
 /*	Lista de atributos 														*/	
 	
 	private JPanel jPanel1;
-/*	private JPanel jPanel1, card01Principal, card02Resultado;
-	private JPanel Card03Termos, Card04Limitacoes;*/
-
 	
 	private JButton btnCalcular, btnVoltar1, btnExportar, btnVoltar2, btnVoltar3;                                       
 	private JComboBox<String> comboMotivoSaida, comboAvisoPrevio;
@@ -72,14 +67,12 @@ public class FramePrincipal extends JFrame {
 	private JFormattedTextField dataEntradaFmt, dataSaidaFmt;
 	private JFormattedTextField salarioFmt, saldoFgtsFmt;
 	
-	private JLabel lblSalario, lblFeriasVencidas;
-	private JLabel lblAvisoPrevio, lblSaldoFgts, lblInformeFgts; 
-	private JLabel lblRescisao, lblTermosDeUso, lblLimitacoes;
+	private JLabel lblFeriasVencidas;
+	private JLabel lblAvisoPrevio, lblInformeFgts; 
 	
 	private JMenuItem jMenuItem1, jMenuItem2, jMenuItem3;
 	
 	private JRadioButton jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4;
-	private JScrollPane jScrollPane2, jScrollPane3, jScrollPane4;
 
 	private JTable tblRescisao, tblFGTS;
 	private JTextPane jTextPane1, jTextPane2;
@@ -211,8 +204,6 @@ public class FramePrincipal extends JFrame {
 
 /*	Método responsável por iniciar os componentes e posicioná-los			*/	
 	
-
-	
  	private void iniciarComponentes() {
 		
         jPanel1										= 	new JPanel();
@@ -229,9 +220,9 @@ public class FramePrincipal extends JFrame {
         dataEntradaFmt 								= 	new JFormattedTextField();
         JLabel lblDataSaida 						= 	new JLabel();
         dataSaidaFmt 								= 	new JFormattedTextField();
-        lblSalario 									= 	new JLabel();
+        JLabel lblSalario 							= 	new JLabel();
         salarioFmt			 						= 	new JFormattedTextField();
-        lblFeriasVencidas 							= 	new JLabel();
+        JLabel lblFeriasVencidas 					= 	new JLabel();
         saldoFgtsFmt 								= 	new JFormattedTextField();
 
         
@@ -244,10 +235,10 @@ public class FramePrincipal extends JFrame {
         
         
         JLabel lblMotivoSaida 						= 	new JLabel();
-        lblAvisoPrevio 								= 	new JLabel();
-        lblSaldoFgts 								= 	new JLabel();
-        lblInformeFgts 								= 	new JLabel();
-        lblRescisao 								= 	new JLabel();
+        JLabel lblAvisoPrevio 						= 	new JLabel();
+        JLabel lblSaldoFgts 						= 	new JLabel();
+        JLabel lblInformeFgts 						= 	new JLabel();
+        JLabel lblRescisao 							= 	new JLabel();
         
         
         comboMotivoSaida 							= 	new JComboBox<>();
@@ -259,21 +250,21 @@ public class FramePrincipal extends JFrame {
         JScrollPane jScrollPane1 					= 	new JScrollPane();
         tblRescisao 								= 	new JTable();
         JLabel lblFgts 								= 	new JLabel();
-        jScrollPane2 								= 	new JScrollPane();
+        JScrollPane jScrollPane2 					= 	new JScrollPane();
         tblFGTS 									= 	new JTable();
         btnVoltar1 									= 	new JButton();
         btnExportar 								= 	new JButton();
         
         
         JPanel Card03Termos			 				= 	new JPanel();
-        jScrollPane3 								= 	new JScrollPane();
+        JScrollPane jScrollPane3 					= 	new JScrollPane();
         jTextPane1	 								= 	new JTextPane();
-        lblTermosDeUso								= 	new JLabel();
+        JLabel lblTermosDeUso						= 	new JLabel();
         btnVoltar3 									= 	new JButton();
         	
         JPanel Card04Limitacoes 					= 	new JPanel();
-        lblLimitacoes 								= 	new JLabel();
-        jScrollPane4 								= 	new JScrollPane();
+        JLabel lblLimitacoes 						= 	new JLabel();
+        JScrollPane jScrollPane4 					= 	new JScrollPane();
         jTextPane2 									= 	new JTextPane();
         btnVoltar2 									= 	new JButton();
 

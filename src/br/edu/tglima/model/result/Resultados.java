@@ -20,7 +20,6 @@ package br.edu.tglima.model.result;
 /**
  * 
  * @author Thiago Lima
- * @version 2017.04.10-1
  * @see Classe responsável por armazenar diversos dados obtidos durante
  * a execução do programa. Todos estes dados são guardados no formato String, 
  * facilitando sua reutilização posteriormente.

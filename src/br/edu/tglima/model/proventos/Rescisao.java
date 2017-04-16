@@ -22,7 +22,6 @@ import java.time.LocalDate;
 
 /**
  * @author Thiago Lima de Sousa
- * @version 2017.04.10-1
  * @see Classe responsável por armazenar os valores e dados durante a execução
  * do programa. Ela também é responsável por realizar a rescisão de acordo com
  * as opções obtidas da view.
