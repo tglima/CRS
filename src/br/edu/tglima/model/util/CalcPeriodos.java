@@ -199,9 +199,8 @@ public class CalcPeriodos {
             if (diaFim > 14) {
                 mesFim = mesFim + 1;
 
-            } else {
-            }
-
+            } 
+            
             mesInicio = 1;
             totMesesTrabUltAno = mesFim - mesInicio;
             return totMesesTrabUltAno;

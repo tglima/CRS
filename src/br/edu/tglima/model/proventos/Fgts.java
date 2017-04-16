@@ -65,7 +65,7 @@ public class Fgts {
 	 * @param valorMulta Referente ao valor da multa de 40%.
 	 * @return A soma dos 2 valores.
 	 */
-	public BigDecimal SomarMultaeFgts(BigDecimal saldoFgts, BigDecimal valorMulta){
+	public BigDecimal somarMultaeFgts(BigDecimal saldoFgts, BigDecimal valorMulta){
 		return saldoFgts.add(valorMulta);
 	}
 	

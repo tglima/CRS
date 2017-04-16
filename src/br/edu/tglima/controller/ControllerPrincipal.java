@@ -111,14 +111,14 @@ public class ControllerPrincipal {
         this.gui.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RadioButton3ActionPerformed();
+				actionRadioButton3();
 			}
 		});
         
         this.gui.getjRadioButton4().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RadioButton4ActionPerformed();
+				actionRadionButton4();
 			}
 		});
                 
@@ -265,14 +265,14 @@ public class ControllerPrincipal {
     
 /*	Métodos responsáveis pelas escolhas feitas com os radio buttons 		*/    
     
-    private void RadioButton3ActionPerformed() {                                              
+    private void actionRadioButton3() {                                              
         if (true) {
             gui.getSaldoFgtsFmt().setEnabled(true);
             gui.getLblInformeFgts().setEnabled(true);
         }
     }   
 	
-    private void RadioButton4ActionPerformed() {                                              
+    private void actionRadionButton4() {                                              
         if (true) {
             gui.getSaldoFgtsFmt().setEnabled(false);
             gui.getLblInformeFgts().setEnabled(false);
@@ -527,7 +527,7 @@ public class ControllerPrincipal {
     	
     	String motivoRes = (String) gui.getComboMotivoSaida().getSelectedItem();
     	
-    	if (motivoRes.equals("Demissão sem justa causa")) {
+    	if ("Demissão sem justa causa".equals(motivoRes)) {
     		this.res.setVlrMulta(fgts.calcMulta(this.res.getSaldoFgts()));
 		} else {
 			this.res.setVlrMulta(cvt.cvtStrToBigDecimal("0"));
@@ -539,7 +539,7 @@ public class ControllerPrincipal {
     
     private void calcVlrTotFgts(){
     	Fgts fgts = new Fgts();
-    	this.res.setVlrTotFgts(fgts.SomarMultaeFgts(
+    	this.res.setVlrTotFgts(fgts.somarMultaeFgts(
     			this.res.getSaldoFgts(), this.res.getVlrMulta()));
     }
     
@@ -666,7 +666,9 @@ public class ControllerPrincipal {
 
 	  
 	  private void destacarCampo(JFormattedTextField field) {
-		  final int timerDelay = 500, totalTime = 2000;
+		  final int timerDelay = 500;
+		  final int totalTime = 2000;
+		  
 		  final int totalCount = totalTime / timerDelay;
 		  Timer timer = new Timer(timerDelay, new ActionListener(){
 		    int count = 0;

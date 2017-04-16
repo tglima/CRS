@@ -312,6 +312,9 @@ public LocalDate getDataEntrada() {
 		case "Falecimento":
 			rescFalecimento();
 			break;
+			
+		default:
+			break;
 		}
 	}
 
