@@ -65,7 +65,6 @@ public class FramePrincipal extends JFrame {
 /*	private JPanel jPanel1, card01Principal, card02Resultado;
 	private JPanel Card03Termos, Card04Limitacoes;*/
 
-	private ButtonGroup btGroupFerias;
 	
 	private JButton btnCalcular, btnVoltar1, btnExportar, btnVoltar2, btnVoltar3;                                       
 	private JComboBox<String> comboMotivoSaida, comboAvisoPrevio;
@@ -73,17 +72,14 @@ public class FramePrincipal extends JFrame {
 	private JFormattedTextField dataEntradaFmt, dataSaidaFmt;
 	private JFormattedTextField salarioFmt, saldoFgtsFmt;
 	
-	private JLabel lblDataSaida, lblSalario, lblFeriasVencidas;
-	private JLabel lblMotivoSaida, lblAvisoPrevio, lblSaldoFgts, lblInformeFgts; 
-	private JLabel lblRescisao, lblFgts, lblTermosDeUso, lblLimitacoes;
+	private JLabel lblSalario, lblFeriasVencidas;
+	private JLabel lblAvisoPrevio, lblSaldoFgts, lblInformeFgts; 
+	private JLabel lblRescisao, lblTermosDeUso, lblLimitacoes;
 	
-	private JMenu jMenu1;
-	private JMenuBar jMenuBar1;
-	private JPopupMenu.Separator jSeparator1;
 	private JMenuItem jMenuItem1, jMenuItem2, jMenuItem3;
 	
 	private JRadioButton jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4;
-	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3, jScrollPane4;
+	private JScrollPane jScrollPane2, jScrollPane3, jScrollPane4;
 
 	private JTable tblRescisao, tblFGTS;
 	private JTextPane jTextPane1, jTextPane2;
@@ -214,73 +210,75 @@ public class FramePrincipal extends JFrame {
 	
 
 /*	Método responsável por iniciar os componentes e posicioná-los			*/	
-	private void iniciarComponentes() {
+	
+
+	
+ 	private void iniciarComponentes() {
 		
-
-
-		
-
-        jPanel1			= 	new JPanel();
-        jMenuBar1 		= 	new JMenuBar();
-        jMenu1 			= 	new JMenu();
-        jMenuItem1 		= 	new JMenuItem();
-        jMenuItem2	 	= 	new JMenuItem();
-        jSeparator1 	= 	new JPopupMenu.Separator();
-        jMenuItem3 		= 	new JMenuItem();
+        jPanel1										= 	new JPanel();
+        JMenuBar jMenuBar1 							= 	new JMenuBar();
+        JMenu jMenu1 								= 	new JMenu();
+        jMenuItem1 									= 	new JMenuItem();
+        jMenuItem2	 								= 	new JMenuItem();
+        JPopupMenu.Separator jSeparator1 			= 	new JPopupMenu.Separator();
+        jMenuItem3 									= 	new JMenuItem();
 
         
-        JPanel card01Principal 		= 	new JPanel();
-        JLabel lblDataEntrada 				= 	new JLabel();
-        dataEntradaFmt 				= 	new JFormattedTextField();
-        lblDataSaida 				= 	new JLabel();
-        dataSaidaFmt 				= 	new JFormattedTextField();
-        lblSalario 					= 	new JLabel();
-        salarioFmt			 		= 	new JFormattedTextField();
-        lblFeriasVencidas 			= 	new JLabel();
-        saldoFgtsFmt 				= 	new JFormattedTextField();
+        JPanel card01Principal 						= 	new JPanel();
+        JLabel lblDataEntrada 						= 	new JLabel();
+        dataEntradaFmt 								= 	new JFormattedTextField();
+        JLabel lblDataSaida 						= 	new JLabel();
+        dataSaidaFmt 								= 	new JFormattedTextField();
+        lblSalario 									= 	new JLabel();
+        salarioFmt			 						= 	new JFormattedTextField();
+        lblFeriasVencidas 							= 	new JLabel();
+        saldoFgtsFmt 								= 	new JFormattedTextField();
 
         
-        btGroupFerias 					= 	new ButtonGroup();
-        ButtonGroup btGroupFGTS 		= 	new ButtonGroup();
-        jRadioButton1 					= 	new JRadioButton();
-        jRadioButton2 					= 	new JRadioButton();
-        jRadioButton3 					= 	new JRadioButton();
-        jRadioButton4 					= 	new JRadioButton();
+        ButtonGroup btGroupFerias 					= 	new ButtonGroup();
+        ButtonGroup btGroupFGTS 					= 	new ButtonGroup();
+        jRadioButton1 								= 	new JRadioButton();
+        jRadioButton2 								= 	new JRadioButton();
+        jRadioButton3 								= 	new JRadioButton();
+        jRadioButton4 								= 	new JRadioButton();
         
         
-        lblMotivoSaida 	= 	new JLabel();
-        lblAvisoPrevio 	= 	new JLabel();
-        lblSaldoFgts 	= 	new JLabel();
-        lblInformeFgts 	= 	new JLabel();
-        lblRescisao 	= 	new JLabel();
+        JLabel lblMotivoSaida 						= 	new JLabel();
+        lblAvisoPrevio 								= 	new JLabel();
+        lblSaldoFgts 								= 	new JLabel();
+        lblInformeFgts 								= 	new JLabel();
+        lblRescisao 								= 	new JLabel();
         
         
-        comboMotivoSaida 	= 	new JComboBox<>();
-        comboAvisoPrevio 	= 	new JComboBox<>();
-        btnCalcular 		= 	new JButton();
+        comboMotivoSaida 							= 	new JComboBox<>();
+        comboAvisoPrevio 							= 	new JComboBox<>();
+        btnCalcular 								= 	new JButton();
         
         
-        JPanel card02Resultado 	= 	new JPanel();
-        jScrollPane1 			= 	new JScrollPane();
-        tblRescisao 			= 	new JTable();
-        lblFgts 				= 	new JLabel();
-        jScrollPane2 			= 	new JScrollPane();
-        tblFGTS 				= 	new JTable();
-        btnVoltar1 				= 	new JButton();
-        btnExportar 			= 	new JButton();
+        JPanel card02Resultado 						= 	new JPanel();
+        JScrollPane jScrollPane1 					= 	new JScrollPane();
+        tblRescisao 								= 	new JTable();
+        JLabel lblFgts 								= 	new JLabel();
+        jScrollPane2 								= 	new JScrollPane();
+        tblFGTS 									= 	new JTable();
+        btnVoltar1 									= 	new JButton();
+        btnExportar 								= 	new JButton();
         
         
-        JPanel Card03Termos 	= 	new JPanel();
-        jScrollPane3 			= 	new JScrollPane();
-        jTextPane1	 			= 	new JTextPane();
-        lblTermosDeUso			= 	new JLabel();
-        btnVoltar3 				= 	new JButton();
+        JPanel Card03Termos			 				= 	new JPanel();
+        jScrollPane3 								= 	new JScrollPane();
+        jTextPane1	 								= 	new JTextPane();
+        lblTermosDeUso								= 	new JLabel();
+        btnVoltar3 									= 	new JButton();
         	
-        JPanel Card04Limitacoes 	= 	new JPanel();
-        lblLimitacoes 				= 	new JLabel();
-        jScrollPane4 				= 	new JScrollPane();
-        jTextPane2 					= 	new JTextPane();
-        btnVoltar2 					= 	new JButton();
+        JPanel Card04Limitacoes 					= 	new JPanel();
+        lblLimitacoes 								= 	new JLabel();
+        jScrollPane4 								= 	new JScrollPane();
+        jTextPane2 									= 	new JTextPane();
+        btnVoltar2 									= 	new JButton();
+
+
+
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cálculos Rescisórios Simples");
@@ -556,8 +554,6 @@ public class FramePrincipal extends JFrame {
 
         jPanel1.add(card02Resultado, "card2");
         Card03Termos.setPreferredSize(new Dimension(525, 600));
-
-        
         
     	StyleSheet css = new StyleSheet();
     	css.addRule("h2 { margin: 0px, 0px, 0px, 0px; margin-top: 25px; padding: 0px; font-size: 1.40em;}");
@@ -729,6 +725,8 @@ public class FramePrincipal extends JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+	
+	
 	
 //	------------------------------------------------------------------------ //	
 	

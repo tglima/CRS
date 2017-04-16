@@ -89,9 +89,8 @@ public class ConverteFormata {
 	public BigDecimal cvtStrToBigDecimal(String vlrDigitado) {
 		BigDecimal vlrInformado = new BigDecimal("0"); 
 		
-		String vlr = vlrDigitado.replace(" ", "").replace(",", ".")
-				.replace("R$", "");
-
+		String vlr = vlrDigitado.replace(" ", "").replace(".", "")
+				.replace(",", ".").replace("R$", "");
 		
         try {
             vlrInformado = new BigDecimal(vlr);

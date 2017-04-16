@@ -124,7 +124,7 @@ public class Validacoes {
 	 */
 	public boolean valSalMax(BigDecimal valor){
 		
-		return valor.compareTo(new BigDecimal("59999")) < 0;
+		return valor.compareTo(new BigDecimal("60000")) < 0;
 		
 /*		if (valor.compareTo(new BigDecimal("59999")) > 0) {
 			return false;

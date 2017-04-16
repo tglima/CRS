@@ -111,14 +111,14 @@ public class ControllerPrincipal {
         this.gui.getjRadioButton3().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				actionRadioButton3();
+				actionRadioButtonFgts();
 			}
 		});
         
         this.gui.getjRadioButton4().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				actionRadionButton4();
+				actionRadioButtonFgts();
 			}
 		});
                 
@@ -265,19 +265,18 @@ public class ControllerPrincipal {
     
 /*	Métodos responsáveis pelas escolhas feitas com os radio buttons 		*/    
     
-    private void actionRadioButton3() {                                              
-        if (true) {
+    private void actionRadioButtonFgts() {                                              
+        if (gui.getjRadioButton3().isSelected()) {
             gui.getSaldoFgtsFmt().setEnabled(true);
             gui.getLblInformeFgts().setEnabled(true);
-        }
-    }   
-	
-    private void actionRadionButton4() {                                              
-        if (true) {
+        }else {
             gui.getSaldoFgtsFmt().setEnabled(false);
             gui.getLblInformeFgts().setEnabled(false);
-        }
-    }    
+		}
+        
+        
+    }   
+	  
 	
 //	------------------------------------------------------------------------ //    
 
