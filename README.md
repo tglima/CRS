@@ -7,7 +7,7 @@
 O CRS é uma aplicação Java para Desktops que realiza de forma simplificada, alguns dos principais itens presentes em uma rescisão trabalhista.
 
 # Recursos
- * Realiza os sequintes cálculos:
+* Realiza os sequintes cálculos:
   * Último salário (proporcional ao total de dias trabalhados.).
   * Décimo terceiro salário.
   * Férias proporcional.
