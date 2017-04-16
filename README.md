@@ -1,7 +1,7 @@
 ![CRS](src/br/edu/tglima/resource/imgs/CRS-LogoHeader.png)
 
 [![License](https://img.shields.io/github/license/tglima/CRS.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/release/tglima/CRS.svg)](https://github.com/tglima/CRS/releases/download/v0.60.1/0.60.1-build20170412-1800.jar)
+[![GitHub release](https://img.shields.io/github/release/tglima/CRS.svg)](https://github.com/tglima/CRS/releases/download/v0.60.2/0.60.2-build20170416-1600.jar)
 [![Github All Releases](https://img.shields.io/github/downloads/tglima/CRS/total.svg)](https://github.com/tglima/CRS/releases/)
 
 O CRS é uma aplicação Java para Desktops que realiza de forma simplificada, alguns dos principais itens presentes em uma rescisão trabalhista.
@@ -30,7 +30,7 @@ Ter o [Java 8](https://www.java.com/en/download/) baixado e instalado em sua má
 
 | Obter aplicação :                                |  
 |:-------------------------------------------------|
-| [0.60.2-build20170416-1600.jar](releases/download/v0.60.2/0.60.2-build20170416-1600.jar)                                       |
+| [0.60.2-build20170416-1600.jar](releases/download/v0.60.2/0.60.2-build20170416-1600.jar)                                 |
 
 
 | Tipo de arquivo    | Executável jar                    |
