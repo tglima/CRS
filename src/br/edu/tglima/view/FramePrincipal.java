@@ -61,10 +61,11 @@ public class FramePrincipal extends JFrame {
 
 /*	Lista de atributos 														*/	
 	
-	private JPanel jPanel1, card01Principal, card02Resultado;
-	private JPanel Card03Termos, Card04Limitacoes;
+	private JPanel jPanel1;
+/*	private JPanel jPanel1, card01Principal, card02Resultado;
+	private JPanel Card03Termos, Card04Limitacoes;*/
 
-	private ButtonGroup btGroupFGTS, btGroupFerias;
+	private ButtonGroup btGroupFerias;
 	
 	private JButton btnCalcular, btnVoltar1, btnExportar, btnVoltar2, btnVoltar3;                                       
 	private JComboBox<String> comboMotivoSaida, comboAvisoPrevio;
@@ -72,7 +73,7 @@ public class FramePrincipal extends JFrame {
 	private JFormattedTextField dataEntradaFmt, dataSaidaFmt;
 	private JFormattedTextField salarioFmt, saldoFgtsFmt;
 	
-	private JLabel lblDataEntrada, lblDataSaida, lblSalario, lblFeriasVencidas;
+	private JLabel lblDataSaida, lblSalario, lblFeriasVencidas;
 	private JLabel lblMotivoSaida, lblAvisoPrevio, lblSaldoFgts, lblInformeFgts; 
 	private JLabel lblRescisao, lblFgts, lblTermosDeUso, lblLimitacoes;
 	
@@ -172,9 +173,9 @@ public class FramePrincipal extends JFrame {
 		return jPanel1;
 	}
 
-	public JPanel getCard01Principal() {
+/*	public JPanel getCard01Principal() {
 		return card01Principal;
-	}
+	}*/
 
 	public JRadioButton getjRadioButton1() {
 		return jRadioButton1;
@@ -214,33 +215,37 @@ public class FramePrincipal extends JFrame {
 
 /*	Método responsável por iniciar os componentes e posicioná-los			*/	
 	private void iniciarComponentes() {
+		
 
-        jPanel1		= 	new JPanel();
-        jMenuBar1 	= 	new JMenuBar();
-        jMenu1 		= 	new JMenu();
-        jMenuItem1 	= 	new JMenuItem();
-        jMenuItem2 	= 	new JMenuItem();
-        jSeparator1 = 	new JPopupMenu.Separator();
-        jMenuItem3 	= 	new JMenuItem();
 
-        
-        card01Principal 		= 	new JPanel();
-        lblDataEntrada 			= 	new JLabel();
-        dataEntradaFmt 			= 	new JFormattedTextField();
-        lblDataSaida 			= 	new JLabel();
-        dataSaidaFmt 			= 	new JFormattedTextField();
-        lblSalario 				= 	new JLabel();
-        salarioFmt			 	= 	new JFormattedTextField();
-        lblFeriasVencidas 		= 	new JLabel();
-        saldoFgtsFmt 			= 	new JFormattedTextField();
+		
+
+        jPanel1			= 	new JPanel();
+        jMenuBar1 		= 	new JMenuBar();
+        jMenu1 			= 	new JMenu();
+        jMenuItem1 		= 	new JMenuItem();
+        jMenuItem2	 	= 	new JMenuItem();
+        jSeparator1 	= 	new JPopupMenu.Separator();
+        jMenuItem3 		= 	new JMenuItem();
 
         
-        btGroupFerias 		= 	new ButtonGroup();
-        btGroupFGTS 		= 	new ButtonGroup();
-        jRadioButton1 		= 	new JRadioButton();
-        jRadioButton2 		= 	new JRadioButton();
-        jRadioButton3 		= 	new JRadioButton();
-        jRadioButton4 		= 	new JRadioButton();
+        JPanel card01Principal 		= 	new JPanel();
+        JLabel lblDataEntrada 				= 	new JLabel();
+        dataEntradaFmt 				= 	new JFormattedTextField();
+        lblDataSaida 				= 	new JLabel();
+        dataSaidaFmt 				= 	new JFormattedTextField();
+        lblSalario 					= 	new JLabel();
+        salarioFmt			 		= 	new JFormattedTextField();
+        lblFeriasVencidas 			= 	new JLabel();
+        saldoFgtsFmt 				= 	new JFormattedTextField();
+
+        
+        btGroupFerias 					= 	new ButtonGroup();
+        ButtonGroup btGroupFGTS 		= 	new ButtonGroup();
+        jRadioButton1 					= 	new JRadioButton();
+        jRadioButton2 					= 	new JRadioButton();
+        jRadioButton3 					= 	new JRadioButton();
+        jRadioButton4 					= 	new JRadioButton();
         
         
         lblMotivoSaida 	= 	new JLabel();
@@ -255,27 +260,27 @@ public class FramePrincipal extends JFrame {
         btnCalcular 		= 	new JButton();
         
         
-        card02Resultado 	= 	new JPanel();
-        jScrollPane1 		= 	new JScrollPane();
-        tblRescisao 		= 	new JTable();
-        lblFgts 			= 	new JLabel();
-        jScrollPane2 		= 	new JScrollPane();
-        tblFGTS 			= 	new JTable();
-        btnVoltar1 			= 	new JButton();
-        btnExportar 		= 	new JButton();
+        JPanel card02Resultado 	= 	new JPanel();
+        jScrollPane1 			= 	new JScrollPane();
+        tblRescisao 			= 	new JTable();
+        lblFgts 				= 	new JLabel();
+        jScrollPane2 			= 	new JScrollPane();
+        tblFGTS 				= 	new JTable();
+        btnVoltar1 				= 	new JButton();
+        btnExportar 			= 	new JButton();
         
         
-        Card03Termos 	= 	new JPanel();
-        jScrollPane3 	= 	new JScrollPane();
-        jTextPane1	 	= 	new JTextPane();
-        lblTermosDeUso	= 	new JLabel();
-        btnVoltar3 		= 	new JButton();
-        
-        Card04Limitacoes 	= 	new JPanel();
-        lblLimitacoes 		= 	new JLabel();
-        jScrollPane4 		= 	new JScrollPane();
-        jTextPane2 			= 	new JTextPane();
-        btnVoltar2 			= 	new JButton();
+        JPanel Card03Termos 	= 	new JPanel();
+        jScrollPane3 			= 	new JScrollPane();
+        jTextPane1	 			= 	new JTextPane();
+        lblTermosDeUso			= 	new JLabel();
+        btnVoltar3 				= 	new JButton();
+        	
+        JPanel Card04Limitacoes 	= 	new JPanel();
+        lblLimitacoes 				= 	new JLabel();
+        jScrollPane4 				= 	new JScrollPane();
+        jTextPane2 					= 	new JTextPane();
+        btnVoltar2 					= 	new JButton();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cálculos Rescisórios Simples");

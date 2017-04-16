@@ -142,11 +142,15 @@ public class Validacoes {
 	 * qualquer valor inferior.
 	 */
 	public boolean valFgts(BigDecimal valor) {
-		if (valor.compareTo(new BigDecimal("0")) < 0) {
+		
+		return valor.compareTo(new BigDecimal("0")) > 0;
+		
+		/*if (valor.compareTo(new BigDecimal("0")) < 0) {
 			return false;
 		} else {
 			return true;
-		}
+		}*/
+		
 	}
 	
 	
