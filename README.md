@@ -30,7 +30,7 @@ Ter o [Java 8](https://www.java.com/en/download/) baixado e instalado em sua má
 
 | Obter aplicação :                                |  
 |:-------------------------------------------------|
-| [0.60.2-build20170416-1600.jar](releases/download/v0.60.2/0.60.2-build20170416-1600.jar)                                 |
+| [0.60.2-build20170416-1600.jar](https://github.com/tglima/CRS/releases/download/v0.60.2/0.60.2-build20170416-1600.jar)                                 |
 
 
 | Tipo de arquivo    | Executável jar                    |
