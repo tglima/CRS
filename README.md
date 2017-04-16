@@ -7,21 +7,21 @@
 O CRS é uma aplicação Java para Desktops que realiza de forma simplificada, alguns dos principais itens presentes em uma rescisão trabalhista.
 
 # Recursos
- + Realiza os sequintes cálculos:
-  - Último salário (proporcional ao total de dias trabalhados.).
-  - Décimo terceiro salário.
-  - Férias proporcional.
-  - 1/3 das férias.
-  - Férias vencidas.
-  - 1/3 das férias vencidas
-  - Aviso prévio (Valor a receber | Valor a ser descontado | Qtd de dias).
-  - FGTS.
-  - Multa de 40% sobre o valor do FGTS.
+ * Realiza os sequintes cálculos:
+  * Último salário (proporcional ao total de dias trabalhados.).
+  * Décimo terceiro salário.
+  * Férias proporcional.
+  * 1/3 das férias.
+  * Férias vencidas.
+  * 1/3 das férias vencidas
+  * Aviso prévio (Valor a receber | Valor a ser descontado | Qtd de dias).
+  * FGTS.
+  * Multa de 40% sobre o valor do FGTS.
 
-+ Exporte o resultado dos cálculos em uma planilha (XLS) e consulte sempre que precisar.
-+ Aplicativo multiplataforma: Windows / Mac OS X / Linux.
-+ Portátil: Dispensa instalação, clique e execute.
-+ Livre de Spyware, Adware e outros tipos de malwares.
+* Exporte o resultado dos cálculos em uma planilha (XLS) e consulte sempre que precisar.
+* Aplicativo multiplataforma: Windows / Mac OS X / Linux.
+* Portátil: Dispensa instalação, clique e execute.
+* Livre de Spyware, Adware e outros tipos de malwares.
 
 ## Requisitos
 Ter o [Java 8](https://www.java.com/en/download/) baixado e instalado em sua máquina.
@@ -58,4 +58,3 @@ Este programa é software livre: você pode redistribuí-lo e / ou modificá-lo 
 This software uses icons from the [Ultra-Flat-Icons icon set by Steftrikia](steftrikia@gmail.com).
 
 The Ultra-Flat-Icons icon set is licensed under a Creative Commons [Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0).
-
